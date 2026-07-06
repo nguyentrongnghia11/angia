@@ -1,0 +1,28 @@
+{
+"name"              : "The Gió Riverside",
+"short_name"        : "The Gió Riverside",
+"description"       : "The Gió Riverside",
+"start_url"         : "./",
+"display_override": ["fullscreen", "minimal-ui"],
+"display": "standalone",
+"orientation": "portrait",
+"background_color"  : "#d6b194",
+"theme_color"       : "#ffffff",
+"icons": [
+	{
+		"src": "./catalog/view/images/icon-192.png",
+		"sizes": "192x192",
+		"type": "image/png"
+	},
+	{
+		"src": "./catalog/view/images/icon-512.png",
+		"sizes": "512x512",
+		"type": "image/png"
+	},
+	{
+      "src": "./catalog/view/images/maskable_icon.png",
+      "sizes": "196x196",
+      "type": "image/png"
+    }
+  ]
+}

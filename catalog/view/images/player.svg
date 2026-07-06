@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"	 width="140px" height="140px" viewBox="0 0 140 140">
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="40" y1="70" x2="100" y2="70">
+<stop  offset="0" style="stop-color:#FFFFFF"/>
+<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0"/>
+</linearGradient>
+<path fill="none" stroke="url(#SVGID_1_)" stroke-width="3" d="M46.7,42.5V101c0,5.1,5.7,8.3,10,5.4
+l45.2-29.3c3.9-2.7,3.9-8.4,0-11.1L56.7,37C52.4,34.2,46.7,37.3,46.7,42.5z"/>
+<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="40" y1="70" x2="100" y2="70">
+<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+<stop  offset="1" style="stop-color:#FFFFFF"/>
+</linearGradient>
+<path fill="none" stroke="url(#SVGID_2_)" stroke-width="3" d="
+M58.8,56.4v30.2c0,2.7,3,4.3,5.2,2.8l23.4-15.1c2-1.4,2-4.4,0-5.7L64,53.5C61.8,52.1,58.8,53.7,58.8,56.4z"/>
+<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="110" y1="30" x2="30" y2="110">
+<stop  offset="0" style="stop-color:#FFFFFF"/>
+<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0"/>
+</linearGradient>
+<circle fill="none" stroke="url(#SVGID_3_)" stroke-width="2" cx="70" cy="70" r="60"/>
+</svg>

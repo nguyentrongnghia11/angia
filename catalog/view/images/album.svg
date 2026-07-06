@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="140px" height="140px" viewBox="0 0 140 140">
+<path fill="none" stroke="#fff" stroke-width="3" d="M99.2,52.7V96c0,2.3-1.9,4.2-4.2,4.2H35.6c-2.3,0-4.2-1.9-4.2-4.2
+V52.7c0-2.3,1.9-4.2,4.2-4.2H95C97.3,48.5,99.2,50.4,99.2,52.7z"/>
+<path fill="none" stroke="#fff" stroke-width="3" d="M95.4,48.5H40.8
+v-3.9c0-2.7,2.2-4.8,4.8-4.8h58.3c2.7,0,4.8,2.2,4.8,4.8v42.1c0,2.6-2.1,4.8-4.8,4.8h-4.7V52.7"/>
+<polyline fill="none" stroke="#fff" stroke-width="3" points="31.3,90.3 47.9,74.4 70,100.2"/>
+<polyline fill="none" stroke="#fff" stroke-width="3" points="58.2,86.4 76.1,73.5 98.9,94.3"/>
+<circle fill="none" stroke="#fff" stroke-width="3" cx="48.1" cy="61.4" r="5.4"/>
+<linearGradient id="SVGID_1" gradientUnits="userSpaceOnUse" x1="110" y1="110" x2="30" y2="30" gradientTransform="matrix(1 0 0 -1 0 140)">
+<stop  offset="0" style="stop-color:#FFFFFF"/>
+<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0"/>
+</linearGradient>
+<circle fill="none" stroke="url(#SVGID_1)" stroke-width="2" cx="70" cy="70" r="60"/>
+</svg>

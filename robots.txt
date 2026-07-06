@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://angia.org.vn/sitemap.xml
