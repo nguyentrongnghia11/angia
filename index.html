@@ -7040,7 +7040,7 @@
 			width: auto;
 			height: auto;
 			top: 8rem;
-			left: 3rem;
+			left: 12rem;
 			z-index: 30
 		}
 
@@ -15127,6 +15127,75 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 	<script src="catalog/view/js/app4bf4.js?ver=1.0.3" type="module"></script>
 
 
+	<!-- Facebook Sticky Button -->
+	<div id="fb-sticky">
+		<a href="https://www.facebook.com/thegiosales/" target="_blank" rel="noopener noreferrer" class="fb-btn">
+			<svg viewBox="0 0 24 24" fill="currentColor">
+				<path
+					d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+			</svg>
+		</a>
+	</div>
+
+	<style>
+		/* Vị trí cố định cho Facebook Sticky */
+		#fb-sticky {
+			position: fixed;
+			bottom: 200px;
+			right: 35px;
+			z-index: 9999;
+			width: 50px;
+			height: 50px;
+		}
+
+		/* Nút Facebook */
+		.fb-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+			background: #1877F2;
+			border-radius: 50%;
+			box-shadow: 0 2px 10px rgba(24, 119, 242, 0.3);
+			text-decoration: none;
+			transition: all 0.3s ease;
+			animation: shake 1.4s infinite;
+			animation-delay: 0.2s;
+			/* Hơi lệch pha với Zalo cho sinh động */
+		}
+
+		/* Logo Facebook */
+		.fb-btn svg {
+			width: 30px;
+			height: 30px;
+			fill: #ffffff;
+		}
+
+		/* Hover effect */
+		.fb-btn:hover {
+			transform: scale(1.1);
+			box-shadow: 0 4px 15px rgba(24, 119, 242, 0.5);
+			animation-play-state: paused;
+		}
+
+		/* Responsive cho mobile */
+		@media (max-width: 768px) {
+			#fb-sticky {
+				bottom: 195px !important;
+				right: 25px !important;
+				width: 45px !important;
+				height: 45px !important;
+			}
+
+			.fb-btn svg {
+				width: 26px !important;
+				height: 26px !important;
+			}
+		}
+	</style>
+
+
 	<!-- Zalo Sticky Button - Compact Size -->
 	<div id="zalo-sticky">
 		<a href="https://zalo.me/0797096034" target="_blank" rel="noopener noreferrer" class="zalo-btn">
@@ -15408,7 +15477,7 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 			}
 		});
 
-		// Carousel Touch Swipe & Navigation Logic
+		// Carousel Touch Swipe & Navigation Logic & Auto-slide
 		document.addEventListener("DOMContentLoaded", () => {
 			const carousels = document.querySelectorAll(".gallery-carousel");
 			carousels.forEach((carousel) => {
@@ -15422,6 +15491,7 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 				let currentIndex = 0;
 				let startX = 0;
 				let isDragging = false;
+				let autoSlideInterval;
 
 				const updateCarousel = (index) => {
 					track.style.transform = `translateX(-${index * 100}%)`;
@@ -15437,22 +15507,40 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 					currentIndex = index;
 				};
 
+				const startAutoSlide = () => {
+					stopAutoSlide();
+					autoSlideInterval = setInterval(() => {
+						let index = currentIndex + 1;
+						if (index >= slides.length) index = 0;
+						updateCarousel(index);
+					}, 3000); // Tự động chuyển slide sau mỗi 4 giây
+				};
+
+				const stopAutoSlide = () => {
+					if (autoSlideInterval) {
+						clearInterval(autoSlideInterval);
+					}
+				};
+
 				if (prevBtn && nextBtn) {
 					prevBtn.addEventListener("click", () => {
 						let index = currentIndex - 1;
 						if (index < 0) index = slides.length - 1;
 						updateCarousel(index);
+						startAutoSlide();
 					});
 					nextBtn.addEventListener("click", () => {
 						let index = currentIndex + 1;
 						if (index >= slides.length) index = 0;
 						updateCarousel(index);
+						startAutoSlide();
 					});
 				}
 
 				dots.forEach((dot, index) => {
 					dot.addEventListener("click", () => {
 						updateCarousel(index);
+						startAutoSlide();
 					});
 				});
 
@@ -15460,6 +15548,7 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 				track.addEventListener("touchstart", (e) => {
 					startX = e.touches[0].clientX;
 					isDragging = true;
+					stopAutoSlide();
 				}, { passive: true });
 
 				track.addEventListener("touchmove", (e) => {
@@ -15484,7 +15573,15 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 
 				track.addEventListener("touchend", () => {
 					isDragging = false;
+					startAutoSlide();
 				});
+
+				// Pause auto-slide when mouse enters, resume when leaves
+				carousel.addEventListener("mouseenter", stopAutoSlide);
+				carousel.addEventListener("mouseleave", startAutoSlide);
+
+				// Start auto-slide initially
+				startAutoSlide();
 			});
 			if (typeof ZoomPic === "function") {
 				ZoomPic();

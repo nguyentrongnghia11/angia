@@ -3482,9 +3482,9 @@ body.zoom-active .slidebox-pagination {
 
   .gallery-carousel,
   .map-iframe-wrapper {
-    width: 45% !important;
+    width: 80% !important;
     /* Thu hẹp bề ngang (Cũ là 50%) */
-    max-width: 750px !important;
+    max-width: 800px !important;
     /* Giới hạn chiều rộng tối đa (Cũ là 800px) */
     margin: 0 auto !important;
   }
