@@ -11,10 +11,10 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="theme-color" content="#d6b194">
-	<title id="hdtitle">Hình ảnh dự án The Gió Riverside</title>
+	<title id="hdtitle">Vị trí nhà mẫu dự án The Gió Riverside An Gia</title>
 	<meta name="description"
-		content="Thư viện hình ảnh phối cảnh căn hộ và tiện ích đẳng cấp của dự án The Gió Riverside ven sông.">
-	<meta name="keywords" content="hình ảnh the gió riverside, phối cảnh the gió riverside">
+		content="Địa chỉ chính thức và hướng dẫn đường đi đến nhà mẫu (Sales Gallery) của dự án căn hộ cao cấp The Gió Riverside An Gia.">
+	<meta name="keywords" content="vị trí nhà mẫu the gió, địa chỉ nhà mẫu the gió an gia, nhà mẫu the gió riverside">
 	<link rel="shortcut icon" href="catalog/view/images/favicon.png" type="image/x-icon">
 	<link rel="icon" sizes="512x512" href="catalog/view/images/icon-512.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="catalog/view/images/apple-touch-icon.png">
@@ -28,8 +28,8 @@
 	<link rel="stylesheet" href="catalog/view/css/app.css">
 
 	<style>
-		/* Custom style for this subpage to align text center and image below */
-		.gallery-container {
+		/* Custom style for map subpage */
+		.map-container {
 			max-width: 1200px;
 			margin: 0 auto;
 			padding: 120px 24px 80px;
@@ -41,12 +41,12 @@
 			min-height: 80vh;
 		}
 
-		.gallery-content {
-			margin-bottom: 45px;
+		.map-content {
+			margin-bottom: 40px;
 			max-width: 800px;
 		}
 
-		.gallery-title {
+		.map-title {
 			font-family: Montserrat, sans-serif;
 			font-weight: 700;
 			font-size: 2.8rem;
@@ -57,187 +57,60 @@
 			line-height: 1.2;
 		}
 
-		.gallery-text {
+		.map-text {
 			font-size: 1.1rem;
 			line-height: 1.8;
 			color: #efefef;
-			margin-bottom: 0;
+			margin-bottom: 20px;
 		}
 
-		.gallery-carousel {
-			width: 50%;
-			max-width: 800px;
-			position: relative;
-			overflow: hidden;
-			box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-			margin: 20px auto 0;
-			user-select: none;
-			aspect-ratio: 2000 / 1400;
-		}
-
-		.carousel-track {
-			display: flex;
-			transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-			width: 100%;
-			height: 100%;
-		}
-
-		.carousel-slide {
-			min-width: 100%;
-			flex-shrink: 0;
-			position: relative;
-			height: 100%;
-		}
-
-		.carousel-slide img {
-			width: 100% !important;
-			height: 100% !important;
-			display: block;
-			object-fit: cover !important;
-		}
-
-		.carousel-caption {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			background: rgba(0, 0, 0, 0.75);
+		.map-address-box {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(214, 177, 148, 0.3);
 			padding: 20px 30px;
-			text-align: left;
-			border-top: 1px solid rgba(214, 177, 148, 0.3);
+			border-radius: 8px;
+			display: inline-block;
+			margin-top: 15px;
 			backdrop-filter: blur(5px);
 		}
 
-		.carousel-caption h3 {
+		.map-address-box p {
+			margin: 8px 0;
+			font-size: 1.1rem;
+			color: #ffffff;
+		}
+
+		.map-address-box strong {
 			color: #d6b194;
-			margin: 0 0 6px;
-			font-size: 1.2rem;
-			text-transform: uppercase;
-			font-family: Montserrat, sans-serif;
-			font-weight: 700;
 		}
 
-		.carousel-caption p {
-			color: #efefef;
-			margin: 0;
-			font-size: 0.95rem;
-			line-height: 1.5;
-		}
-
-		.carousel-prev,
-		.carousel-next {
-			position: absolute;
-			top: 50%;
-			transform: translateY(-50%);
-			background: rgba(0, 0, 0, 0.6);
-			border: 1px solid rgba(214, 177, 148, 0.6);
-			color: #d6b194;
-			width: 48px;
-			height: 48px;
-			border-radius: 50%;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 1.6rem;
-			font-family: monospace;
-			transition: all 0.3s ease;
-			z-index: 10;
-			backdrop-filter: blur(4px);
-			outline: none;
-		}
-
-		.carousel-prev {
-			left: 20px;
-		}
-
-		.carousel-next {
-			right: 20px;
-		}
-
-		.carousel-prev:hover,
-		.carousel-next:hover {
-			background: #d6b194;
-			color: #000000;
-			box-shadow: 0 0 15px rgba(214, 177, 148, 0.6);
-		}
-
-		.carousel-dots {
-			position: absolute;
-			bottom: 110px;
-			/* Above the caption */
-			left: 50%;
-			transform: translateX(-50%);
-			display: flex;
-			gap: 10px;
-			z-index: 10;
-		}
-
-		.carousel-dot {
-			width: 12px;
-			height: 12px;
-			border-radius: 50%;
-			background: rgba(255, 255, 255, 0.4);
-			cursor: pointer;
-			transition: all 0.3s ease;
-		}
-
-		.carousel-dot.active {
-			background: #d6b194;
-			transform: scale(1.2);
+		.map-iframe-holder {
+			width: 50%;
+			max-width: 800px;
+			overflow: hidden;
+			box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+			margin-top: 20px;
 		}
 
 		@media (max-width: 768px) {
-			.gallery-carousel {
+			.map-iframe-holder {
 				width: 100% !important;
 			}
 
-			.gallery-container {
+			.map-container {
 				padding-top: 90px;
 			}
 
-			.gallery-title {
+			.map-title {
 				font-size: 2rem;
 			}
 
-			.gallery-text {
+			.map-text {
 				font-size: 1rem;
 			}
 
-			.carousel-prev,
-			.carousel-next {
-				width: 36px;
-				height: 36px;
-				font-size: 1.2rem;
-				left: 10px;
-			}
-
-			.carousel-next {
-				right: 10px;
-			}
-
-			.carousel-caption {
-				padding: 15px 20px;
-			}
-
-			.carousel-caption h3 {
-				font-size: 1.05rem;
-			}
-
-			.carousel-caption p {
-				font-size: 0.85rem;
-			}
-
-			.carousel-dots {
-				bottom: 95px;
-			}
-
-			.gallery-text {
-				font-size: 1rem;
-			}
-
-			.gallery-grid {
-				grid-template-columns: 1fr;
+			.map-address-box {
+				padding: 15px;
 			}
 		}
 	</style>
@@ -271,34 +144,33 @@
 				<div class="logo-menu column col-x-y">
 					<span></span><span></span><span></span><span></span>
 				</div>
-			</div>
-			<div class="nav">
-				<ul class="main-menu column col-x-y">
-					<li class="nav-item" data-id="filter-text"><a class="link-home link-hoz" href="index.html"
+				<ul class="main-menu">
+					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz" href="index.html"
 							data-name="home-page" data-text="Trang chủ">Trang chủ</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/home-page.html"
-							data-hrefvi="https://angia.org.vn/trang-chu.html" data-title="Trang chủ"
+						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/index.html"
+							data-hrefvi="https://angia.org.vn/index.html" data-title="Trang chủ"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl"></div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz" href="gioi-thieu.html"
-							data-name="about-page" data-text="Giới thiệu">Giới thiệu</a><span
-							class="icon parent"></span>
+					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
+							href="https://angia.org.vn/gioi-thieu.html" data-name="about-page"
+							data-text="Giới thiệu">Giới thiệu</a><span class="icon parent"></span>
 						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/about-us.html"
 							data-hrefvi="https://angia.org.vn/gioi-thieu.html" data-title="Giới thiệu"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl"></div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz" href="vi-tri.html"
-							data-name="location-page" data-text="Vị trí">Vị trí</a><span class="icon parent"></span>
+					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
+							href="https://angia.org.vn/vi-tri.html" data-name="location-page" data-text="Vị trí">Vị
+							trí</a><span class="icon parent"></span>
 						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/location.html"
 							data-hrefvi="https://angia.org.vn/vi-tri.html" data-title="Vị trí"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl"></div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz" href="tien-ich.html"
-							data-name="facilities-page" data-text="Tiện ích">Tiện ích</a><span
-							class="icon parent"></span>
+					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
+							href="https://angia.org.vn/tien-ich.html" data-name="facilities-page"
+							data-text="Tiện ích">Tiện ích</a><span class="icon parent"></span>
 						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/facilities.html"
 							data-hrefvi="https://angia.org.vn/tien-ich.html" data-title="Tiện ích"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
@@ -345,33 +217,22 @@
 			</div>
 		</nav>
 		<div class="right-header">
-			<button class="subscribe" aria-label="subscribe" data-id="filter-text">
-				<div class="effect parent">
-					<svg viewBox="0 0 50 50">
-						<path fill="url(#gradient_01)"
-							d="M44.41,15.52c-0.78-0.78-2.04-0.79-2.83-0.01c0,0-0.01,0.01-0.01,0.01l-2.58,2.66V7c0-1.1-0.9-2-2-2s-2,0.9-2,2v11.18l-2.58-2.6c-0.78-0.78-2.06-0.78-2.84,0c-0.78,0.78-0.78,2.06,0,2.84l6,6c0.19,0.18,0.41,0.32,0.66,0.42c0.48,0.21,1.04,0.21,1.52,0c0.25-0.1,0.47-0.24,0.66-0.42l6-6c0.78-0.78,0.79-2.04,0.01-2.83c0,0-0.01-0.01-0.01-0.01V15.52z" />
-					</svg>
-				</div>
-				<span>Nhận tin</span>
-			</button>
-		</div>
-		<div class="option-header">
-			<div class="language">
-				<form id="change_lang" enctype="multipart/form-data" method="post" onsubmit="return false;">
+			<div class="language-header">
+				<form id="changelanguage" action="#" method="post" enctype="multipart/form-data">
 					<ul>
 						<li class="active" data-id="filter-text">
 							<div class="effect parent"></div>
 							<button class="vi" aria-label="vi"
-								onclick="onChangeLanguage('vi','hinh-anh.html');">VI</button>
+								onclick="onChangeLanguage('vi','vi-tri-nha-mau.html');">VI</button>
 						</li>
 						<li data-id="filter-text">
 							<div class="effect parent"></div>
 							<button class="en" aria-label="en"
-								onclick="onChangeLanguage('en','gallery.html');">EN</button>
+								onclick="onChangeLanguage('en','model-gallery-location.html');">EN</button>
 						</li>
 					</ul>
 					<input type="hidden" value="" name="language_code" id="language_code" aria-label="input">
-					<input id="changlanguage_redirect" type="hidden" value="https://angia.org.vn/hinh-anh.html"
+					<input id="changlanguage_redirect" type="hidden" value="https://angia.org.vn/vi-tri-nha-mau.html"
 						name="redirect" aria-label="input">
 				</form>
 			</div>
@@ -382,54 +243,27 @@
 		</div>
 	</header>
 
-	<main class="container" id="gallery-page">
-		<div class="gallery-container">
-			<div class="gallery-content">
-				<h1 class="gallery-title">Hình ảnh dự án</h1>
-				<div class="gallery-text">
-					<p>Khám phá bộ sưu tập hình ảnh phối cảnh ngoại khu, nội khu và sảnh đón sang trọng chuẩn phong cách
-						resort 5 sao tại dự án căn hộ cao cấp <strong>The Gió Riverside</strong>.</p>
+	<main class="container" id="model-map-page">
+		<div class="map-container">
+			<div class="map-content">
+				<h1 class="map-title">Vị trí nhà mẫu</h1>
+				<div class="map-text">
+					<p>Nhằm đem đến trải nghiệm chân thực và trực quan nhất về tổ ấm tương lai, Tập đoàn An Gia trân
+						trọng kính mời Quý khách hàng ghé thăm <strong>Nhà mẫu dự án The Gió Riverside</strong>.</p>
+
+					<div class="map-address-box">
+						<p>📍 <strong>Địa chỉ nhà mẫu:</strong> 89 Hoàng Sa, Phường Đa Kao, Quận 1, Thành phố Hồ Chí
+							Minh.</p>
+						<p>📞 <strong>Hotline hỗ trợ:</strong> 0906 888 888 (Phục vụ 24/7)</p>
+					</div>
 				</div>
 			</div>
 
-			<!-- Carousel Container -->
-			<div class="gallery-carousel">
-				<!-- Carousel Track -->
-				<div class="carousel-track">
-					<div class="carousel-slide">
-						<img src="pictures/catalog/background/1.jpg" alt="Phối cảnh ban đêm">
-						<div class="carousel-caption">
-							<h3>Phối cảnh hoàng hôn</h3>
-							<p>Toàn cảnh dự án The Gió Riverside rực rỡ bên sông Đồng Nai lúc chiều tà.</p>
-						</div>
-					</div>
-					<div class="carousel-slide">
-						<img src="pictures/catalog/lien-he/lobby.jpg" alt="Sảnh đón 5 sao">
-						<div class="carousel-caption">
-							<h3>Sảnh đón sang trọng</h3>
-							<p>Không gian sảnh đón lộng lẫy và đẳng cấp, tạo ấn tượng ban đầu mạnh mẽ.</p>
-						</div>
-					</div>
-					<div class="carousel-slide">
-						<img src="pictures/catalog/library/C04PoolFinal.jpg" alt="Hồ bơi chân mây tầng thượng"
-							style="object-fit: cover;">
-						<div class="carousel-caption">
-							<h3>Quy mô ấn tượng</h3>
-							<p>Dự án gồm các tháp căn hộ với thiết kế tối ưu tầm nhìn sông tuyệt mỹ.</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Navigation arrows -->
-				<button class="carousel-prev" aria-label="Previous">&lt;</button>
-				<button class="carousel-next" aria-label="Next">&gt;</button>
-
-				<!-- Indicators -->
-				<div class="carousel-dots">
-					<span class="carousel-dot active" data-slide="0"></span>
-					<span class="carousel-dot" data-slide="1"></span>
-					<span class="carousel-dot" data-slide="2"></span>
-				</div>
+			<div class="map-iframe-holder">
+				<iframe
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.283187429177!2d106.6975694762589!3d10.788777392313283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f000d306723%3A0xd242337db1981ea1!2zTmjDoCBt4bqndSBk4buxIMOhbiBUaGUgR2nDsyBBTiBHSUE!5e0!3m2!1svi!2svn!4v1717650000000!5m2!1svi!2svn"
+					width="100%" height="550" style="border:0; display: block;" allowfullscreen="" loading="lazy"
+					referrerpolicy="no-referrer-when-downgrade"></iframe>
 			</div>
 		</div>
 	</main>
@@ -463,82 +297,6 @@
 	<script src="catalog/view/js/common4bf4.js?ver=1.0.3" type="text/javascript"></script>
 	<script src="catalog/view/js/app4bf4.js?ver=1.0.3" type="module"></script>
 	<script>window.addEventListener("pageshow", function (e) { if (e.persisted) { location.reload(); } });</script>
-	<script>
-		// Carousel Touch Swipe & Navigation Logic
-		document.addEventListener("DOMContentLoaded", () => {
-			const track = document.querySelector(".carousel-track");
-			if (track) {
-				const slides = Array.from(track.children);
-				const prevBtn = document.querySelector(".carousel-prev");
-				const nextBtn = document.querySelector(".carousel-next");
-				const dots = Array.from(document.querySelectorAll(".carousel-dot"));
-				let currentIndex = 0;
-				let startX = 0;
-				let isDragging = false;
-
-				const updateCarousel = (index) => {
-					track.style.transform = `translateX(-${index * 100}%)`;
-					dots.forEach((dot, idx) => {
-						if (idx === index) {
-							dot.classList.add("active");
-						} else {
-							dot.classList.remove("active");
-						}
-					});
-					currentIndex = index;
-				};
-
-				if (prevBtn && nextBtn) {
-					prevBtn.addEventListener("click", () => {
-						let index = currentIndex - 1;
-						if (index < 0) index = slides.length - 1;
-						updateCarousel(index);
-					});
-					nextBtn.addEventListener("click", () => {
-						let index = currentIndex + 1;
-						if (index >= slides.length) index = 0;
-						updateCarousel(index);
-					});
-				}
-
-				dots.forEach((dot, index) => {
-					dot.addEventListener("click", () => {
-						updateCarousel(index);
-					});
-				});
-
-				// Touch Events for Mobile
-				track.addEventListener("touchstart", (e) => {
-					startX = e.touches[0].clientX;
-					isDragging = true;
-				}, { passive: true });
-
-				track.addEventListener("touchmove", (e) => {
-					if (!isDragging) return;
-					const currentX = e.touches[0].clientX;
-					const diff = currentX - startX;
-					if (Math.abs(diff) > 50) {
-						isDragging = false;
-						if (diff > 0) {
-							// Swipe right -> prev
-							let index = currentIndex - 1;
-							if (index < 0) index = slides.length - 1;
-							updateCarousel(index);
-						} else {
-							// Swipe left -> next
-							let index = currentIndex + 1;
-							if (index >= slides.length) index = 0;
-							updateCarousel(index);
-						}
-					}
-				}, { passive: true });
-
-				track.addEventListener("touchend", () => {
-					isDragging = false;
-				});
-			}
-		});
-	</script>
 </body>
 
 </html>

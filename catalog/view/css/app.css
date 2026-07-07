@@ -3389,11 +3389,12 @@ body.zoom-active .slidebox-pagination {
   }
 }
 
-/* Mobile responsive fixes for home-legal and home-gallery sections */
+/* Mobile responsive fixes for home-legal, home-gallery, and home-map sections */
 @media screen and (max-width: 1100px) {
 
   .home-legal .content-main,
-  .home-gallery .content-main {
+  .home-gallery .content-main,
+  .home-map .content-main {
     position: relative !important;
     height: auto !important;
     min-height: auto !important;
@@ -3403,7 +3404,8 @@ body.zoom-active .slidebox-pagination {
 
   .home-legal .slide-inner,
   .home-gallery .slide-inner,
-  .home-location .slide-inner {
+  .home-location .slide-inner,
+  .home-map .slide-inner {
     position: absolute !important;
     width: 100% !important;
     height: 100% !important;
@@ -3417,7 +3419,9 @@ body.zoom-active .slidebox-pagination {
   .home-gallery .bg-cover,
   .home-gallery .bg-inner,
   .home-location .bg-cover,
-  .home-location .bg-inner {
+  .home-location .bg-inner,
+  .home-map .bg-cover,
+  .home-map .bg-inner {
     position: absolute !important;
     left: 0 !important;
     top: 0 !important;
@@ -3426,8 +3430,56 @@ body.zoom-active .slidebox-pagination {
   }
 
   .legal-image-home,
-  .gallery-image-home {
+  .gallery-image-home,
+  .map-iframe-wrapper {
     opacity: 1 !important;
     transform: none !important;
   }
+
+  /* Carousel responsive sizing */
+  .gallery-carousel {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .map-iframe-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .gallery-carousel .carousel-prev,
+  .gallery-carousel .carousel-next {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 1.2rem !important;
+    left: 10px !important;
+  }
+
+  .gallery-carousel .carousel-next {
+    left: auto !important;
+    right: 10px !important;
+  }
+
+  .gallery-carousel .carousel-dots {
+    bottom: 10px !important;
+  }
+}
+
+/* Gallery carousel and map wrapper base styling (desktop) */
+.gallery-carousel,
+.map-iframe-wrapper {
+  width: 50% !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
+
+.gallery-carousel {
+  aspect-ratio: 2000 / 1400 !important;
+  height: auto !important;
+}
+
+.gallery-carousel img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
