@@ -3436,10 +3436,31 @@ body.zoom-active .slidebox-pagination {
     transform: none !important;
   }
 
-  /* Carousel responsive sizing */
+  /* Carousel responsive sizing - Đã sửa lỗi bẹp ảnh trên Mobile */
   .gallery-carousel {
     width: 100% !important;
     max-width: 100% !important;
+    aspect-ratio: 16 / 11 !important;
+    /* Tạo tỷ lệ vàng giúp khung tự động nở cao theo chiều rộng phone */
+    height: auto !important;
+    /* Ngắt chiều cao 100% lỗi di truyền từ slide-inner */
+    margin: 20px auto 0 !important;
+    /* Tạo khoảng cách thông thoáng với chữ phía trên */
+  }
+
+  /* Ép đường ray slide con và nội dung nở to lấp đầy khung cha mới trên Mobile */
+  .gallery-carousel .carousel-track,
+  .gallery-carousel .carousel-slide {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+  }
+
+  .gallery-carousel img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    /* Dùng contain để hiển thị trọn vẹn 100% sổ đỏ, không mất chữ/rìa */
   }
 
   .map-iframe-wrapper {
@@ -3465,21 +3486,43 @@ body.zoom-active .slidebox-pagination {
   }
 }
 
+/* ======================================================= */
 /* Gallery carousel and map wrapper base styling (desktop) */
+/* ĐÃ CHỈNH SỬA: Bóp ngắn bề ngang và làm lùn chiều cao dẹt lại */
+/* ======================================================= */
 .gallery-carousel,
 .map-iframe-wrapper {
-  width: 50% !important;
-  max-width: 800px !important;
+  width: 45% !important;
+  /* Thu hẹp bề ngang (Cũ là 50%) */
+  max-width: 750px !important;
+  /* Giới hạn chiều rộng tối đa (Cũ là 800px) */
   margin: 0 auto !important;
 }
 
 .gallery-carousel {
-  aspect-ratio: 2000 / 1400 !important;
+  aspect-ratio: 16 / 9 !important;
+  /* Thay đổi tỷ lệ 16:9 panorama giúp ảnh dẹt và ngắn lại theo chiều dọc */
   height: auto !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Đảm bảo đường ray slide trên desktop ăn theo 100% tỷ lệ dẹt mới */
+.gallery-carousel .carousel-track {
+  display: flex !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.gallery-carousel .carousel-slide {
+  min-width: 100% !important;
+  flex-shrink: 0 !important;
+  height: 100% !important;
 }
 
 .gallery-carousel img {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
+  display: block !important;
 }
