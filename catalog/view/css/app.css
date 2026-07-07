@@ -3021,12 +3021,6 @@ body.zoom-active .slidebox-pagination {
   top: 20%;
 }
 
-.dot-num.dot-hran-1::after,
-.dot-num.dot-hran-2::after,
-.dot-num-hran.dot-hran-1::after,
-.dot-num-hran.dot-hran-2::after {
-  /*background-color:var(--color-highlight);*/
-}
 
 .dot-num.dot-hran-1,
 .dot-num.dot-hran-2,
@@ -3074,7 +3068,6 @@ body.zoom-active .slidebox-pagination {
   /*transform: rotate(45deg);*/
 }
 
-.ddot-hran::before {}
 
 .hran-w {
   position: relative;
@@ -3101,15 +3094,11 @@ body.zoom-active .slidebox-pagination {
   box-shadow: none;
 }
 
-.hover-hran p {
-  /*font-size:14px;*/
-}
 
 .ddot-hran::after {
   width: 100%;
 }
 
-.hover-li span.hran-w {}
 
 /* Catalogue Styles */
 #catalogue {
@@ -3459,8 +3448,7 @@ body.zoom-active .slidebox-pagination {
   .gallery-carousel img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
-    /* Dùng contain để hiển thị trọn vẹn 100% sổ đỏ, không mất chữ/rìa */
+    object-fit: cover !important;
   }
 
   .map-iframe-wrapper {
@@ -3490,39 +3478,46 @@ body.zoom-active .slidebox-pagination {
 /* Gallery carousel and map wrapper base styling (desktop) */
 /* ĐÃ CHỈNH SỬA: Bóp ngắn bề ngang và làm lùn chiều cao dẹt lại */
 /* ======================================================= */
-.gallery-carousel,
-.map-iframe-wrapper {
-  width: 45% !important;
-  /* Thu hẹp bề ngang (Cũ là 50%) */
-  max-width: 750px !important;
-  /* Giới hạn chiều rộng tối đa (Cũ là 800px) */
-  margin: 0 auto !important;
+@media screen and (min-width: 1101px) {
+
+  .gallery-carousel,
+  .map-iframe-wrapper {
+    width: 45% !important;
+    /* Thu hẹp bề ngang (Cũ là 50%) */
+    max-width: 750px !important;
+    /* Giới hạn chiều rộng tối đa (Cũ là 800px) */
+    margin: 0 auto !important;
+  }
+
+  .gallery-carousel {
+    aspect-ratio: 16 / 9 !important;
+    /* Thay đổi tỷ lệ 16:9 panorama giúp ảnh dẹt và ngắn lại theo chiều dọc */
+    height: auto !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  /* Đảm bảo đường ray slide trên desktop ăn theo 100% tỷ lệ dẹt mới */
+  .gallery-carousel .carousel-track {
+    display: flex !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .gallery-carousel .carousel-slide {
+    min-width: 100% !important;
+    flex-shrink: 0 !important;
+    height: 100% !important;
+  }
+
+  .gallery-carousel img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
 }
 
-.gallery-carousel {
-  aspect-ratio: 16 / 9 !important;
-  /* Thay đổi tỷ lệ 16:9 panorama giúp ảnh dẹt và ngắn lại theo chiều dọc */
-  height: auto !important;
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-/* Đảm bảo đường ray slide trên desktop ăn theo 100% tỷ lệ dẹt mới */
-.gallery-carousel .carousel-track {
-  display: flex !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.gallery-carousel .carousel-slide {
-  min-width: 100% !important;
-  flex-shrink: 0 !important;
-  height: 100% !important;
-}
-
-.gallery-carousel img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
+.zoom-pic {
+  cursor: zoom-in !important;
 }
