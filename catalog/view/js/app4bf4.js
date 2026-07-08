@@ -74,13 +74,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 transform: none !important;
             }
             @media (max-width: 1100px) {
-            .normal-scroll .group-central {
-                height: auto !important; /* Phá bỏ 100vh, mobile tự co giãn theo nội dung */
-            }
+                .normal-scroll .group-central {
+                    height: auto !important;
+                }
                 .normal-scroll .group-central:first-of-type {
-                height: 100vh !important;
+                    height: 100vh !important;
+                }
+                #news-page .group-central:first-of-type,
+                #progress-page .group-central:first-of-type,
+                #library-page .group-central:first-of-type,
+                #facilities-page .group-central:first-of-type,
+                #contact-page .group-central:first-of-type {
+                    height: auto !important;
+                }
             }
-        }
         `;
     document.head.appendChild(style);
   }
@@ -1032,7 +1039,7 @@ function NewsLoad(e) {
           ZoomPic(),
           ShareSocial(),
           checkWidth(),
-          (document.querySelector(".scrollC").scrollTop = 0));
+          (document.querySelector(".scrollC") && (document.querySelector(".scrollC").scrollTop = 0)));
         var n = document.querySelectorAll(".link-page");
         n.forEach(function (e) {
           e.classList.remove("on-show", "on-view", "isview");
@@ -1046,17 +1053,24 @@ function NewsLoad(e) {
             var l = n[c - 1],
               i = n[c + 1],
               u = n[c + 2];
-            (null == i
-              ? (n[0].classList.add("isview"), n[1].classList.add("isview"))
-              : i.classList.add("isview"),
-              null == l
-                ? n[c + 3].classList.add("isview")
-                : l.classList.add("isview"),
-              void 0 !== u && u.classList.add("isview"),
-              document
-                .querySelector(".link-page:nth-last-child(2)")
-                .classList.contains("current") &&
-              n[c - 2].classList.add("isview"));
+            if (null == i) {
+              if (n[0]) n[0].classList.add("isview");
+              if (n[1]) n[1].classList.add("isview");
+            } else {
+              if (i) i.classList.add("isview");
+            }
+            if (null == l) {
+              if (n[c + 3]) n[c + 3].classList.add("isview");
+            } else {
+              if (l) l.classList.add("isview");
+            }
+            if (void 0 !== u && u) {
+              u.classList.add("isview");
+            }
+            var secondLast = document.querySelector(".link-page:nth-last-child(2)");
+            if (secondLast && secondLast.classList.contains("current")) {
+              if (n[c - 2]) n[c - 2].classList.add("isview");
+            }
           }
         (gsap.to(".news-content", {
           duration: 0.5,
@@ -1066,8 +1080,9 @@ function NewsLoad(e) {
             (Mobile.matches ||
               setTimeout(function () {
                 var e = document.querySelector(".scrollC");
-                (new SmoothScroll(e),
-                  document.querySelector(".outer").classList.remove("hide"));
+                var outerEl = document.querySelector(".outer");
+                (e && new SmoothScroll(e),
+                  outerEl && outerEl.classList.remove("hide"));
               }, 500),
               document.querySelector(".news-content").classList.add("show"),
               document.querySelector(".colum-box-news").classList.add("show"),
