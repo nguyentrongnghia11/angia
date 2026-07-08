@@ -324,11 +324,14 @@ var removeURL = function () {
   );
 },
   addURL = function (e, t) {
-    var o = e.href ? e.href : e.dataset.href,
-      s =
-        null != e.dataset.title
-          ? e.dataset.title
-          : e.parentElement.querySelector(".link-change-url").dataset.title,
+    var o = e.href ? e.href : e.dataset.href;
+    if (o) {
+      o = o.replace("/tin-tuc/tin-tuc/", "/tin-tuc/").replace("/news/news/", "/news/");
+    }
+    var s =
+      null != e.dataset.title
+        ? e.dataset.title
+        : e.parentElement.querySelector(".link-change-url").dataset.title,
       a =
         null != e.dataset.keyword
           ? e.dataset.keyword
@@ -691,7 +694,7 @@ function optionLogo(e) {
             }, 500),
               (isFirst = 1)))),
         t.classList.contains("home-facilities") && Wave.Play(),
-        t.classList.contains("home-news") && Pat.Play(),
+        t.classList.contains("home-news") && (Pat.Pause(), typeof lazyLoadInstance !== 'undefined' && lazyLoadInstance.update()),
         t.classList.contains("home-contact") && Wave.Play()),
       aboutPage &&
       (t.classList.contains("about-intro")
@@ -814,8 +817,7 @@ function optionLogo(e) {
           : t.classList.contains("home-facilities") ||
             t.classList.contains("home-contact")
             ? (t.querySelector(".bg-inner").append(bgCanvas), Wave.Play())
-            : t.classList.contains("home-news") &&
-            (t.querySelector(".bg-inner").append(Pattern), Pat.Play())),
+            : t.classList.contains("home-news") && (Pat.Pause(), typeof lazyLoadInstance !== 'undefined' && lazyLoadInstance.update())),
       aboutPage &&
       (t.classList.contains("about-intro")
         ? (Logo.classList.remove("show"), titlePage.classList.add("hide"))
@@ -1642,7 +1644,7 @@ function ContentLoad() {
                 goDown.classList.add("show", "center-align"));
             }, 500))
           : document.querySelector(".water") && Gowater.Pause(),
-        document.querySelectorAll(".item-news-home").forEach(function (e) {
+        document.querySelectorAll(".item-news-home, .news-homepage .link-page").forEach(function (e) {
           e.addEventListener("click", function (e) {
             (e.preventDefault(), this.querySelector(".link-load").click());
           });
@@ -1890,6 +1892,9 @@ function ContentLoad() {
         (e.preventDefault(), RemoveClass(l), this.classList.add("current"));
         var t = this.querySelector(".view-news").dataset.name,
           o = this.querySelector(".view-news").href;
+        if (o) {
+          o = o.replace("/tin-tuc/tin-tuc/", "/tin-tuc/").replace("/news/news/", "/news/");
+        }
         return (
           document.querySelector(".outer").classList.add("hide"),
           document.querySelector(".news-content").classList.remove("show"),
