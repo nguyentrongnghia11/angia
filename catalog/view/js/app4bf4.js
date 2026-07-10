@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const navButtons = document.querySelectorAll(".box-nav-button");
   const isHome =
     document.body.classList.contains("home") ||
-    !!document.querySelector(".home-wave");
+    !!document.querySelector(".home-wave") || !!document.querySelector(".home-overview");
 
   // Dynamic Style Injection for all pages to stack slides vertically
   const isNormalScrollPage =
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Home page animations
     if (homePage && !Mobile.matches) {
-      if (sec.classList.contains("home-wave")) {
+      if (sec.classList.contains("home-wave") || sec.classList.contains("home-overview")) {
         if (typeof Wave !== 'undefined') Wave.Play();
         if (typeof Pat !== 'undefined') Pat.Play();
         if (typeof logoCenter !== 'undefined') logoCenter.classList.add("show");
@@ -1524,10 +1524,11 @@ function ContentLoad() {
         duration: 1,
         ease: "none",
         opacity: 0,
-        onComplete: function () {
+          onComplete: function () {
           (Body.classList.remove("no-scroll"),
             HTML.classList.remove("no-scroll"),
-            document.querySelector(".load-center").remove());
+            document.querySelector(".load-center") &&
+              document.querySelector(".load-center").remove());
         },
       }),
         Mobile.matches
@@ -2077,7 +2078,7 @@ function swapMask() {
               e.classList.remove("enable");
             }),
             Pat.Pause(),
-            null != document.querySelector(".home-wave .bgcanvas") ||
+            null != document.querySelector(".home-overview .bg-inner") ||
             navClick.classList.contains("active") ||
             (Glwave1.append(bgCanvas), Wave.resize()),
             e < window.innerWidth + 0.5625 * window.innerWidth &&
@@ -2103,7 +2104,7 @@ function swapMask() {
       } else {
         // scrollStay đã bị gỡ bỏ — resize chỉ cần reset styles
         if (homePage) {
-          document.querySelector(".home-wave .slide-inner") && (document.querySelector(".home-wave .slide-inner").style = "");
+          document.querySelector(".home-overview .slide-inner") && (document.querySelector(".home-overview .slide-inner").style = "");
           if (typeof TaglineVI !== 'undefined') TaglineVI.style = "";
           if (typeof TaglineEN !== 'undefined') TaglineEN.style = "";
         }
@@ -2131,8 +2132,8 @@ function swapMask() {
       );
 
       if (homePage) {
-        var s = document.querySelector(".home-wave"),
-          a = document.querySelector(".home-wave .slide-inner"),
+        var s = document.querySelector(".home-overview"),
+          a = document.querySelector(".home-overview .slide-inner"),
           n = document.querySelector(".home-overview"),
           r = document.querySelector(".home-location"),
           c = 1 - (t - a.offsetHeight + window.innerHeight / 1.2) / window.innerHeight;
@@ -2209,8 +2210,19 @@ function swapMask() {
   })(),
   homePage
     ? (ResizeWindows(),
+      document.querySelector(".group-central.home-wave") &&
+      document.querySelector(".group-central.home-wave").remove(),
       document
-        .querySelector(".home-wave .slide-inner")
+        .querySelector('.box-nav-button button[data-page="home-wave"]') &&
+      document
+        .querySelector('.box-nav-button button[data-page="home-wave"]')
+        .closest(".box-nav-button") &&
+      document
+        .querySelector('.box-nav-button button[data-page="home-wave"]')
+        .closest(".box-nav-button")
+        .remove(),
+      document
+        .querySelector(".home-overview .slide-inner")
         .classList.add("scroll-mobile"),
       gsap.to(".load-center", {
         duration: 0.8,
