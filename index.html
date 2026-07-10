@@ -1044,7 +1044,9 @@
 			top: 1rem;
 			width: calc(500/280*20vh);
 			height: 20vh;
-			z-index: 20
+			z-index: 20;
+			left: 1.8rem;
+			right: auto
 		}
 
 		.effect::after,
@@ -1067,7 +1069,8 @@
 		}
 
 		.logo.space {
-			right: 3rem
+			left: 3rem;
+			right: auto
 		}
 
 		.logo.cursor {
@@ -1153,7 +1156,8 @@
 		.option-header {
 			width: auto;
 			height: auto;
-			left: 9rem;
+			right: 11rem;
+			left: auto;
 			top: 1.5rem;
 			text-align: left;
 			text-transform: uppercase;
@@ -1344,7 +1348,7 @@
 			position: fixed;
 			top: .5rem;
 			left: 2rem;
-			display: flex;
+			display: none;
 			width: 5.5rem;
 			height: 5.5rem;
 			opacity: 0;
@@ -1831,13 +1835,13 @@
 
 		.box-nav li span,
 		.box-nav li a {
-			font-size: .7rem;
+			font-size: 0.95rem;
 			font-weight: 700;
 			text-transform: uppercase;
 			color: var(--color-white);
 			text-shadow: 0 1px 1px var(--color-black-alpha-02);
 			padding-left: 0;
-			opacity: .5;
+			opacity: .8;
 			transition: opacity .3s ease-in-out
 		}
 
@@ -9083,8 +9087,8 @@
 			.logo.space,
 			.logo.transparent {
 				position: fixed;
-				right: auto;
-				left: 10px;
+				right: 10px !important;
+				left: auto !important;
 				top: 8px;
 				width: 180px;
 				height: calc(280/500*180px);
@@ -9127,9 +9131,9 @@
 
 			.option-header,
 			.option-header.hide {
-				left: auto;
+				left: 70px !important;
 				top: 10px;
-				right: 80px
+				right: auto !important;
 			}
 
 			.hotline-text,
@@ -9157,9 +9161,12 @@
 			}
 
 			.nav-click {
+				display: flex !important;
+				opacity: 1 !important;
+				pointer-events: auto !important;
 				top: 5px;
-				left: auto;
-				right: 10px;
+				left: 10px !important;
+				right: auto !important;
 				width: 50px;
 				height: 50px
 			}
@@ -12661,84 +12668,66 @@ L53.2,50l11.2-11.2C65.2,38,65.2,36.6,64.3,35.7z" />
 			</div>
 			<div class="nav">
 				<ul class="main-menu column col-x-y">
-					<li class="nav-item current" data-id="filter-text"><a class="link-home  link-hoz"
-							href="https://angia.org.vn/" data-name="home-page" data-text="Trang chủ">Trang chủ</a><span
+					<li class="nav-item current" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-wave" data-name="home-page" data-text="Tổng quan">Tổng quan</a><span
 							class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/home-page.html"
-							data-hrefvi="https://angia.org.vn/trang-chu.html" data-title="Trang chủ"
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Tổng quan"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/gioi-thieu.html" data-name="about-page"
-							data-text="Giới thiệu">Giới thiệu</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/about-us.html"
-							data-hrefvi="https://angia.org.vn/gioi-thieu.html" data-title="Giới thiệu"
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-location" data-name="location-page" data-text="Vị trí">Vị trí</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Vị trí"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/vi-tri.html" data-name="location-page" data-text="Vị trí">Vị
-							trí</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/location.html"
-							data-hrefvi="https://angia.org.vn/vi-tri.html" data-title="Vị trí"
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-facilities" data-name="facilities-page" data-text="Tiện ích">Tiện
+							ích</a><span class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Tiện ích"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/tien-ich.html" data-name="facilities-page"
-							data-text="Tiện ích">Tiện ích</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/facilities.html"
-							data-hrefvi="https://angia.org.vn/tien-ich.html" data-title="Tiện ích"
+					<li class="nav-item" data-id="filter-text"><a class="link-hoz" href="mat-bang.html"
+							data-name="apartment-page" data-text="Mặt bằng">Mặt bằng</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="mat-bang.html"
+							data-hrefvi="mat-bang.html" data-title="Mặt bằng" data-description="The Gió Riverside"
+							data-keyword="The Gió Riverside" aria-label="linkchangeurl">
+						</div>
+					</li>
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-map" data-name="map-page" data-text="Nhà mẫu">Nhà mẫu</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Nhà mẫu"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/mat-bang.html" data-name="apartment-page"
-							data-text="Mặt bằng">Mặt bằng</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/master-plan.html"
-							data-hrefvi="https://angia.org.vn/mat-bang.html" data-title="Mặt bằng"
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-legal" data-name="legal-page" data-text="Pháp lý">Pháp lý</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Pháp lý"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-
-					<!-- <li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/thu-vien.html" data-name="library-page" data-text="Thư viện">Thư
-							viện</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/library.html"
-							data-hrefvi="https://angia.org.vn/thu-vien.html" data-title="Thư viện"
-							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-							aria-label="linkchangeurl">
-						</div>
-					</li> -->
-					<!-- <li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/tin-tuc.html" data-name="news-page" data-text="Tin tức">Tin
-							tức</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/news.html"
-							data-hrefvi="https://angia.org.vn/tin-tuc.html" data-title="Tin tức"
-							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-							aria-label="linkchangeurl">
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-policy" data-name="policy-page" data-text="Chính sách">Chính sách</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#"
+							data-title="Chính sách" data-description="The Gió Riverside"
+							data-keyword="The Gió Riverside" aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/tien-do.html" data-name="progress-page" data-text="Tiến độ">Tiến
-							độ</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/progress.html"
-							data-hrefvi="https://angia.org.vn/tien-do.html" data-title="Tiến độ"
-							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-							aria-label="linkchangeurl">
-						</div>
-					</li> -->
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/lien-he.html" data-name="contact-page" data-text="Liên hệ">Liên
-							hệ</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/contact-us.html"
-							data-hrefvi="https://angia.org.vn/lien-he.html" data-title="Liên hệ"
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-contact" data-name="contact-page" data-text="Liên hệ">Liên hệ</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Liên hệ"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
@@ -12805,7 +12794,8 @@ c0.78-0.78,0.79-2.04,0.01-2.83c0,0-0.01-0.01-0.01-0.01V15.52z" />
 						data-page="video-library" aria-label="click"></button><span>Video</span></li>
 				<li class="box-nav-button hidden" style="display: none !important;"><button class="click"
 						data-page="brochure-library" aria-label="click"></button><span>E-catalogue</span></li>
-				<li class="box-nav-button hidden"><button class="click" data-page="news" aria-label="click"></button><span>Tin
+				<li class="box-nav-button hidden"><button class="click" data-page="news"
+						aria-label="click"></button><span>Tin
 						tức</span></li>
 				<li class="box-nav-button hidden"><button class="click" data-page="progress"
 						aria-label="click"></button><span>Tiến độ</span></li>
@@ -15913,6 +15903,31 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 				});
 			}
 		})();
+	</script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var scrollLinks = document.querySelectorAll(".main-menu .link-scroll");
+			scrollLinks.forEach(function (link) {
+				link.addEventListener("click", function (e) {
+					e.preventDefault();
+					var page = link.getAttribute("data-page");
+					var targetSection = document.querySelector('.group-central[data-name="' + page + '"]');
+
+					// Close mobile overlay menu by clicking the close button
+					var closeBtn = document.querySelector(".close-nav");
+					if (closeBtn) {
+						closeBtn.click();
+					}
+
+					if (targetSection) {
+						setTimeout(function () {
+							targetSection.scrollIntoView({ behavior: "smooth" });
+						}, 350); // Small timeout to wait for overlay close transition
+					}
+				});
+			});
+		});
 	</script>
 </body>
 
