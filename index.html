@@ -1472,6 +1472,7 @@
 
 		.box-nav li.current .click::before,
 		.box-nav li.current span,
+		.box-nav li.current a,
 		.text-ani-item .char.move {
 			opacity: 1
 		}
@@ -1790,53 +1791,67 @@
 		.box-nav li {
 			display: flex;
 			align-items: center;
-			width: 2rem;
 			height: auto
 		}
 
 		.box-nav {
-			left: 2.2rem;
-			top: 50%;
+			left: 0;
+			right: 0;
+			top: 2.2rem;
+			bottom: auto;
+			width: 100%;
+			flex-direction: row;
 			justify-content: center;
 			pointer-events: none;
 			opacity: 0;
-			transform: translate(-50%, -50%);
+			transform: translateY(-20px);
 			transition: all 1s cubic-bezier(.215, .61, .355, 1);
-			z-index: 20;
-			position: fixed
+			z-index: 120;
+			position: fixed;
+			padding: 0.6rem 0
 		}
 
 		.box-nav ul {
-			width: auto;
+			width: 100%;
 			text-align: center;
-			margin: 0
+			margin: 0;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap
 		}
 
 		.box-nav li {
 			position: relative;
-			margin: 1rem 0;
+			margin: 0 0.8rem;
 			white-space: nowrap;
 			cursor: pointer
 		}
 
-		.box-nav li span {
+		.box-nav li span,
+		.box-nav li a {
 			font-size: .7rem;
 			font-weight: 700;
 			text-transform: uppercase;
 			color: var(--color-white);
 			text-shadow: 0 1px 1px var(--color-black-alpha-02);
-			padding-left: 2rem;
+			padding-left: 0;
 			opacity: .5;
 			transition: opacity .3s ease-in-out
 		}
 
 		.box-nav li span,
-		.box-nav ul,
+		.box-nav li a,
 		.box-slider,
 		.click,
 		.social li svg {
 			position: relative;
 			display: block
+		}
+
+		.box-nav ul {
+			position: relative;
 		}
 
 		.click {
@@ -1871,27 +1886,19 @@
 			display: none
 		}
 
+		.box-nav .click {
+			display: none
+		}
+
 		.box-nav.show {
 			pointer-events: auto;
 			opacity: 1;
-			transform: translate(0, -50%)
+			transform: translateY(0)
 		}
 
 		.box-nav ul::after,
 		.box-nav ul::before {
-			content: '';
-			width: .1rem;
-			height: 5rem;
-			position: absolute;
-			left: calc(50% - .05rem)
-		}
-
-		.box-nav ul::before {
-			top: -4rem
-		}
-
-		.box-nav ul::after {
-			bottom: -4rem
+			display: none
 		}
 
 		.box-slider {
@@ -2217,9 +2224,7 @@
 			opacity: .3
 		}
 
-		#home-page .box-nav li:first-child {
-			display: none
-		}
+
 
 		#home-page .box-txt a,
 		#home-page .box-txt p {
@@ -12778,35 +12783,32 @@ c0.78-0.78,0.79-2.04,0.01-2.83c0,0-0.01-0.01-0.01-0.01V15.52z" />
 		<div class="box-nav">
 			<ul data-id="filter-text">
 				<li class="box-nav-button"><button class="click" data-page="home-wave"
-						aria-label="click"></button><span>The Gió Riverside</span></li>
-				<li class="box-nav-button"><button class="click" data-page="home-overview"
-						aria-label="click"></button><span>The Gió Riverside</span></li>
-				<li class="box-nav-button"><button class="click" data-page="home-video"
+						aria-label="click"></button><span>Tổng quan</span></li>
+				<li class="box-nav-button hidden"><button class="click" data-page="home-overview"
+						aria-label="click"></button><span>Tổng quan</span></li>
+				<li class="box-nav-button hidden"><button class="click" data-page="home-video"
 						aria-label="click"></button><span>Video</span></li>
 				<li class="box-nav-button"><button class="click" data-page="home-location"
 						aria-label="click"></button><span>Vị trí</span></li>
 				<li class="box-nav-button"><button class="click" data-page="home-facilities"
 						aria-label="click"></button><span>Tiện ích</span></li>
+				<li class="box-nav-button"><a href="mat-bang.html">Mặt bằng</a></li>
+				<li class="box-nav-button"><button class="click" data-page="home-map"
+						aria-label="click"></button><span>Nhà mẫu</span></li>
 				<li class="box-nav-button"><button class="click" data-page="home-legal"
 						aria-label="click"></button><span>Pháp lý</span></li>
-
-
 				<li class="box-nav-button"><button class="click" data-page="home-policy"
 						aria-label="click"></button><span>Chính sách</span></li>
-				<li class="box-nav-button"><button class="click" data-page="picture-library"
+				<li class="box-nav-button hidden"><button class="click" data-page="picture-library"
 						aria-label="click"></button><span>Thư viện</span></li>
-				<li class="box-nav-button" style="display: none !important;"><button class="click"
+				<li class="box-nav-button hidden" style="display: none !important;"><button class="click"
 						data-page="video-library" aria-label="click"></button><span>Video</span></li>
-				<li class="box-nav-button" style="display: none !important;"><button class="click"
+				<li class="box-nav-button hidden" style="display: none !important;"><button class="click"
 						data-page="brochure-library" aria-label="click"></button><span>E-catalogue</span></li>
-				<li class="box-nav-button"><button class="click" data-page="news" aria-label="click"></button><span>Tin
+				<li class="box-nav-button hidden"><button class="click" data-page="news" aria-label="click"></button><span>Tin
 						tức</span></li>
-				<li class="box-nav-button"><button class="click" data-page="progress"
+				<li class="box-nav-button hidden"><button class="click" data-page="progress"
 						aria-label="click"></button><span>Tiến độ</span></li>
-
-
-				<li class="box-nav-button"><button class="click" data-page="home-map"
-						aria-label="click"></button><span>Vị trí nhà mẫu</span></li>
 				<li class="box-nav-button"><button class="click" data-page="home-contact"
 						aria-label="click"></button><span>Liên hệ</span></li>
 
@@ -14559,7 +14561,7 @@ l1.2-7.1L394.3,34.5z" />
 							style="display: block; opacity: 1 !important; transform: none !important;">
 							<h2
 								style="font-family: Montserrat, sans-serif; font-size: 3rem; font-weight: 700; text-transform: uppercase; color: #ffffff; margin-bottom: 1.5rem; letter-spacing: 2px;">
-								Vị trí nhà mẫu</h2>
+								Nhà mẫu</h2>
 						</div>
 						<div class="box-txt white-text column col-short ani-item"
 							style="display: block; opacity: 1 !important; font-size: 1.1rem; line-height: 1.7; color: #efefef;">
