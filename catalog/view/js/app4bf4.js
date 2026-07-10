@@ -11,17 +11,7 @@ import {
 window.ZoomPic = ZoomPic;
 window.Mobile = window.matchMedia("(max-width: 1100px)");
 
-if (typeof SmoothScroll === "undefined") {
-  window.SmoothScroll = class {
-    constructor(element) {
-      this.element = element;
-      if (element) {
-        element.style.overflow = "auto";
-        element.style.scrollBehavior = "smooth";
-      }
-    }
-  };
-}
+// SmoothScroll đã bị gỡ bỏ — dùng CSS scroll-behavior: smooth trên container
 
 document.addEventListener("DOMContentLoaded", () => {
   const boxNav = document.querySelector(".box-nav");
@@ -92,6 +82,63 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(style);
   }
 
+  // --- Custom Smooth Scroll quán tính nhẹ cho Desktop ---
+  if (!Mobile.matches) {
+    let targetY = window.pageYOffset || window.scrollY;
+    let currentY = targetY;
+    let isMoving = false;
+    const speedMultiplier = 1.5; // Tăng lên 2.5 để cuộn đi xa hơn trên mỗi nấc chuột
+
+    window.addEventListener("wheel", (e) => {
+      // Bỏ qua nếu đang cuộn bên trong các khung cuộn nội bộ (.scrollA, .scrollB, .scrollC, .scrollD)
+      const path = e.composedPath ? e.composedPath() : [];
+      const hasInternalScroll = path.some(el => {
+        if (!el.classList) return false;
+        return el.classList.contains("scrollB") ||
+          el.classList.contains("scrollC") ||
+          el.classList.contains("scrollD") ||
+          el.classList.contains("scrollA");
+      });
+      if (hasInternalScroll) return;
+
+      e.preventDefault();
+
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      targetY += e.deltaY * speedMultiplier;
+      targetY = Math.max(0, Math.min(targetY, maxScroll));
+
+      if (!isMoving) {
+        isMoving = true;
+        requestAnimationFrame(updateScroll);
+      }
+    }, { passive: false });
+
+    function updateScroll() {
+      const diff = targetY - currentY;
+      // Chia cho 5 để tốc độ bắt kịp nhanh hơn, cho cảm giác nhạy và mượt hơn
+      const step = diff / 5;
+      currentY += step;
+
+      window.scrollTo(0, currentY);
+
+      if (Math.abs(diff) > 0.5) {
+        requestAnimationFrame(updateScroll);
+      } else {
+        currentY = targetY;
+        window.scrollTo(0, currentY);
+        isMoving = false;
+      }
+    }
+
+    // Cập nhật vị trí đích khi dùng phím tắt hoặc scrollbar kéo thả trực tiếp
+    window.addEventListener("scroll", () => {
+      if (!isMoving) {
+        targetY = window.pageYOffset || window.scrollY;
+        currentY = targetY;
+      }
+    }, { passive: true });
+  }
+
   navButtons.forEach((button, index) => {
     button.setAttribute("data-index", index);
     button.addEventListener("click", (e) => {
@@ -115,34 +162,55 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   let lastActiveIndex = -1;
+  let _navTicking = false;
 
-  function updateDesktopNav() {
+  // --- IntersectionObserver thay thế getBoundingClientRect loop ---
+  let _currentActiveIndex = 0;
+  const _sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const idx = Array.from(sections).indexOf(entry.target);
+        if (idx === -1) return;
+        if (entry.isIntersecting) {
+          // section đang vào viewport: chọn section có index lớn nhất đang visible
+          _currentActiveIndex = Math.max(_currentActiveIndex, idx);
+        }
+      });
+      // Recalc: lấy section có top gần viewport/2 nhất
+      const viewportMid = window.innerHeight / 2;
+      let best = 0;
+      sections.forEach((sec, i) => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top <= viewportMid) best = i;
+      });
+      _currentActiveIndex = best;
+      _scheduleNavUpdate();
+    },
+    { threshold: 0, rootMargin: "0px 0px -40% 0px" }
+  );
+  sections.forEach((sec) => _sectionObserver.observe(sec));
+
+  function _scheduleNavUpdate() {
+    if (_navTicking) return;
+    _navTicking = true;
+    requestAnimationFrame(_runNavUpdate);
+  }
+
+  function _runNavUpdate() {
+    _navTicking = false;
     const scrollY = window.pageYOffset || window.scrollY;
+    const currentActiveIndex = _currentActiveIndex;
+
+    // Cập nhật boxNav visibility
     if (boxNav) {
       if (isHome) {
-        if (scrollY > 100 && sections.length >= 2) {
-          boxNav.classList.add("show");
-        } else {
-          boxNav.classList.remove("show");
-        }
+        boxNav.classList.toggle("show", scrollY > 100 && sections.length >= 2);
       } else {
-        if (sections.length >= 2) {
-          boxNav.classList.add("show");
-        } else {
-          boxNav.classList.remove("show");
-        }
+        boxNav.classList.toggle("show", sections.length >= 2);
       }
     }
 
-    let currentActiveIndex = 0;
-    const viewportHeight = window.innerHeight;
-    sections.forEach((section, index) => {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= viewportHeight / 2) {
-        currentActiveIndex = index;
-      }
-    });
-
+    // Tính targetNavIndex
     let targetNavIndex = currentActiveIndex;
     const activeSection = sections[currentActiveIndex];
     if (activeSection) {
@@ -150,9 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (name === "video-library" || name === "brochure-library") {
         const pictureLibBtn = Array.from(navButtons).find((btn) => {
           const clickBtn = btn.querySelector(".click");
-          return (
-            clickBtn && clickBtn.getAttribute("data-page") === "picture-library"
-          );
+          return clickBtn && clickBtn.getAttribute("data-page") === "picture-library";
         });
         if (pictureLibBtn) {
           targetNavIndex = Array.from(navButtons).indexOf(pictureLibBtn);
@@ -161,27 +227,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     navButtons.forEach((btn, idx) => {
-      if (idx === targetNavIndex) {
-        btn.classList.add("current");
-      } else {
-        btn.classList.remove("current");
-      }
+      btn.classList.toggle("current", idx === targetNavIndex);
     });
 
-    // Trigger animations when the active section changes for normal scrolling pages
+    // Trigger animations khi section thay đổi
     if (isNormalScrollPage && currentActiveIndex !== lastActiveIndex) {
       if (lastActiveIndex !== -1 && sections[lastActiveIndex]) {
         sections[lastActiveIndex].classList.remove("show-text");
-        if (scrollStay.prototype.resetSlide) {
-          scrollStay.prototype.resetSlide(lastActiveIndex);
-        }
       }
       if (sections[currentActiveIndex]) {
-        sections[currentActiveIndex].classList.add("show-text");
-        if (scrollStay.prototype.applySlide) {
-          scrollStay.prototype.applySlide(currentActiveIndex);
-        }
-        // Fix for mobile scroll back to top: animate logo and tagline of home-wave
+        const sec = sections[currentActiveIndex];
+        sec.classList.add("show-text", "css-play");
+        // Trigger animation cho section mới active
+        _triggerSectionAnimation(sec, currentActiveIndex);
+        // Fix mobile scroll back to top
         if (Mobile.matches && currentActiveIndex === 0 && isHome) {
           const logoCenter = document.querySelector(".logo-center");
           const TaglineVI = document.querySelector(".tagline-vi");
@@ -195,15 +254,9 @@ document.addEventListener("DOMContentLoaded", () => {
               document.documentElement.lang === "vi" ||
               document.body.lang === "vi";
             if (isVi) {
-              if (TaglineVI) {
-                TaglineVI.classList.add("show");
-                if (typeof aniText === "function") aniText(TaglineVI);
-              }
+              if (TaglineVI) { TaglineVI.classList.add("show"); if (typeof aniText === "function") aniText(TaglineVI); }
             } else {
-              if (TaglineEN) {
-                TaglineEN.classList.add("show");
-                if (typeof aniText === "function") aniText(TaglineEN);
-              }
+              if (TaglineEN) { TaglineEN.classList.add("show"); if (typeof aniText === "function") aniText(TaglineEN); }
             }
           }, 500);
         }
@@ -212,17 +265,105 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  window.addEventListener("scroll", updateDesktopNav);
-  window.addEventListener("resize", updateDesktopNav);
+  // Hàm trigger animation khi section vào viewport (thay thế scrollStay.prototype.applySlide)
+  function _triggerSectionAnimation(sec, idx) {
+    if (!sec) return;
+    // Header dark/light
+    sec.classList.contains("dark")
+      ? (Header.classList.add("dark"), Header.classList.remove("light"))
+      : (Header.classList.remove("dark"), Header.classList.add("light"));
 
-  // Call onScroll when normal scroll is active
-  if (isNormalScrollPage) {
-    window.addEventListener("scroll", () => {
-      if (typeof onScroll === "function") onScroll();
+    // Text animation
+    var breakEl = sec.querySelector(".break");
+    if (breakEl && typeof aniText === "function") aniText(breakEl);
+    var mapSvg = sec.querySelector(".map-svg");
+    if (mapSvg) {
+      mapSvg.classList.add("show");
+      Array.from(sec.querySelectorAll(".dot-p"), function (e, i) {
+        setTimeout(function () { e.classList.add("showed"); }, 100 * (i + 1));
+      });
+    }
+    var mapArea = sec.querySelector(".map-area");
+    if (mapArea) {
+      mapArea.classList.add("show");
+      Array.from(sec.querySelectorAll(".dot-region"), function (e, i) {
+        setTimeout(function () { e.classList.add("show"); }, 300 * (i + 1));
+      });
+    }
+    Array.from(sec.querySelectorAll(".dot-num"), function (e, i) {
+      setTimeout(function () { e.classList.add("show"); }, 50 * (i + 1));
+    });
+
+    // Wave / Loop / Gowater
+    if (sec.querySelector(".move-img")) { if (typeof logoBanner !== 'undefined') logoBanner.classList.add("show"); if (typeof Loop !== 'undefined') Loop.play(); }
+    if (sec.querySelector(".water") && typeof Gowater !== 'undefined') Gowater.Play();
+
+    // Home page animations
+    if (homePage && !Mobile.matches) {
+      if (sec.classList.contains("home-wave")) {
+        if (typeof Wave !== 'undefined') Wave.Play();
+        if (typeof Pat !== 'undefined') Pat.Play();
+        if (typeof logoCenter !== 'undefined') logoCenter.classList.add("show");
+        if (typeof rightHeader !== 'undefined') rightHeader.classList.add("normal");
+        setTimeout(function () {
+          Header.classList.add("show");
+          if (typeof HTML !== 'undefined' && "vi" == HTML.lang) {
+            if (typeof TaglineVI !== 'undefined') { TaglineVI.classList.add("show"); if (typeof aniText === 'function') aniText(TaglineVI); }
+          } else {
+            if (typeof TaglineEN !== 'undefined') { TaglineEN.classList.add("show"); if (typeof aniText === 'function') aniText(TaglineEN); }
+          }
+          if (typeof goDown !== 'undefined') goDown.classList.add("show", "center-align");
+        }, 500);
+      }
+      if (sec.classList.contains("home-facilities") || sec.classList.contains("home-contact")) {
+        if (typeof Wave !== 'undefined') Wave.Play();
+      }
+      if (sec.classList.contains("home-news")) {
+        if (typeof Pat !== 'undefined') Pat.Pause();
+        if (typeof lazyLoadInstance !== 'undefined') lazyLoadInstance.update();
+      }
+    }
+
+    // About page
+    if (aboutPage) {
+      sec.classList.contains("about-intro")
+        ? (Logo.classList.remove("show"), typeof titlePage !== 'undefined' && titlePage.classList.add("hide"))
+        : (Logo.classList.add("show"), typeof titlePage !== 'undefined' && titlePage.classList.remove("hide"));
+      if (sec.classList.contains("about-investor") && typeof Pat !== 'undefined') Pat.Play();
+    }
+
+    // Location page
+    if (locationPage && sec.classList.contains("region") && typeof Wave !== 'undefined') Wave.Play();
+
+    // Library / News wave
+    if (sec.classList.contains("brochure-library") && typeof Wave !== 'undefined') Wave.Play();
+    if (sec.classList.contains("news") && typeof Wave !== 'undefined') setTimeout(function () { Wave.Play(); }, 1000);
+
+    // colEffect for layout-move
+    if (sec.querySelector(".layout-move")) {
+      sec.querySelectorAll(".layout-move").forEach(function (e) { e.classList.remove("enable"); });
+      setTimeout(function () { if (typeof colEffect !== 'undefined') new colEffect(sec); }, 300);
+    }
+  }
+
+  // --- Gộp tất cả scroll listener thành 1, throttle bằng rAF ---
+  let _scrollTicking = false;
+  function _onScrollThrottled() {
+    if (_scrollTicking) return;
+    _scrollTicking = true;
+    requestAnimationFrame(() => {
+      _scheduleNavUpdate();
+      if (isNormalScrollPage && typeof onScroll === "function") onScroll();
+      _scrollTicking = false;
     });
   }
 
-  updateDesktopNav();
+  window.addEventListener("scroll", _onScrollThrottled, { passive: true });
+  window.addEventListener("resize", () => {
+    _scheduleNavUpdate();
+  }, { passive: true });
+
+  _runNavUpdate();
 });
 gsap.config({ nullTargetWarn: !1 });
 var isFirst = 0;
@@ -601,253 +742,9 @@ function optionLogo(e) {
       ? e.classList.add("single-slide")
       : e.classList.remove("single-slide");
 }
-((scrollStay.prototype.applySlide = function (e) {
-  var t = groupCentral[e];
-  (t.classList.contains("dark")
-    ? (Header.classList.add("dark"), Header.classList.remove("light"))
-    : (Header.classList.remove("dark"), Header.classList.add("light")),
-    !homePage &&
-    groupLength >= 2 &&
-    (boxNav.classList.add("show"),
-      goTop.classList.contains("show") || goDown.classList.add("show")));
-  var o = document.querySelector(".show-text .break");
-  if (
-    (o && aniText(o),
-      document.querySelector(".show-text") &&
-      document.querySelector(".show-text").classList.add("css-play"),
-      document.querySelector(".show-text .map-svg") &&
-      (document.querySelector(".show-text .map-svg").classList.add("show"),
-        Array.from(
-          document.querySelectorAll(".show-text .dot-p"),
-          function (e, t) {
-            setTimeout(
-              function () {
-                e.classList.add("showed");
-              },
-              100 * (t + 1),
-            );
-          },
-        )),
-      document.querySelector(".show-text .map-area") &&
-      (document.querySelector(".show-text .map-area").classList.add("show"),
-        Array.from(
-          document.querySelectorAll(".show-text .dot-region"),
-          function (e, t) {
-            setTimeout(
-              function () {
-                e.classList.add("show");
-              },
-              300 * (t + 1),
-            );
-          },
-        )),
-      document.querySelector(".show-text .all-dot") &&
-      Array.from(
-        document.querySelectorAll(".show-text .dot-num"),
-        function (e, t) {
-          setTimeout(
-            function () {
-              e.classList.add("show");
-            },
-            50 * (t + 1),
-          );
-        },
-      ),
-      document.querySelector(".show-text .layout-move"))
-  ) {
-    for (
-      var s = Container.querySelectorAll(".layout-move"), a = 0;
-      a < s.length;
-      a++
-    )
-      s[a].classList.remove("enable");
-    var n = document.querySelector(".css-play");
-    setTimeout(function () {
-      n && new colEffect(n);
-    }, 300);
-  }
-  if (
-    (t.querySelector(".move-img") &&
-      (logoBanner.classList.add("show"), Loop.play()),
-      t.querySelector(".water") && Gowater.Play(),
-      homePage &&
-      !Mobile.matches &&
-      (t.classList.contains("home-wave") &&
-        (Wave.Play(),
-          Pat.Play(),
-          logoCenter.classList.add("show"),
-          rightHeader.classList.add("normal"),
-          setTimeout(function () {
-            (Header.classList.add("show"),
-              "vi" == HTML.lang
-                ? (TaglineVI.classList.add("show"), aniText(TaglineVI))
-                : (TaglineEN.classList.add("show"), aniText(TaglineEN)),
-              goDown.classList.add("show", "center-align"));
-          }, 500)),
-        t.classList.contains("home-video") &&
-        (Logo.classList.add("transparent"),
-          t.querySelector(".onstream") ||
-          (t.querySelector(".player-vid").click(),
-            0 == isFirst &&
-            (setTimeout(function () {
-              t.querySelector(".player-vid").click();
-            }, 500),
-              (isFirst = 1)))),
-        t.classList.contains("home-facilities") && Wave.Play(),
-        t.classList.contains("home-news") && (Pat.Pause(), typeof lazyLoadInstance !== 'undefined' && lazyLoadInstance.update()),
-        t.classList.contains("home-contact") && Wave.Play()),
-      aboutPage &&
-      (t.classList.contains("about-intro")
-        ? (Logo.classList.remove("show"), titlePage.classList.add("hide"))
-        : (Logo.classList.add("show"), titlePage.classList.remove("hide")),
-        t.classList.contains("about-investor") && Pat.Play()),
-      locationPage && t.classList.contains("region") && Wave.Play(),
-      t.classList.contains("brochure-library") && Wave.Play(),
-      t.classList.contains("news") &&
-      setTimeout(function () {
-        Wave.Play();
-      }, 1e3),
-      facilitiesPage &&
-      t.classList.contains("floor-01") &&
-      gsap.to(".floor-01 .scrollA", {
-        duration: 0.5,
-        scrollTop: 0,
-        scrollLeft: 0,
-        ease: "none",
-      }),
-      aboutPage || locationPage || apartmentPage || facilitiesPage || libraryPage)
-  ) {
-    if (1 == isFirst) {
-      document.querySelector(".group-central.css-play").dataset.name;
-      (addURL(
-        document.querySelector(".group-central.css-play"),
-        document.querySelector(".group-central.css-play").dataset.name,
-      ),
-        changeAlternate(
-          document.querySelector(".group-central.css-play").dataset.href,
-          document.querySelector(".group-central.css-play"),
-          1,
-        ));
-    }
-    isFirst = 1;
-  }
-}),
-  (scrollStay.prototype.resetSlide = function (e) {
-    var t = groupCentral[e];
-    e == groupLength - 1
-      ? (goDown.classList.remove("show"),
-        goTop.classList.add("show"),
-        Footer.classList.add("show"))
-      : (goDown.classList.add("show"),
-        goTop.classList.remove("show"),
-        Footer.classList.remove("show"));
-    var o = document.querySelectorAll(".char");
-    if (
-      (RemoveClass(o),
-        document.querySelector(".home-video") &&
-        document.querySelector(".onstream") &&
-        setTimeout(function () {
-          StopPlay();
-        }, 500),
-        document.querySelector(".map-svg"))
-    ) {
-      document.querySelector(".map-svg").classList.remove("show");
-      for (
-        var s = document.querySelectorAll(".dot-p"), a = 0;
-        a < s.length;
-        a++
-      )
-        s[a].classList.remove("showed");
-    }
-    if (document.querySelector(".map-area")) {
-      document.querySelector(".map-area").classList.remove("show");
-      for (
-        s = document.querySelectorAll(".dot-region"), a = 0;
-        a < s.length;
-        a++
-      )
-        s[a].classList.remove("show");
-    }
-    if (document.querySelectorAll(".all-dot")) {
-      s = document.querySelectorAll(".dot-num");
-      var n = document.querySelectorAll(".dot-num"),
-        r = document.querySelectorAll(".show-box-pic"),
-        c = document.querySelectorAll(".hover-li");
-      for (a = 0; a < s.length; a++) s[a].classList.remove("show");
-      for (a = 0; a < r.length; a++)
-        (r[a].classList.remove("showup"), (r[a].style = ""));
-      for (a = 0; a < n.length; a++) n[a].classList.remove("current");
-      RemoveClass(c);
-    }
-    (document.querySelector(".move-img") &&
-      (logoBanner.classList.remove("show"), Loop.pause()),
-      document.querySelector(".pattern") && Pat.Pause(),
-      document.querySelector(".water") && Gowater.Pause(),
-      document.querySelector("#gl_wave") && Wave.Pause(),
-      document.querySelectorAll(".column").forEach(function (e) {
-        e.style.transform = "translate3d(0px, 0px, 0px)";
-      }),
-      homePage &&
-      (goDown.classList.remove("center-align"),
-        e > 0 ? boxNav.classList.add("show") : boxNav.classList.remove("show"),
-        Logo.classList.remove("transparent"),
-        t.classList.contains("home-wave")
-          ? logoCenter.classList.add("show")
-          : logoCenter.classList.remove("show"),
-        t.classList.contains("home-wave") ||
-          t.classList.contains("home-overview")
-          ? (Logo.classList.remove("show"), rightHeader.classList.add("normal"))
-          : (Logo.classList.add("show"),
-            rightHeader.classList.remove("normal"))));
-  }),
-  (scrollStay.prototype.Detect = function (e) {
-    var t = groupCentral[e];
-    (homePage &&
-      (Header.classList.add("show"),
-        t.classList.contains("home-wave")
-          ? (t.querySelector(".bg-inner").append(bgCanvas),
-            logoCenter.append(Pattern),
-            goDown.classList.add("show", "center-align"),
-            rightHeader.classList.add("normal"),
-            (document.querySelector(".home-wave .slide-inner").style = ""),
-            (TaglineVI.style = ""),
-            (TaglineEN.style = ""),
-            Wave.Play(),
-            Pat.Play())
-          : t.classList.contains("home-facilities") ||
-            t.classList.contains("home-contact")
-            ? (t.querySelector(".bg-inner").append(bgCanvas), Wave.Play())
-            : t.classList.contains("home-news") && (Pat.Pause(), typeof lazyLoadInstance !== 'undefined' && lazyLoadInstance.update())),
-      aboutPage &&
-      (t.classList.contains("about-intro")
-        ? (Logo.classList.remove("show"), titlePage.classList.add("hide"))
-        : (Logo.classList.add("show"), titlePage.classList.remove("hide")),
-        t.classList.contains("about-intro") &&
-        null == t.querySelector(".logo-banner") &&
-        t.querySelector(".slide-inner").append(logoBanner),
-        t.classList.contains("about-intro") &&
-        (logoBanner.classList.add("show"), Loop.play()),
-        t.classList.contains("about-investor") && Pat.Play()),
-      locationPage) &&
-      t.classList.contains("region") &&
-      (t.querySelector(".bg-inner").append(bgCanvas),
-        document.querySelector(".panzoom") && panzoom.reset());
-    if (
-      (t.classList.contains("brochure-library") &&
-        t.querySelector(".bg-inner") &&
-        t.querySelector(".bg-inner").append(bgCanvas),
-        t.classList.contains("news") &&
-        t.querySelector(".bg-inner") &&
-        t.querySelector(".bg-inner").append(bgCanvas),
-        t.querySelector(".layout-move"))
-    ) {
-      for (var o = t.querySelectorAll(".layout-move"), s = 0; s < o.length; s++)
-        o[s].classList.remove("enable");
-      setTimeout(function () {
-        new colEffect(t);
-      }, 300);
-    }
-  }));
+// scrollStay.prototype.applySlide, resetSlide, Detect đã bị gỡ bỏ hoàn toàn
+// Animation được xử lý bởi _triggerSectionAnimation() và IntersectionObserver
+
 var librarySlide = function () {
   document.querySelectorAll(".slide-library").forEach(function (e) {
     var t = new Splide(e, {
@@ -877,16 +774,8 @@ var librarySlide = function () {
       pagination: !1,
       autoWidth: !0,
       afterTrace: !0,
-      autoScroll: { speed: 1, autoStart: !1 },
     });
-    e.mount(window.splide.ExScroll);
-    var t = e.Components.AutoScroll;
-    t.pause();
-    new IntersectionObserver(function (e, o) {
-      e.forEach(function (e) {
-        e.isIntersecting ? t.play() : t.pause();
-      });
-    }).observe(document.querySelector(".list-logo"));
+    e.mount();
   },
   logoSlide = function () {
     var e = new Splide(".slide-logo", {
@@ -956,11 +845,7 @@ function LoadProgress(e, t) {
                 0 == News &&
                 (document.querySelector(".select-list").classList.add("fadein"),
                   (News = 1)),
-                Mobile.matches ||
-                setTimeout(function () {
-                  var e = document.querySelector(".scrollD");
-                  new SmoothScroll(e);
-                }, 500),
+                Mobile.matches || (function () { var e = document.querySelector(".scrollD"); if (e) { e.style.overflowY = "auto"; e.style.scrollBehavior = "smooth"; } })(),
                 Loadx.classList.remove("display-block"));
             },
           }));
@@ -1079,13 +964,12 @@ function NewsLoad(e) {
           opacity: 1,
           ease: "none",
           onComplete: function () {
-            (Mobile.matches ||
-              setTimeout(function () {
-                var e = document.querySelector(".scrollC");
-                var outerEl = document.querySelector(".outer");
-                (e && new SmoothScroll(e),
-                  outerEl && outerEl.classList.remove("hide"));
-              }, 500),
+            (Mobile.matches || (function () {
+              var e = document.querySelector(".scrollC");
+              if (e) { e.style.overflowY = "auto"; e.style.scrollBehavior = "smooth"; }
+              var outerEl = document.querySelector(".outer");
+              if (outerEl) outerEl.classList.remove("hide");
+            })(),
               document.querySelector(".news-content").classList.add("show"),
               document.querySelector(".colum-box-news").classList.add("show"),
               document.querySelector(".wrap-view-more").classList.add("show"),
@@ -1882,7 +1766,7 @@ function ContentLoad() {
       (document.querySelector(".news .bg-inner").append(bgCanvas),
         (document.querySelector(".scrollB").scrollTop = 0));
       var c = document.querySelector(".scrollB");
-      new SmoothScroll(c);
+      if (c) { c.style.overflowY = "auto"; c.style.scrollBehavior = "smooth"; }
     }
     (Logo.classList.add("show", "scale-logo"),
       Footer.classList.add("show", "align-left"));
@@ -2047,10 +1931,8 @@ function ContentLoad() {
       Register &&
       (document.body.insertBefore(Register, Footer),
         Register.classList.add("hide-subscribe"))),
-    document.querySelector(".box-nav li button.current")
-      ? (scrollStay.prototype.applySlide(0),
-        document.querySelector(".box-nav li button.current").click())
-      : scrollStay.prototype.applySlide(0));
+    document.querySelector(".box-nav li button.current") &&
+    document.querySelector(".box-nav li button.current").click());
 }
 if (bgCanvas) {
   var Wave = new Waves();
@@ -2095,32 +1977,20 @@ function Done() {
     document.querySelector("#news-page") ||
     document.querySelector("#progress-page") ||
     document.querySelector("#contact-page");
-  if (Mobile.matches || isNormalScrollPage) {
-    onScroll();
-    if (!Mobile.matches) {
-      if (locationPage && document.querySelector(".region .bg-inner"))
-        document.querySelector(".region .bg-inner").append(bgCanvas);
-      if (
-        (libraryPage || document.querySelector(".pic-library")) &&
-        document.querySelector(".brochure-library .bg-inner")
-      )
-        document.querySelector(".brochure-library .bg-inner").append(bgCanvas);
-      if (
-        (newsPage || document.querySelector(".news")) &&
-        document.querySelector(".news .bg-inner")
-      )
-        document.querySelector(".news .bg-inner").append(bgCanvas);
-    }
-  } else {
-    new scrollStay(0);
-    locationPage &&
-      !Mobile.matches &&
+  // Chỉ dùng scroll tự nhiên — không còn scrollStay
+  onScroll();
+  if (!Mobile.matches) {
+    if (locationPage && document.querySelector(".region .bg-inner"))
       document.querySelector(".region .bg-inner").append(bgCanvas);
-    (libraryPage || document.querySelector(".pic-library")) &&
-      !Mobile.matches &&
+    if (
+      (libraryPage || document.querySelector(".pic-library")) &&
+      document.querySelector(".brochure-library .bg-inner")
+    )
       document.querySelector(".brochure-library .bg-inner").append(bgCanvas);
-    (newsPage || document.querySelector(".news")) &&
-      !Mobile.matches &&
+    if (
+      (newsPage || document.querySelector(".news")) &&
+      document.querySelector(".news .bg-inner")
+    )
       document.querySelector(".news .bg-inner").append(bgCanvas);
   }
   ContentLoad();
@@ -2218,124 +2088,113 @@ function swapMask() {
           (newsPage || document.querySelector(".news")) &&
           document.querySelector(".news .bg-inner .bgcanvas") &&
           Wave.Pause());
-      } else if (boxSlider.classList.contains("desktop-slide")) {
+      } else {
+        // scrollStay đã bị gỡ bỏ — resize chỉ cần reset styles
         if (homePage) {
-          ((document.querySelector(".home-wave .slide-inner").style = ""),
-            (TaglineVI.style = ""),
-            (TaglineEN.style = ""));
-          var t = document.querySelector(".box-nav-button.current").dataset
-            .index;
-          scrollStay.prototype.Detect(t);
-        }
-        if (!homePage) {
-          t = document.querySelector(".box-nav-button.current").dataset.index;
-          scrollStay.prototype.Detect(t);
+          document.querySelector(".home-wave .slide-inner") && (document.querySelector(".home-wave .slide-inner").style = "");
+          if (typeof TaglineVI !== 'undefined') TaglineVI.style = "";
+          if (typeof TaglineEN !== 'undefined') TaglineEN.style = "";
         }
         (newsPage || document.querySelector(".news")) &&
-          (document.querySelector(".news .bg-inner .is-play") || Wave.Play());
-      } else
-        ((First = 1), new scrollStay(0), scrollStay.prototype.applySlide(0));
+          (document.querySelector(".news .bg-inner .is-play") || (typeof Wave !== 'undefined' && Wave.Play()));
+      }
       (newsPage || document.querySelector(".news")) && checkWidth();
     }, 250),
   ),
-  window.addEventListener(
-    "scroll",
-    function (e) {
-      if (Mobile.matches) {
-        var t = window.pageYOffset,
-          o = 0.5625 * window.innerWidth;
-        if (
-          (t + window.innerHeight >= document.body.offsetHeight - 120
-            ? rightHeader.classList.add("bottom-up")
-            : rightHeader.classList.remove("bottom-up"),
-            homePage)
-        ) {
-          var s = document.querySelector(".home-wave"),
-            a = document.querySelector(".home-wave .slide-inner"),
-            n = document.querySelector(".home-overview"),
-            r = document.querySelector(".home-location"),
-            c =
-              (document.querySelector(".home-contact"),
-                1 -
-                (t - a.offsetHeight + window.innerHeight / 1.2) /
-                window.innerHeight);
-          (t > 20
-            ? goDown.classList.remove("show", "center-align")
-            : goDown.classList.add("show", "center-align"),
-            t >= n.offsetTop
-              ? Header.classList.add("show-head")
-              : Header.classList.remove("show-head"),
-            t >= n.offsetTop + o
-              ? Header.classList.add("show")
-              : Header.classList.remove("show"),
-            t > window.innerHeight / 4 && !navClick.classList.contains("active")
-              ? Wave.Pause()
-              : Wave.Play(),
-            t < window.innerHeight + 200 &&
-            ("vi" == HTML.lang
-              ? (TaglineVI.style.transform =
-                "translate3d(0," +
-                Math.round("".concat(0.15 * t)) +
-                "px, 0)")
-              : (TaglineEN.style.transform =
-                "translate3d(0," +
-                Math.round("".concat(0.15 * t)) +
-                "px, 0)"),
-              (a.style.opacity = c),
-              c > "1"
-                ? (a.style.opacity = 1)
-                : c < "0" && (a.style.opacity = 0)),
-            t > s.offsetTop && t <= s.offsetHeight + window.innerHeight
-              ? (Loop.play(), Gowater.Play())
-              : (Loop.pause(), Gowater.Pause()),
-            isInViewport(r)
-              ? r.querySelector(".map-svg").classList.add("show")
-              : r.querySelector(".map-svg").classList.remove("show"));
+  // --- Legacy scroll handler (Mobile only) — throttled bằng rAF ---
+  (function () {
+    // Cache các DOM query thường dùng để tránh query lại mỗi frame
+    var _mobileScrollTicking = false;
+    var _clickNavEls = null;
+    var _groupCentralEls = null;
+
+    function _mobileScrollHandler() {
+      var t = window.pageYOffset,
+        o = 0.5625 * window.innerWidth;
+
+      // bottom-up header
+      rightHeader.classList.toggle(
+        "bottom-up",
+        t + window.innerHeight >= document.body.offsetHeight - 120
+      );
+
+      if (homePage) {
+        var s = document.querySelector(".home-wave"),
+          a = document.querySelector(".home-wave .slide-inner"),
+          n = document.querySelector(".home-overview"),
+          r = document.querySelector(".home-location"),
+          c = 1 - (t - a.offsetHeight + window.innerHeight / 1.2) / window.innerHeight;
+
+        goDown.classList.toggle("show", t <= 20);
+        goDown.classList.toggle("center-align", t <= 20);
+        Header.classList.toggle("show-head", t >= n.offsetTop);
+        Header.classList.toggle("show", t >= n.offsetTop + o);
+
+        if (!navClick.classList.contains("active")) {
+          t > window.innerHeight / 4 ? Wave.Pause() : Wave.Play();
         }
-        if (aboutPage) {
-          var l = document.querySelector(".about-overview .logo-banner");
-          isInViewport(l)
-            ? (Loop.play(), Gowater.Play())
-            : (Loop.pause(), Gowater.Pause());
+
+        if (t < window.innerHeight + 200) {
+          var parallaxVal = "translate3d(0," + Math.round(0.15 * t) + "px,0)";
+          if ("vi" == HTML.lang) {
+            TaglineVI.style.transform = parallaxVal;
+          } else {
+            TaglineEN.style.transform = parallaxVal;
+          }
+          var opacity = Math.max(0, Math.min(1, c));
+          a.style.opacity = opacity;
         }
-        if (locationPage) {
-          r = document.querySelector(".location");
-          var i = document.querySelector(".region");
-          (isInViewport(r)
-            ? r.querySelector(".map-svg").classList.add("show")
-            : r.querySelector(".map-svg").classList.remove("show"),
-            isInViewport(i)
-              ? i.querySelector(".map-area").classList.add("show")
-              : i.querySelector(".map-area").classList.remove("show"));
+
+        var inWave = t > s.offsetTop && t <= s.offsetHeight + window.innerHeight;
+        inWave ? (Loop.play(), Gowater.Play()) : (Loop.pause(), Gowater.Pause());
+
+        if (r) {
+          r.querySelector(".map-svg").classList.toggle("show", isInViewport(r));
         }
-        if (document.querySelector(".click-nav")) {
-          var u = document.querySelectorAll(".click-nav"),
-            d = Logo.scrollHeight;
-          document.querySelectorAll(".group-central").forEach(function (e) {
-            var o = e.offsetTop - d,
-              s = e.offsetHeight - d;
-            if (
-              (s < innerHeight && (s = innerHeight), t >= o - 5 && t <= o + s)
-            ) {
-              RemoveClass(u);
-              for (
-                var a = e.dataset.name,
-                n = document.querySelectorAll(
-                  '.click-nav[data-page="' + a + '"]',
-                ),
-                r = 0;
-                r < n.length;
-                r++
-              )
-                n[r].classList.add("current");
-            }
-          });
-        }
-        onScroll();
       }
-    },
-    { passive: !1 },
-  ),
+
+      if (aboutPage) {
+        var l = document.querySelector(".about-overview .logo-banner");
+        isInViewport(l) ? (Loop.play(), Gowater.Play()) : (Loop.pause(), Gowater.Pause());
+      }
+
+      if (locationPage) {
+        var locEl = document.querySelector(".location");
+        var regEl = document.querySelector(".region");
+        if (locEl) locEl.querySelector(".map-svg").classList.toggle("show", isInViewport(locEl));
+        if (regEl) regEl.querySelector(".map-area").classList.toggle("show", isInViewport(regEl));
+      }
+
+      if (document.querySelector(".click-nav")) {
+        if (!_clickNavEls) _clickNavEls = document.querySelectorAll(".click-nav");
+        if (!_groupCentralEls) _groupCentralEls = document.querySelectorAll(".group-central");
+        var d = Logo.scrollHeight;
+        _groupCentralEls.forEach(function (e) {
+          var ot = e.offsetTop - d,
+            oh = e.offsetHeight - d;
+          if (oh < innerHeight) oh = innerHeight;
+          if (t >= ot - 5 && t <= ot + oh) {
+            RemoveClass(_clickNavEls);
+            var a = e.dataset.name;
+            document.querySelectorAll('.click-nav[data-page="' + a + '"]')
+              .forEach(function (el) { el.classList.add("current"); });
+          }
+        });
+      }
+
+      onScroll();
+    }
+
+    window.addEventListener("scroll", function () {
+      if (!Mobile.matches) return;
+      if (_mobileScrollTicking) return;
+      _mobileScrollTicking = true;
+      requestAnimationFrame(function () {
+        _mobileScrollHandler();
+        _mobileScrollTicking = false;
+      });
+    }, { passive: true });
+  })(),
   homePage
     ? (ResizeWindows(),
       document
