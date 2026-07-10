@@ -219,74 +219,63 @@ document.addEventListener("DOMContentLoaded", () => {
     const activeSection = sections[currentActiveIndex];
     if (activeSection) {
       const name = activeSection.getAttribute("data-name");
-
-      // Generic match: find button with matching data-page
-      const matchingBtn = Array.from(navButtons).find((btn) => {
-        const clickBtn = btn.querySelector(".click");
-        return clickBtn && clickBtn.getAttribute("data-page") === name;
-      });
-      if (matchingBtn) {
-        targetNavIndex = Array.from(navButtons).indexOf(matchingBtn);
-      } else {
-        // Fallback for custom group mappings
-        if (name === "video-library" || name === "brochure-library") {
-          const pictureLibBtn = Array.from(navButtons).find((btn) => {
-            const clickBtn = btn.querySelector(".click");
-            return clickBtn && clickBtn.getAttribute("data-page") === "picture-library";
-          });
-          if (pictureLibBtn) {
-            targetNavIndex = Array.from(navButtons).indexOf(pictureLibBtn);
-          }
-        } else if (name === "home-overview" || name === "home-video") {
-          const tongQuanBtn = Array.from(navButtons).find((btn) => {
-            const clickBtn = btn.querySelector(".click");
-            return clickBtn && clickBtn.getAttribute("data-page") === "home-wave";
-          });
-          if (tongQuanBtn) {
-            targetNavIndex = Array.from(navButtons).indexOf(tongQuanBtn);
-          }
+      if (name === "video-library" || name === "brochure-library") {
+        const pictureLibBtn = Array.from(navButtons).find((btn) => {
+          const clickBtn = btn.querySelector(".click");
+          return clickBtn && clickBtn.getAttribute("data-page") === "picture-library";
+        });
+        if (pictureLibBtn) {
+          targetNavIndex = Array.from(navButtons).indexOf(pictureLibBtn);
+        }
+      } else if (name === "home-overview" || name === "home-video") {
+        const tongQuanBtn = Array.from(navButtons).find((btn) => {
+          const clickBtn = btn.querySelector(".click");
+          return clickBtn && clickBtn.getAttribute("data-page") === "home-wave";
+        });
+        if (tongQuanBtn) {
+          targetNavIndex = Array.from(navButtons).indexOf(tongQuanBtn);
         }
       }
     }
 
-  navButtons.forEach((btn, idx) => {
-    btn.classList.toggle("current", idx === targetNavIndex);
-  });
+    navButtons.forEach((btn, idx) => {
+      btn.classList.toggle("current", idx === targetNavIndex);
+    });
 
-  // Trigger animations khi section thay đổi
-  if (isNormalScrollPage && currentActiveIndex !== lastActiveIndex) {
-    if (lastActiveIndex !== -1 && sections[lastActiveIndex]) {
-      sections[lastActiveIndex].classList.remove("show-text");
-    }
-    if (sections[currentActiveIndex]) {
-      const sec = sections[currentActiveIndex];
-      sec.classList.add("show-text", "css-play");
-      // Trigger animation cho section mới active
-      _triggerSectionAnimation(sec, currentActiveIndex);
-      // Fix mobile scroll back to top
-      if (Mobile.matches && currentActiveIndex === 0 && isHome) {
-        const logoCenter = document.querySelector(".logo-center");
-        const TaglineVI = document.querySelector(".tagline-vi");
-        const TaglineEN = document.querySelector(".tagline-en");
-        const goDown = document.querySelector(".go-down");
-        if (logoCenter) logoCenter.classList.add("show");
-        if (goDown) goDown.classList.add("show", "center-align");
-        setTimeout(() => {
-          const isVi =
-            (typeof HTML !== "undefined" && HTML.lang === "vi") ||
-            document.documentElement.lang === "vi" ||
-            document.body.lang === "vi";
-          if (isVi) {
-            if (TaglineVI) { TaglineVI.classList.add("show"); if (typeof aniText === "function") aniText(TaglineVI); }
-          } else {
-            if (TaglineEN) { TaglineEN.classList.add("show"); if (typeof aniText === "function") aniText(TaglineEN); }
-          }
-        }, 500);
+    // Trigger animations khi section thay đổi
+    if (isNormalScrollPage && currentActiveIndex !== lastActiveIndex) {
+      if (lastActiveIndex !== -1 && sections[lastActiveIndex]) {
+        sections[lastActiveIndex].classList.remove("show-text");
       }
+      if (sections[currentActiveIndex]) {
+        const sec = sections[currentActiveIndex];
+        sec.classList.add("show-text", "css-play");
+        // Trigger animation cho section mới active
+        _triggerSectionAnimation(sec, currentActiveIndex);
+        // Fix mobile scroll back to top
+        if (Mobile.matches && currentActiveIndex === 0 && isHome) {
+          const logoCenter = document.querySelector(".logo-center");
+          const TaglineVI = document.querySelector(".tagline-vi");
+          const TaglineEN = document.querySelector(".tagline-en");
+          const goDown = document.querySelector(".go-down");
+          if (logoCenter) logoCenter.classList.add("show");
+          if (goDown) goDown.classList.add("show", "center-align");
+          setTimeout(() => {
+            const isVi =
+              (typeof HTML !== "undefined" && HTML.lang === "vi") ||
+              document.documentElement.lang === "vi" ||
+              document.body.lang === "vi";
+            if (isVi) {
+              if (TaglineVI) { TaglineVI.classList.add("show"); if (typeof aniText === "function") aniText(TaglineVI); }
+            } else {
+              if (TaglineEN) { TaglineEN.classList.add("show"); if (typeof aniText === "function") aniText(TaglineEN); }
+            }
+          }, 500);
+        }
+      }
+      lastActiveIndex = currentActiveIndex;
     }
-    lastActiveIndex = currentActiveIndex;
   }
-}
 
   // Hàm trigger animation khi section vào viewport (thay thế scrollStay.prototype.applySlide)
   function _triggerSectionAnimation(sec, idx) {
@@ -371,22 +360,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Gộp tất cả scroll listener thành 1, throttle bằng rAF ---
   let _scrollTicking = false;
-function _onScrollThrottled() {
-  if (_scrollTicking) return;
-  _scrollTicking = true;
-  requestAnimationFrame(() => {
+  function _onScrollThrottled() {
+    if (_scrollTicking) return;
+    _scrollTicking = true;
+    requestAnimationFrame(() => {
+      _scheduleNavUpdate();
+      if (isNormalScrollPage && typeof onScroll === "function") onScroll();
+      _scrollTicking = false;
+    });
+  }
+
+  window.addEventListener("scroll", _onScrollThrottled, { passive: true });
+  window.addEventListener("resize", () => {
     _scheduleNavUpdate();
-    if (isNormalScrollPage && typeof onScroll === "function") onScroll();
-    _scrollTicking = false;
-  });
-}
+  }, { passive: true });
 
-window.addEventListener("scroll", _onScrollThrottled, { passive: true });
-window.addEventListener("resize", () => {
-  _scheduleNavUpdate();
-}, { passive: true });
-
-_runNavUpdate();
+  _runNavUpdate();
 });
 gsap.config({ nullTargetWarn: !1 });
 var isFirst = 0;
@@ -1601,14 +1590,9 @@ function ContentLoad() {
     }
     hoverEvents();
   }
-  if (apartmentPage || document.querySelector(".masterplan")) {
-    if (apartmentPage) {
-      Logo.classList.add("show", "scale-logo");
-    }
-    if (!Mobile.matches) {
-      if (apartmentPage) {
-        goDown.classList.add("show");
-      }
+  if (apartmentPage) {
+    if ((Logo.classList.add("show", "scale-logo"), !Mobile.matches)) {
+      goDown.classList.add("show");
       var o = document.querySelectorAll(".svg-b");
       document.querySelectorAll(".hover-b").forEach(function (e) {
         (e.addEventListener("mouseenter", function () {
@@ -2273,7 +2257,7 @@ function swapMask() {
       document.querySelectorAll(".select-box li a").forEach(function (e) {
         e.href == t && e.click();
       }),
-      (document.querySelector("#apartment-page") || document.querySelector("#home-page")) &&
+      document.querySelector("#apartment-page") &&
       (null != document.querySelector(".house-detail")
         ? document.querySelector(".close-apartment").click()
         : document.querySelectorAll(".go-link").forEach(function (e) {
