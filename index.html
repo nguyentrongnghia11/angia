@@ -1044,7 +1044,9 @@
 			top: 1rem;
 			width: calc(500/280*20vh);
 			height: 20vh;
-			z-index: 20
+			z-index: 20;
+			left: 1.8rem;
+			right: auto
 		}
 
 		.effect::after,
@@ -1067,7 +1069,8 @@
 		}
 
 		.logo.space {
-			right: 3rem
+			left: 3rem;
+			right: auto
 		}
 
 		.logo.cursor {
@@ -1153,7 +1156,8 @@
 		.option-header {
 			width: auto;
 			height: auto;
-			left: 9rem;
+			right: 11rem;
+			left: auto;
 			top: 1.5rem;
 			text-align: left;
 			text-transform: uppercase;
@@ -1344,7 +1348,7 @@
 			position: fixed;
 			top: .5rem;
 			left: 2rem;
-			display: flex;
+			display: none;
 			width: 5.5rem;
 			height: 5.5rem;
 			opacity: 0;
@@ -1472,6 +1476,7 @@
 
 		.box-nav li.current .click::before,
 		.box-nav li.current span,
+		.box-nav li.current a,
 		.text-ani-item .char.move {
 			opacity: 1
 		}
@@ -1790,53 +1795,67 @@
 		.box-nav li {
 			display: flex;
 			align-items: center;
-			width: 2rem;
 			height: auto
 		}
 
 		.box-nav {
-			left: 2.2rem;
-			top: 50%;
+			left: 0;
+			right: 0;
+			top: 2.2rem;
+			bottom: auto;
+			width: 100%;
+			flex-direction: row;
 			justify-content: center;
 			pointer-events: none;
 			opacity: 0;
-			transform: translate(-50%, -50%);
+			transform: translateY(-20px);
 			transition: all 1s cubic-bezier(.215, .61, .355, 1);
-			z-index: 20;
-			position: fixed
+			z-index: 120;
+			position: fixed;
+			padding: 0.6rem 0
 		}
 
 		.box-nav ul {
-			width: auto;
+			width: 100%;
 			text-align: center;
-			margin: 0
+			margin: 0;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap
 		}
 
 		.box-nav li {
 			position: relative;
-			margin: 1rem 0;
+			margin: 0 0.8rem;
 			white-space: nowrap;
 			cursor: pointer
 		}
 
-		.box-nav li span {
-			font-size: .7rem;
+		.box-nav li span,
+		.box-nav li a {
+			font-size: 0.95rem;
 			font-weight: 700;
 			text-transform: uppercase;
 			color: var(--color-white);
 			text-shadow: 0 1px 1px var(--color-black-alpha-02);
-			padding-left: 2rem;
-			opacity: .5;
+			padding-left: 0;
+			opacity: .8;
 			transition: opacity .3s ease-in-out
 		}
 
 		.box-nav li span,
-		.box-nav ul,
+		.box-nav li a,
 		.box-slider,
 		.click,
 		.social li svg {
 			position: relative;
 			display: block
+		}
+
+		.box-nav ul {
+			position: relative;
 		}
 
 		.click {
@@ -1871,27 +1890,19 @@
 			display: none
 		}
 
+		.box-nav .click {
+			display: none
+		}
+
 		.box-nav.show {
 			pointer-events: auto;
 			opacity: 1;
-			transform: translate(0, -50%)
+			transform: translateY(0)
 		}
 
 		.box-nav ul::after,
 		.box-nav ul::before {
-			content: '';
-			width: .1rem;
-			height: 5rem;
-			position: absolute;
-			left: calc(50% - .05rem)
-		}
-
-		.box-nav ul::before {
-			top: -4rem
-		}
-
-		.box-nav ul::after {
-			bottom: -4rem
+			display: none
 		}
 
 		.box-slider {
@@ -2217,9 +2228,7 @@
 			opacity: .3
 		}
 
-		#home-page .box-nav li:first-child {
-			display: none
-		}
+
 
 		#home-page .box-txt a,
 		#home-page .box-txt p {
@@ -3248,8 +3257,8 @@
 			display: block;
 			width: 90%;
 			height: auto;
-			margin: auto;
-			padding-bottom: 15vh;
+			margin: auto auto 2rem;
+			padding-bottom: 2rem;
 			text-align: center;
 			z-index: 3
 		}
@@ -3296,7 +3305,7 @@
 			width: 100%;
 			display: inline-block;
 			vertical-align: middle;
-			margin: 0 auto 3rem
+			margin: 0 auto 1.5rem
 		}
 
 		.partner-info.single {
@@ -3305,6 +3314,155 @@
 
 		.partner-info h2 {
 			font-size: 1rem
+		}
+
+		html.normal-scroll,
+		body.normal-scroll {
+			background: var(--color-bg-gradient) !important;
+		}
+
+		.list-logo-marquee {
+			width: 60vw;
+			height: auto;
+			overflow: hidden;
+			position: relative;
+			display: block;
+			margin: auto;
+		}
+
+		.list-logo-marquee .item-part {
+			display: flex !important;
+			align-items: center !important;
+			width: max-content !important;
+			animation: marquee-logos 45s linear infinite !important;
+			flex-wrap: nowrap !important;
+			transform: translate3d(0, 0, 0);
+		}
+
+		.list-logo-marquee .item-logo {
+			height: 4rem !important;
+			max-height: 10vh !important;
+			padding: 0 2rem !important;
+			flex-shrink: 0 !important;
+			display: inline-block !important;
+		}
+
+		.list-logo-marquee .item-logo img {
+			height: 100% !important;
+			width: auto !important;
+			object-fit: contain !important;
+		}
+
+		@keyframes marquee-logos {
+			0% {
+				transform: translate3d(0, 0, 0);
+			}
+
+			100% {
+				transform: translate3d(-50%, 0, 0);
+			}
+		}
+
+		html.normal-scroll body.normal-scroll .group-central.home-contact {
+			height: auto !important;
+			overflow: visible !important;
+			background: var(--color-bg-gradient) !important;
+		}
+
+		html.normal-scroll body.normal-scroll .group-central.home-contact .content-main {
+			position: relative !important;
+			top: auto !important;
+			left: auto !important;
+			height: auto !important;
+			min-height: 100vh !important;
+			flex-direction: column !important;
+			justify-content: flex-start !important;
+			padding-top: 6rem;
+			padding-bottom: 6rem;
+			box-sizing: border-box;
+			transform: none !important;
+		}
+
+		html.normal-scroll body.normal-scroll .group-central.home-contact .company-info {
+			position: relative !important;
+			left: auto !important;
+			bottom: auto !important;
+			margin-top: 1.5rem !important;
+			padding-bottom: 2rem;
+		}
+
+
+		.contact-projects-section {
+			width: 100%;
+			max-width: 1000px;
+			margin: 0 auto 4.5rem;
+			text-align: center;
+			position: relative;
+			z-index: 5;
+		}
+
+		.projects-list-horizontal {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 2.5rem;
+			margin-top: 1.5rem;
+		}
+
+		.project-item {
+			display: flex;
+			align-items: center;
+			font-family: Montserrat, sans-serif;
+		}
+
+		.project-item .ta-icon {
+			width: 16px;
+			height: 16px;
+			color: #ffffff;
+			margin-right: 10px;
+			flex-shrink: 0;
+			display: inline-block;
+			transition: transform 0.3s ease;
+		}
+
+		.project-item:hover .ta-icon {
+			transform: scale(1.2);
+		}
+
+		.project-item a {
+			color: #ffffff;
+			text-decoration: none;
+			font-size: 1.1rem;
+			font-weight: 500;
+			transition: color 0.3s;
+		}
+
+		.project-item a:hover {
+			color: #d6b194;
+		}
+
+		.contact-register-section {
+			width: 100%;
+			max-width: 1000px;
+			margin: 0 auto 2rem;
+			position: relative;
+			z-index: 5;
+		}
+
+
+		/* Mobile responsive for sub-sections */
+		@media (max-width: 1100px) {
+			.projects-list-horizontal {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 1.2rem;
+				padding: 0 5%;
+			}
+
+			.contact-register-section {
+				padding: 0 5%;
+			}
 		}
 
 		.company-info {
@@ -8929,8 +9087,8 @@
 			.logo.space,
 			.logo.transparent {
 				position: fixed;
-				right: auto;
-				left: 10px;
+				right: 10px !important;
+				left: auto !important;
 				top: 8px;
 				width: 180px;
 				height: calc(280/500*180px);
@@ -8973,9 +9131,9 @@
 
 			.option-header,
 			.option-header.hide {
-				left: auto;
+				left: 70px !important;
 				top: 10px;
-				right: 80px
+				right: auto !important;
 			}
 
 			.hotline-text,
@@ -9003,9 +9161,12 @@
 			}
 
 			.nav-click {
+				display: flex !important;
+				opacity: 1 !important;
+				pointer-events: auto !important;
 				top: 5px;
-				left: auto;
-				right: 10px;
+				left: 10px !important;
+				right: auto !important;
 				width: 50px;
 				height: 50px
 			}
@@ -12507,84 +12668,66 @@ L53.2,50l11.2-11.2C65.2,38,65.2,36.6,64.3,35.7z" />
 			</div>
 			<div class="nav">
 				<ul class="main-menu column col-x-y">
-					<li class="nav-item current" data-id="filter-text"><a class="link-home  link-hoz"
-							href="https://angia.org.vn/" data-name="home-page" data-text="Trang chủ">Trang chủ</a><span
+					<li class="nav-item current" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-wave" data-name="home-page" data-text="Tổng quan">Tổng quan</a><span
 							class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/home-page.html"
-							data-hrefvi="https://angia.org.vn/trang-chu.html" data-title="Trang chủ"
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Tổng quan"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/gioi-thieu.html" data-name="about-page"
-							data-text="Giới thiệu">Giới thiệu</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/about-us.html"
-							data-hrefvi="https://angia.org.vn/gioi-thieu.html" data-title="Giới thiệu"
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-location" data-name="location-page" data-text="Vị trí">Vị trí</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Vị trí"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/vi-tri.html" data-name="location-page" data-text="Vị trí">Vị
-							trí</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/location.html"
-							data-hrefvi="https://angia.org.vn/vi-tri.html" data-title="Vị trí"
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-facilities" data-name="facilities-page" data-text="Tiện ích">Tiện
+							ích</a><span class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Tiện ích"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/tien-ich.html" data-name="facilities-page"
-							data-text="Tiện ích">Tiện ích</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/facilities.html"
-							data-hrefvi="https://angia.org.vn/tien-ich.html" data-title="Tiện ích"
+					<li class="nav-item" data-id="filter-text"><a class="link-hoz" href="mat-bang.html"
+							data-name="apartment-page" data-text="Mặt bằng">Mặt bằng</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="mat-bang.html"
+							data-hrefvi="mat-bang.html" data-title="Mặt bằng" data-description="The Gió Riverside"
+							data-keyword="The Gió Riverside" aria-label="linkchangeurl">
+						</div>
+					</li>
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-map" data-name="map-page" data-text="Nhà mẫu">Nhà mẫu</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Nhà mẫu"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/mat-bang.html" data-name="apartment-page"
-							data-text="Mặt bằng">Mặt bằng</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/master-plan.html"
-							data-hrefvi="https://angia.org.vn/mat-bang.html" data-title="Mặt bằng"
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-legal" data-name="legal-page" data-text="Pháp lý">Pháp lý</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Pháp lý"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
 					</li>
-
-					<!-- <li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/thu-vien.html" data-name="library-page" data-text="Thư viện">Thư
-							viện</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/library.html"
-							data-hrefvi="https://angia.org.vn/thu-vien.html" data-title="Thư viện"
-							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-							aria-label="linkchangeurl">
-						</div>
-					</li> -->
-					<!-- <li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/tin-tuc.html" data-name="news-page" data-text="Tin tức">Tin
-							tức</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/news.html"
-							data-hrefvi="https://angia.org.vn/tin-tuc.html" data-title="Tin tức"
-							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-							aria-label="linkchangeurl">
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-policy" data-name="policy-page" data-text="Chính sách">Chính sách</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#"
+							data-title="Chính sách" data-description="The Gió Riverside"
+							data-keyword="The Gió Riverside" aria-label="linkchangeurl">
 						</div>
 					</li>
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/tien-do.html" data-name="progress-page" data-text="Tiến độ">Tiến
-							độ</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/progress.html"
-							data-hrefvi="https://angia.org.vn/tien-do.html" data-title="Tiến độ"
-							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-							aria-label="linkchangeurl">
-						</div>
-					</li> -->
-					<li class="nav-item" data-id="filter-text"><a class="link-load link-hoz"
-							href="https://angia.org.vn/lien-he.html" data-name="contact-page" data-text="Liên hệ">Liên
-							hệ</a><span class="icon parent"></span>
-						<div class="class-hidden link-change-url" data-hrefen="https://angia.org.vn/contact-us.html"
-							data-hrefvi="https://angia.org.vn/lien-he.html" data-title="Liên hệ"
+					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
+							data-page="home-contact" data-name="contact-page" data-text="Liên hệ">Liên hệ</a><span
+							class="icon parent"></span>
+						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Liên hệ"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
 							aria-label="linkchangeurl">
 						</div>
@@ -12629,36 +12772,33 @@ c0.78-0.78,0.79-2.04,0.01-2.83c0,0-0.01-0.01-0.01-0.01V15.52z" />
 		<div class="box-nav">
 			<ul data-id="filter-text">
 				<li class="box-nav-button"><button class="click" data-page="home-wave"
-						aria-label="click"></button><span>The Gió Riverside</span></li>
-				<li class="box-nav-button"><button class="click" data-page="home-overview"
-						aria-label="click"></button><span>The Gió Riverside</span></li>
-				<li class="box-nav-button"><button class="click" data-page="home-video"
+						aria-label="click"></button><span>Tổng quan</span></li>
+				<li class="box-nav-button hidden"><button class="click" data-page="home-overview"
+						aria-label="click"></button><span>Tổng quan</span></li>
+				<li class="box-nav-button hidden"><button class="click" data-page="home-video"
 						aria-label="click"></button><span>Video</span></li>
 				<li class="box-nav-button"><button class="click" data-page="home-location"
 						aria-label="click"></button><span>Vị trí</span></li>
 				<li class="box-nav-button"><button class="click" data-page="home-facilities"
 						aria-label="click"></button><span>Tiện ích</span></li>
+				<li class="box-nav-button"><a href="mat-bang.html">Mặt bằng</a></li>
+				<li class="box-nav-button"><button class="click" data-page="home-map"
+						aria-label="click"></button><span>Nhà mẫu</span></li>
 				<li class="box-nav-button"><button class="click" data-page="home-legal"
 						aria-label="click"></button><span>Pháp lý</span></li>
-
-
 				<li class="box-nav-button"><button class="click" data-page="home-policy"
 						aria-label="click"></button><span>Chính sách</span></li>
-				<li class="box-nav-button"><button class="click" data-page="picture-library"
+				<li class="box-nav-button hidden"><button class="click" data-page="picture-library"
 						aria-label="click"></button><span>Thư viện</span></li>
-				<li class="box-nav-button" style="display: none !important;"><button class="click"
+				<li class="box-nav-button hidden" style="display: none !important;"><button class="click"
 						data-page="video-library" aria-label="click"></button><span>Video</span></li>
-				<li class="box-nav-button" style="display: none !important;"><button class="click"
+				<li class="box-nav-button hidden" style="display: none !important;"><button class="click"
 						data-page="brochure-library" aria-label="click"></button><span>E-catalogue</span></li>
-				<li class="box-nav-button"><button class="click" data-page="news" aria-label="click"></button><span>Tin
+				<li class="box-nav-button hidden"><button class="click" data-page="news"
+						aria-label="click"></button><span>Tin
 						tức</span></li>
-				<li class="box-nav-button"><button class="click" data-page="progress"
+				<li class="box-nav-button hidden"><button class="click" data-page="progress"
 						aria-label="click"></button><span>Tiến độ</span></li>
-				<li class="box-nav-button"><button class="click" data-page="home-news"
-						aria-label="click"></button><span>AGENTS</span></li>
-
-				<li class="box-nav-button"><button class="click" data-page="home-map"
-						aria-label="click"></button><span>Vị trí nhà mẫu</span></li>
 				<li class="box-nav-button"><button class="click" data-page="home-contact"
 						aria-label="click"></button><span>Liên hệ</span></li>
 
@@ -14399,20 +14539,53 @@ l1.2-7.1L394.3,34.5z" />
 				<div class="progress-list"></div>
 			</div>
 
-			<div class="group-central home-news light" data-name="home-news">
+
+			<div class="group-central home-map dark" data-name="home-map">
 				<div class="slide-inner">
-					<div class="bg-inner"></div>
+					<div class="bg-inner bg-cover lazy" data-bg="pictures/catalog/background/bg2.svg"></div>
 				</div>
-				<div class="content-main layout-move">
-					<div class="text-decor ani-item"></div>
-					<div class="content-center">
-						<!-- Title được đưa lên trên đầu section, căn giữa hoàn hảo -->
-						<!-- TITLE CHÍNH XÁC Ở TRÊN ĐẦU - CĂN GIỮA HOÀN HẢO -->
-						<div style="text-align: center; margin-bottom: 4rem; padding: 0;">
+				<div class="content-main layout-move"
+					style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; box-sizing: border-box; min-height: 100vh;">
+					<div class="content-center" style="max-width: 800px; margin-bottom: 2.5rem; width: 100%;">
+						<div class="title-main break white-text column col-short ani-item"
+							style="display: block; opacity: 1 !important; transform: none !important;">
 							<h2
-								style="font-size: 3rem; font-weight: bold; color: white; text-transform: uppercase; letter-spacing: 3px; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+								style="font-family: Montserrat, sans-serif; font-size: 3rem; font-weight: 700; text-transform: uppercase; color: #ffffff; margin-bottom: 1.5rem; letter-spacing: 2px;">
+								Nhà mẫu</h2>
+						</div>
+						<div class="box-txt white-text column col-short ani-item"
+							style="display: block; opacity: 1 !important; font-size: 1.1rem; line-height: 1.7; color: #efefef;">
+							<p>Kính mời Quý khách hàng đến tham quan và trải nghiệm thực tế căn hộ mẫu cao cấp của dự án
+								<strong>The Gió Riverside An Gia</strong> tại địa chỉ hiển thị trên bản đồ dưới đây.
+							</p>
+						</div>
+					</div>
+					<div class="map-iframe-wrapper ani-item"
+						style="width: 100%; max-width: 1100px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.6); z-index: 2;">
+						<iframe
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.283187429177!2d106.6975694762589!3d10.788777392313283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f000d306723%3A0xd242337db1981ea1!2zTmjDoCBt4bqndSBk4buxIMOhbiBUaGUgR2nDsyBBTiBHSUE!5e0!3m2!1svi!2svn!4v1717650000000!5m2!1svi!2svn"
+							width="100%" height="450" style="border:0; display: block;" allowfullscreen=""
+							loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="group-central home-contact light" data-name="home-contact">
+			<div class="slide-inner">
+				<div class="bg-inner"></div>
+			</div>
+			<div class="content-main layout-move">
+
+
+				<!-- Block 2: Chuyên viên tư vấn -->
+				<div class="contact-agents-section home-news ani-item" style="width: 100%; margin-bottom: 3rem;">
+					<div class="content-center">
+						<div class="title-main break white-text column col-short">
+							<h2 class="text-ani-item"
+								style="font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; text-align: center; margin-bottom: 2rem; letter-spacing: 1px;">
 								Chuyên viên tư vấn</h2>
 						</div>
+
 						<style>
 							/* Override default flexbox layout để title lên trên */
 							.home-news .content-center {
@@ -14457,15 +14630,11 @@ l1.2-7.1L394.3,34.5z" />
 								height: auto !important;
 							}
 
-							/* Removed hover effects for simplicity */
-
 							.home-news .box-news {
-
 								flex-direction: column;
 								align-items: center;
 								text-align: center;
-
-								width: 50%;
+								width: 100%;
 								height: 100%;
 							}
 
@@ -14499,7 +14668,6 @@ l1.2-7.1L394.3,34.5z" />
 								font-weight: 700 !important;
 								margin-bottom: 1.2rem !important;
 								text-transform: none !important;
-								/* Bỏ uppercase để giữ nguyên Mr./Ms. */
 								color: white !important;
 								line-height: 1.4 !important;
 								text-align: center !important;
@@ -14519,7 +14687,6 @@ l1.2-7.1L394.3,34.5z" />
 								overflow-wrap: normal !important;
 							}
 
-							/* Responsive */
 							@media (max-width: 768px) {
 								.home-news .wrap-news {
 									flex-direction: column;
@@ -14546,7 +14713,6 @@ l1.2-7.1L394.3,34.5z" />
 								}
 							}
 
-							/* STAFF INFO TRONG TỪNG CỘT */
 							.staff-info {
 								background: transparent;
 								border-radius: 8px;
@@ -14577,7 +14743,6 @@ l1.2-7.1L394.3,34.5z" />
 								hyphens: auto !important;
 							}
 
-							/* Điều chỉnh lại item-news-home để chứa thông tin */
 							.home-news .item-news-home {
 								flex: 1 1 0 !important;
 								width: 100% !important;
@@ -14595,22 +14760,16 @@ l1.2-7.1L394.3,34.5z" />
 								height: auto !important;
 							}
 
-							/* Responsive cho staff info */
 							@media (max-width: 768px) {
-
-								/* Điều chỉnh title cho mobile - đưa gần hơn với các ô nhân viên */
 								.home-news .content-center>div:first-child {
 									margin-bottom: 1.5rem !important;
-									/* Giảm từ 4rem xuống 1.5rem */
 								}
 
 								.home-news .content-center>div:first-child h2 {
 									font-size: 2rem !important;
-									/* Giảm font size cho mobile */
 									margin-bottom: 0 !important;
 								}
 
-								/* Reset desktop styles cho mobile */
 								.home-news .wrap-news {
 									display: flex !important;
 									flex-direction: column !important;
@@ -14618,7 +14777,6 @@ l1.2-7.1L394.3,34.5z" />
 									width: 100% !important;
 									max-width: 100% !important;
 									margin: 0 auto !important;
-									/* Giảm margin top để gần hơn với title */
 									padding: 0 1rem !important;
 									position: relative !important;
 									z-index: 1 !important;
@@ -14650,7 +14808,6 @@ l1.2-7.1L394.3,34.5z" />
 									display: flex !important;
 									flex-direction: row !important;
 									align-items: center !important;
-
 									padding: 0 !important;
 									margin: 0 !important;
 								}
@@ -14706,31 +14863,21 @@ l1.2-7.1L394.3,34.5z" />
 						</style>
 
 						<script>
-							// Đồng bộ độ rộng text với ảnh khi trang load
 							function matchTextWidthToImage() {
-								// Đợi một chút để ảnh load xong
 								setTimeout(() => {
 									const items = document.querySelectorAll('.home-news .item-news-home');
-
 									items.forEach(item => {
 										const img = item.querySelector('.pic-news-home img');
 										const textContainer = item.querySelector('.txt-news-home');
-
 										if (img && textContainer && img.offsetWidth > 0) {
 											const imgWidth = img.offsetWidth;
-
-											// Đặt text container có cùng độ rộng với ảnh
 											textContainer.style.width = imgWidth + 'px';
 											textContainer.style.maxWidth = imgWidth + 'px';
-
-											// Đặt staff-info cũng có cùng độ rộng
 											const staffInfo = textContainer.querySelector('.staff-info');
 											if (staffInfo) {
 												staffInfo.style.width = imgWidth + 'px';
 												staffInfo.style.maxWidth = imgWidth + 'px';
 											}
-
-											// Đặt title có cùng độ rộng
 											const title = textContainer.querySelector('h3');
 											if (title) {
 												title.style.width = imgWidth + 'px';
@@ -14740,14 +14887,8 @@ l1.2-7.1L394.3,34.5z" />
 									});
 								}, 500);
 							}
-
-							// Chạy khi DOM load xong
 							document.addEventListener('DOMContentLoaded', matchTextWidthToImage);
-
-							// Chạy lại khi window resize
 							window.addEventListener('resize', matchTextWidthToImage);
-
-							// Chạy ngay lập tức nếu DOM đã sẵn sàng
 							if (document.readyState === 'loading') {
 								document.addEventListener('DOMContentLoaded', matchTextWidthToImage);
 							} else {
@@ -14766,13 +14907,9 @@ l1.2-7.1L394.3,34.5z" />
 									<div class="txt-news-home white-text">
 										<h3>Mr. LÊ HIẾU</h3>
 										<div class="staff-info">
-											<p>"Sales Inhouse trực thuộc Chủ
-												đầu tư An Gia. Từng tham
-												gia phân phối thành công
-												nhiều dự án tiêu biểu
-												như Westgate, The Sóng,
-												River Panorama, Sky89…"
-											</p>
+											<p>"Sales Inhouse trực thuộc Chủ đầu tư An Gia. Từng tham gia phân phối
+												thành công nhiều dự án tiêu biểu như Westgate, The Sóng, River Panorama,
+												Sky89…"</p>
 										</div>
 									</div>
 								</div>
@@ -14788,12 +14925,8 @@ l1.2-7.1L394.3,34.5z" />
 									<div class="txt-news-home white-text">
 										<h3>Ms. HẢI TRÂN</h3>
 										<div class="staff-info">
-											<p>"Cử nhân Kinh tế Đối ngoại,
-												Thạc sĩ Bất động sản.
-												Được đào tạo chuyên sâu
-												tại Thái Lan, hiện là Ủy
-												viên Ban Đào tạo VARS.
-												Sales Inhouse trực thuộc
+											<p>"Cử nhân Kinh tế Đối ngoại, Thạc sĩ Bất động sản. Được đào tạo chuyên sâu
+												tại Thái Lan, hiện là Ủy viên Ban Đào tạo VARS. Sales Inhouse trực thuộc
 												Chủ đầu tư An Gia."</p>
 										</div>
 									</div>
@@ -14811,60 +14944,57 @@ l1.2-7.1L394.3,34.5z" />
 										<h3>Mr. ĐÌNH TIẾN</h3>
 										<div class="staff-info">
 											<p>"Phó Chánh Văn phòng Hội Môi giới Bất động sản Việt Nam (Chánh Văn phòng
-												VARS Miền Nam),
-												Người kết nối thông tin BĐS,
-												Chuyên gia chuyển đổi số doanh nghiệp BĐS."</p>
+												VARS Miền Nam), Người kết nối thông tin BĐS, Chuyên gia chuyển đổi số
+												doanh nghiệp BĐS."</p>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<div class="wrap-view-more white-text column col-short ani-item" data-id="filter-text">
+						<!-- <div class="wrap-view-more white-text column col-short ani-item" data-id="filter-text"
+							style="margin-top: 2rem;">
 							<a class="view-more blue link-load" href="https://angia.org.vn/tin-tuc.html"
 								aria-label="link-load">
 								<span class="text-view-more">xem thêm</span>
 								<svg class="icon-button" viewBox="0 0 100 100"></svg>
 							</a>
+						</div> -->
+					</div>
+				</div>
+
+				<!-- Block 1: Những dự án nổi bật -->
+				<div class="contact-projects-section ani-item">
+					<div class="title-main break white-text column col-short">
+						<h2 class="text-ani-item"
+							style="font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; text-align: center; margin-bottom: 2rem; letter-spacing: 1px;">
+							Những dự án nổi bật</h2>
+					</div>
+					<div class="projects-list-horizontal">
+						<div class="project-item">
+							<svg class="ta-icon" style="fill: none; stroke: currentColor; stroke-width: 2;"
+								viewBox="0 0 24 24">
+								<path d="M12 2L2 9l10 13 10-13-10-7z M2 9h20 M12 2v20 M7 9l5 13 5-13" />
+							</svg>
+							<a href="https://angia.org.vn/vi-tri-nha-mau.html">Khu Đô Thị Eco Retreat Long An</a>
+						</div>
+						<div class="project-item">
+							<svg class="ta-icon" style="fill: none; stroke: currentColor; stroke-width: 2;"
+								viewBox="0 0 24 24">
+								<path d="M12 2L2 9l10 13 10-13-10-7z M2 9h20 M12 2v20 M7 9l5 13 5-13" />
+							</svg>
+							<a href="https://angia.org.vn/">The Gió Riverside</a>
+						</div>
+						<div class="project-item">
+							<svg class="ta-icon" style="fill: none; stroke: currentColor; stroke-width: 2;"
+								viewBox="0 0 24 24">
+								<path d="M12 2L2 9l10 13 10-13-10-7z M2 9h20 M12 2v20 M7 9l5 13 5-13" />
+							</svg>
+							<a href="https://angia.org.vn/vi-tri-nha-mau.html">Vinhomes Green Paradise</a>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="group-central home-map dark" data-name="home-map">
-				<div class="slide-inner">
-					<div class="bg-inner bg-cover lazy" data-bg="pictures/catalog/background/bg2.svg"></div>
-				</div>
-				<div class="content-main layout-move"
-					style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; box-sizing: border-box; min-height: 100vh;">
-					<div class="content-center" style="max-width: 800px; margin-bottom: 2.5rem; width: 100%;">
-						<div class="title-main break white-text column col-short ani-item"
-							style="display: block; opacity: 1 !important; transform: none !important;">
-							<h2
-								style="font-family: Montserrat, sans-serif; font-size: 3rem; font-weight: 700; text-transform: uppercase; color: #ffffff; margin-bottom: 1.5rem; letter-spacing: 2px;">
-								Vị trí nhà mẫu</h2>
-						</div>
-						<div class="box-txt white-text column col-short ani-item"
-							style="display: block; opacity: 1 !important; font-size: 1.1rem; line-height: 1.7; color: #efefef;">
-							<p>Kính mời Quý khách hàng đến tham quan và trải nghiệm thực tế căn hộ mẫu cao cấp của dự án
-								<strong>The Gió Riverside An Gia</strong> tại địa chỉ hiển thị trên bản đồ dưới đây.
-							</p>
-						</div>
-					</div>
-					<div class="map-iframe-wrapper ani-item"
-						style="width: 100%; max-width: 1100px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.6); z-index: 2;">
-						<iframe
-							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.283187429177!2d106.6975694762589!3d10.788777392313283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f000d306723%3A0xd242337db1981ea1!2zTmjDoCBt4bqndSBk4buxIMOhbiBUaGUgR2nDsyBBTiBHSUE!5e0!3m2!1svi!2svn!4v1717650000000!5m2!1svi!2svn"
-							width="100%" height="450" style="border:0; display: block;" allowfullscreen=""
-							loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="group-central home-contact light" data-name="home-contact">
-			<div class="slide-inner">
-				<div class="bg-inner"></div>
-			</div>
-			<div class="content-main layout-move">
+
 				<div class="box-contact-main">
 					<div class="partner-info white-text column ani-item">
 						<h2>Đầu tư và phát triển bởi</h2>
@@ -14888,7 +15018,7 @@ l1.2-7.1L394.3,34.5z" />
 					</div>
 					<div class="partner-info white-text column ani-item">
 						<h3>Phân phối & tiếp thị</h3>
-						<div class="slidebox list-logo auto-scroll">
+						<div class="slidebox list-logo-marquee auto-scroll">
 							<div class="slidebox-track">
 								<div class="slidebox-list">
 									<div class="slidebox-item item-part">
@@ -14962,14 +15092,14 @@ l1.2-7.1L394.3,34.5z" />
 				</div>
 				<div class="company-info white-text ani-item">
 					<h3>TẬP ĐOÀN BẤT ĐỘNG SẢN AN GIA</h3>
-					<div class="box-txt ani-item">
+					<div class="box-txt">
 						<p><span class="address"></span>60 Nguyễn Đình Chiểu, Phường Tân Định,
 							TP. Hồ Chí Minh</p>
 						<p><a href="tel:0797096034" target="_blank" rel="noopener nofollow"><span
 									class="element-nhay-giat"><span class="web"></span>Hotline:
 									0797096034</span></a></p>
 					</div>
-					<div class="box-txt ani-item"><i>(*) Chúng tôi đặc biệt cẩn trọng trong việc
+					<div class="box-txt"><i>(*) Chúng tôi đặc biệt cẩn trọng trong việc
 							chuẩn bị nội dung trên website này. Các thông tin/hình ảnh/bản
 							vẽ chỉ thể hiện thông số kỹ thuật, tính thẩm mỹ và sự sáng tạo
 							tại thời điểm được đăng tải và mang tính chất tham khảo, không
@@ -15762,6 +15892,43 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 		}
 	</style>
 
+	<script>
+		(function () {
+			var itemPart = document.querySelector('.list-logo-marquee .item-part');
+			if (itemPart) {
+				var children = Array.from(itemPart.children);
+				children.forEach(function (child) {
+					var clone = child.cloneNode(true);
+					itemPart.appendChild(clone);
+				});
+			}
+		})();
+	</script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var scrollLinks = document.querySelectorAll(".main-menu .link-scroll");
+			scrollLinks.forEach(function (link) {
+				link.addEventListener("click", function (e) {
+					e.preventDefault();
+					var page = link.getAttribute("data-page");
+					var targetSection = document.querySelector('.group-central[data-name="' + page + '"]');
+
+					// Close mobile overlay menu by clicking the close button
+					var closeBtn = document.querySelector(".close-nav");
+					if (closeBtn) {
+						closeBtn.click();
+					}
+
+					if (targetSection) {
+						setTimeout(function () {
+							targetSection.scrollIntoView({ behavior: "smooth" });
+						}, 350); // Small timeout to wait for overlay close transition
+					}
+				});
+			});
+		});
+	</script>
 </body>
 
 </html>

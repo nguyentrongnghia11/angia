@@ -21,9 +21,9 @@ function ensureHiddenInput(form, name, value) {
 	input.value = value;
 }
 
-function attachRegisterFormHandler() {
-	const form = document.getElementById('register_form');
-	const button = document.getElementById('btn-register-submit');
+function setupFormHandler({ formId, submitBtnId, nameId, phoneId, emailId, subjectText }) {
+	const form = document.getElementById(formId);
+	const button = document.getElementById(submitBtnId);
 	if (!form || !button) return;
 
 	// Normalize form attributes to avoid legacy handlers
@@ -39,15 +39,8 @@ function attachRegisterFormHandler() {
 		e.stopImmediatePropagation();
 	}, { capture: true });
 
-	// Also intercept submit at the document level as a safety net
-	document.addEventListener('submit', function (e) {
-		if (e.target && /** @type {HTMLElement} */(e.target).id === 'register_form') {
-			e.stopImmediatePropagation();
-		}
-	}, { capture: true });
-
 	// Hidden configuration for FormSubmit
-	ensureHiddenInput(form, '_subject', 'Đăng ký nhận tin - angia.org.vn');
+	ensureHiddenInput(form, '_subject', subjectText);
 	ensureHiddenInput(form, '_template', 'table');
 	ensureHiddenInput(form, '_captcha', 'false');
 	// Redirect URL if FormSubmit ever redirects (backup only)
@@ -62,9 +55,9 @@ function attachRegisterFormHandler() {
 		// @ts-ignore - stopImmediatePropagation exists in browsers
 		if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
 
-		const fullName = getInputValue('nameregister');
-		const phone = getInputValue('phoneregister');
-		const email = getInputValue('emailregister');
+		const fullName = getInputValue(nameId);
+		const phone = getInputValue(phoneId);
+		const email = getInputValue(emailId);
 
 		if (!fullName || !phone || !email) {
 			alert('Vui lòng nhập đủ Họ và Tên, Số điện thoại và Email.');
@@ -84,9 +77,16 @@ function attachRegisterFormHandler() {
 			if (!response.ok) throw new Error('Submit failed');
 			// Optional: parse JSON to confirm
 			await response.json().catch(() => ({}));
-			// Không rời trang: báo thành công, reset, đóng popup qua hash
+			// Không rời trang: báo thành công, reset
 			alert('Gửi thông tin thành công. Cảm ơn bạn!');
 			form.reset();
+			
+			// Reset text input fields labels placeholder
+			form.querySelectorAll('.input-text, .input-area').forEach((el) => {
+				const holder = el.querySelector('.holder');
+				if (holder) holder.classList.remove('hide');
+			});
+
 			window.history.pushState({}, '', currentUrl + '#submitted');
 		} catch (error) {
 			console.error('Register submit error:', error);
@@ -99,4 +99,33 @@ function attachRegisterFormHandler() {
 	}, { capture: true });
 }
 
-document.addEventListener('DOMContentLoaded', attachRegisterFormHandler);
+function attachRegisterFormHandlers() {
+	// 1. Popup Form cũ
+	setupFormHandler({
+		formId: 'register_form',
+		submitBtnId: 'btn-register-submit',
+		nameId: 'nameregister',
+		phoneId: 'phoneregister',
+		emailId: 'emailregister',
+		subjectText: 'Đăng ký nhận tin - angia.org.vn'
+	});
+
+	// 2. Form Liên hệ mới ở chân trang
+	setupFormHandler({
+		formId: 'register_form_contact',
+		submitBtnId: 'btn-register-submit-contact',
+		nameId: 'nameregister_contact',
+		phoneId: 'phoneregister_contact',
+		emailId: 'emailregister_contact',
+		subjectText: 'Đăng ký nhận tin (Liên hệ) - angia.org.vn'
+	});
+
+	// Chặn submit bọt cho cả hai form ở cấp độ document
+	document.addEventListener('submit', function (e) {
+		if (e.target && (/** @type {HTMLElement} */(e.target).id === 'register_form' || /** @type {HTMLElement} */(e.target).id === 'register_form_contact')) {
+			e.stopImmediatePropagation();
+		}
+	}, { capture: true });
+}
+
+document.addEventListener('DOMContentLoaded', attachRegisterFormHandlers);

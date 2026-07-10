@@ -142,6 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
   navButtons.forEach((button, index) => {
     button.setAttribute("data-index", index);
     button.addEventListener("click", (e) => {
+      const anchor = button.querySelector("a");
+      if (anchor) {
+        return; // Cho phép điều hướng mặc định của liên kết
+      }
       e.preventDefault();
       const btnClick = button.querySelector("button.click");
       const page = btnClick ? btnClick.getAttribute("data-page") : null;
@@ -222,6 +226,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         if (pictureLibBtn) {
           targetNavIndex = Array.from(navButtons).indexOf(pictureLibBtn);
+        }
+      } else if (name === "home-overview" || name === "home-video") {
+        const tongQuanBtn = Array.from(navButtons).find((btn) => {
+          const clickBtn = btn.querySelector(".click");
+          return clickBtn && clickBtn.getAttribute("data-page") === "home-wave";
+        });
+        if (tongQuanBtn) {
+          targetNavIndex = Array.from(navButtons).indexOf(tongQuanBtn);
         }
       }
     }
