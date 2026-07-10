@@ -82,6 +82,63 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(style);
   }
 
+  // --- Custom Smooth Scroll quán tính nhẹ cho Desktop ---
+  if (!Mobile.matches) {
+    let targetY = window.pageYOffset || window.scrollY;
+    let currentY = targetY;
+    let isMoving = false;
+    const speedMultiplier = 1.5; // Tăng lên 2.5 để cuộn đi xa hơn trên mỗi nấc chuột
+
+    window.addEventListener("wheel", (e) => {
+      // Bỏ qua nếu đang cuộn bên trong các khung cuộn nội bộ (.scrollA, .scrollB, .scrollC, .scrollD)
+      const path = e.composedPath ? e.composedPath() : [];
+      const hasInternalScroll = path.some(el => {
+        if (!el.classList) return false;
+        return el.classList.contains("scrollB") ||
+          el.classList.contains("scrollC") ||
+          el.classList.contains("scrollD") ||
+          el.classList.contains("scrollA");
+      });
+      if (hasInternalScroll) return;
+
+      e.preventDefault();
+
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      targetY += e.deltaY * speedMultiplier;
+      targetY = Math.max(0, Math.min(targetY, maxScroll));
+
+      if (!isMoving) {
+        isMoving = true;
+        requestAnimationFrame(updateScroll);
+      }
+    }, { passive: false });
+
+    function updateScroll() {
+      const diff = targetY - currentY;
+      // Chia cho 5 để tốc độ bắt kịp nhanh hơn, cho cảm giác nhạy và mượt hơn
+      const step = diff / 5;
+      currentY += step;
+
+      window.scrollTo(0, currentY);
+
+      if (Math.abs(diff) > 0.5) {
+        requestAnimationFrame(updateScroll);
+      } else {
+        currentY = targetY;
+        window.scrollTo(0, currentY);
+        isMoving = false;
+      }
+    }
+
+    // Cập nhật vị trí đích khi dùng phím tắt hoặc scrollbar kéo thả trực tiếp
+    window.addEventListener("scroll", () => {
+      if (!isMoving) {
+        targetY = window.pageYOffset || window.scrollY;
+        currentY = targetY;
+      }
+    }, { passive: true });
+  }
+
   navButtons.forEach((button, index) => {
     button.setAttribute("data-index", index);
     button.addEventListener("click", (e) => {
@@ -222,48 +279,48 @@ document.addEventListener("DOMContentLoaded", () => {
     var mapSvg = sec.querySelector(".map-svg");
     if (mapSvg) {
       mapSvg.classList.add("show");
-      Array.from(sec.querySelectorAll(".dot-p"), function(e, i) {
-        setTimeout(function() { e.classList.add("showed"); }, 100 * (i + 1));
+      Array.from(sec.querySelectorAll(".dot-p"), function (e, i) {
+        setTimeout(function () { e.classList.add("showed"); }, 100 * (i + 1));
       });
     }
     var mapArea = sec.querySelector(".map-area");
     if (mapArea) {
       mapArea.classList.add("show");
-      Array.from(sec.querySelectorAll(".dot-region"), function(e, i) {
-        setTimeout(function() { e.classList.add("show"); }, 300 * (i + 1));
+      Array.from(sec.querySelectorAll(".dot-region"), function (e, i) {
+        setTimeout(function () { e.classList.add("show"); }, 300 * (i + 1));
       });
     }
-    Array.from(sec.querySelectorAll(".dot-num"), function(e, i) {
-      setTimeout(function() { e.classList.add("show"); }, 50 * (i + 1));
+    Array.from(sec.querySelectorAll(".dot-num"), function (e, i) {
+      setTimeout(function () { e.classList.add("show"); }, 50 * (i + 1));
     });
 
     // Wave / Loop / Gowater
-    if (sec.querySelector(".move-img")) { if(typeof logoBanner !== 'undefined') logoBanner.classList.add("show"); if(typeof Loop !== 'undefined') Loop.play(); }
+    if (sec.querySelector(".move-img")) { if (typeof logoBanner !== 'undefined') logoBanner.classList.add("show"); if (typeof Loop !== 'undefined') Loop.play(); }
     if (sec.querySelector(".water") && typeof Gowater !== 'undefined') Gowater.Play();
 
     // Home page animations
     if (homePage && !Mobile.matches) {
       if (sec.classList.contains("home-wave")) {
-        if(typeof Wave !== 'undefined') Wave.Play();
-        if(typeof Pat !== 'undefined') Pat.Play();
-        if(typeof logoCenter !== 'undefined') logoCenter.classList.add("show");
-        if(typeof rightHeader !== 'undefined') rightHeader.classList.add("normal");
-        setTimeout(function() {
+        if (typeof Wave !== 'undefined') Wave.Play();
+        if (typeof Pat !== 'undefined') Pat.Play();
+        if (typeof logoCenter !== 'undefined') logoCenter.classList.add("show");
+        if (typeof rightHeader !== 'undefined') rightHeader.classList.add("normal");
+        setTimeout(function () {
           Header.classList.add("show");
           if (typeof HTML !== 'undefined' && "vi" == HTML.lang) {
-            if(typeof TaglineVI !== 'undefined') { TaglineVI.classList.add("show"); if(typeof aniText === 'function') aniText(TaglineVI); }
+            if (typeof TaglineVI !== 'undefined') { TaglineVI.classList.add("show"); if (typeof aniText === 'function') aniText(TaglineVI); }
           } else {
-            if(typeof TaglineEN !== 'undefined') { TaglineEN.classList.add("show"); if(typeof aniText === 'function') aniText(TaglineEN); }
+            if (typeof TaglineEN !== 'undefined') { TaglineEN.classList.add("show"); if (typeof aniText === 'function') aniText(TaglineEN); }
           }
-          if(typeof goDown !== 'undefined') goDown.classList.add("show", "center-align");
+          if (typeof goDown !== 'undefined') goDown.classList.add("show", "center-align");
         }, 500);
       }
       if (sec.classList.contains("home-facilities") || sec.classList.contains("home-contact")) {
-        if(typeof Wave !== 'undefined') Wave.Play();
+        if (typeof Wave !== 'undefined') Wave.Play();
       }
       if (sec.classList.contains("home-news")) {
-        if(typeof Pat !== 'undefined') Pat.Pause();
-        if(typeof lazyLoadInstance !== 'undefined') lazyLoadInstance.update();
+        if (typeof Pat !== 'undefined') Pat.Pause();
+        if (typeof lazyLoadInstance !== 'undefined') lazyLoadInstance.update();
       }
     }
 
@@ -280,12 +337,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Library / News wave
     if (sec.classList.contains("brochure-library") && typeof Wave !== 'undefined') Wave.Play();
-    if (sec.classList.contains("news") && typeof Wave !== 'undefined') setTimeout(function() { Wave.Play(); }, 1000);
+    if (sec.classList.contains("news") && typeof Wave !== 'undefined') setTimeout(function () { Wave.Play(); }, 1000);
 
     // colEffect for layout-move
     if (sec.querySelector(".layout-move")) {
-      sec.querySelectorAll(".layout-move").forEach(function(e) { e.classList.remove("enable"); });
-      setTimeout(function() { if(typeof colEffect !== 'undefined') new colEffect(sec); }, 300);
+      sec.querySelectorAll(".layout-move").forEach(function (e) { e.classList.remove("enable"); });
+      setTimeout(function () { if (typeof colEffect !== 'undefined') new colEffect(sec); }, 300);
     }
   }
 
@@ -717,16 +774,8 @@ var librarySlide = function () {
       pagination: !1,
       autoWidth: !0,
       afterTrace: !0,
-      autoScroll: { speed: 1, autoStart: !1 },
     });
-    e.mount(window.splide.ExScroll);
-    var t = e.Components.AutoScroll;
-    t.pause();
-    new IntersectionObserver(function (e, o) {
-      e.forEach(function (e) {
-        e.isIntersecting ? t.play() : t.pause();
-      });
-    }).observe(document.querySelector(".list-logo"));
+    e.mount();
   },
   logoSlide = function () {
     var e = new Splide(".slide-logo", {
@@ -796,7 +845,7 @@ function LoadProgress(e, t) {
                 0 == News &&
                 (document.querySelector(".select-list").classList.add("fadein"),
                   (News = 1)),
-                Mobile.matches || (function() { var e = document.querySelector(".scrollD"); if(e) { e.style.overflowY = "auto"; e.style.scrollBehavior = "smooth"; } })(),
+                Mobile.matches || (function () { var e = document.querySelector(".scrollD"); if (e) { e.style.overflowY = "auto"; e.style.scrollBehavior = "smooth"; } })(),
                 Loadx.classList.remove("display-block"));
             },
           }));
@@ -915,12 +964,12 @@ function NewsLoad(e) {
           opacity: 1,
           ease: "none",
           onComplete: function () {
-            (Mobile.matches || (function() {
-                var e = document.querySelector(".scrollC");
-                if(e) { e.style.overflowY = "auto"; e.style.scrollBehavior = "smooth"; }
-                var outerEl = document.querySelector(".outer");
-                if(outerEl) outerEl.classList.remove("hide");
-              })(),
+            (Mobile.matches || (function () {
+              var e = document.querySelector(".scrollC");
+              if (e) { e.style.overflowY = "auto"; e.style.scrollBehavior = "smooth"; }
+              var outerEl = document.querySelector(".outer");
+              if (outerEl) outerEl.classList.remove("hide");
+            })(),
               document.querySelector(".news-content").classList.add("show"),
               document.querySelector(".colum-box-news").classList.add("show"),
               document.querySelector(".wrap-view-more").classList.add("show"),
@@ -1717,7 +1766,7 @@ function ContentLoad() {
       (document.querySelector(".news .bg-inner").append(bgCanvas),
         (document.querySelector(".scrollB").scrollTop = 0));
       var c = document.querySelector(".scrollB");
-      if(c) { c.style.overflowY = "auto"; c.style.scrollBehavior = "smooth"; }
+      if (c) { c.style.overflowY = "auto"; c.style.scrollBehavior = "smooth"; }
     }
     (Logo.classList.add("show", "scale-logo"),
       Footer.classList.add("show", "align-left"));
@@ -1883,7 +1932,7 @@ function ContentLoad() {
       (document.body.insertBefore(Register, Footer),
         Register.classList.add("hide-subscribe"))),
     document.querySelector(".box-nav li button.current") &&
-      document.querySelector(".box-nav li button.current").click());
+    document.querySelector(".box-nav li button.current").click());
 }
 if (bgCanvas) {
   var Wave = new Waves();
@@ -2043,8 +2092,8 @@ function swapMask() {
         // scrollStay đã bị gỡ bỏ — resize chỉ cần reset styles
         if (homePage) {
           document.querySelector(".home-wave .slide-inner") && (document.querySelector(".home-wave .slide-inner").style = "");
-          if(typeof TaglineVI !== 'undefined') TaglineVI.style = "";
-          if(typeof TaglineEN !== 'undefined') TaglineEN.style = "";
+          if (typeof TaglineVI !== 'undefined') TaglineVI.style = "";
+          if (typeof TaglineEN !== 'undefined') TaglineEN.style = "";
         }
         (newsPage || document.querySelector(".news")) &&
           (document.querySelector(".news .bg-inner .is-play") || (typeof Wave !== 'undefined' && Wave.Play()));
