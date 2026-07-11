@@ -12286,7 +12286,53 @@
 			--distance-sine: calc(var(--char-offset)/var(--char-center));
 			--distance-percent: calc((var(--distance)/var(--char-center)))
 		}
-	</style>
+	
+
+		/* --- HEADER & NAVBAR SCROLL HIDE/SHOW EFFECT --- */
+		html body .header,
+		html body .right-header,
+		html body .option-header,
+		html body .box-nav {
+			transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.35s ease !important;
+		}
+
+		html body .header.header-hidden,
+		html body header.header.show.visible.header-hidden,
+		html body .right-header.header-hidden,
+		html body .option-header.header-hidden,
+		html body .box-nav.header-hidden {
+			animation: none !important;
+			transform: translateY(-200px) !important;
+			opacity: 0 !important;
+			pointer-events: none !important;
+		}
+
+		html body .header.header-hidden,
+		html body .header.header-scrolled-hidden,
+		html body header.header.show.visible.header-hidden,
+		html body header.header.show.visible.header-scrolled-hidden,
+		html body .right-header.header-hidden,
+		html body .right-header.header-scrolled-hidden,
+		html body .option-header.header-hidden,
+		html body .option-header.header-scrolled-hidden,
+		html body .box-nav.header-hidden,
+		html body .box-nav.header-scrolled-hidden {
+			animation: none !important;
+			transform: translateY(-200px) !important;
+			opacity: 0 !important;
+			pointer-events: none !important;
+		}
+
+		html body .header.header-hidden,
+		html body .right-header.header-hidden,
+		html body .option-header.header-hidden,
+		html body .box-nav.header-hidden {
+			animation: none !important;
+			transform: translateY(-200px) !important;
+			opacity: 0 !important;
+			pointer-events: none !important;
+		}
+</style>
 
 
 
@@ -15571,6 +15617,51 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
   }
 })();
 </script>
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+	
+
+
+	
+
+	
+
+
+	
+
+
+	
+
+
+	
+
 </body>
 
 </html>

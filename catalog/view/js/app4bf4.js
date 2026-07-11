@@ -15,6 +15,11 @@ window.Mobile = window.matchMedia("(max-width: 1100px)");
 // SmoothScroll đã bị gỡ bỏ — dùng CSS scroll-behavior: smooth trên container
 
 document.addEventListener("DOMContentLoaded", () => {
+  const headerEl = document.querySelector(".header");
+  const rightHeaderEl = document.querySelector(".right-header");
+  const optionHeaderEl = document.querySelector(".option-header");
+  let lastScrollY = window.pageYOffset || window.scrollY;
+
   const boxNav = document.querySelector(".box-nav");
   const sections = document.querySelectorAll(".group-central");
   const navButtons = document.querySelectorAll(".box-nav-button");
@@ -207,13 +212,49 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentActiveIndex = _currentActiveIndex;
 
     // Cập nhật boxNav visibility
+    // Cập nhật boxNav và Header visibility dựa trên hướng cuộn (Root)
+    const threshold = 80;
+    const isScrollingDown = scrollY > lastScrollY && scrollY > threshold;
+    const menuOpen = document.body.classList.contains("activemenu") || 
+                     document.documentElement.classList.contains("activemenu") ||
+                     (headerEl && headerEl.classList.contains("active"));
+
     if (boxNav) {
-      if (isHome) {
-        boxNav.classList.toggle("show", scrollY > 100 && sections.length >= 2);
+      if (menuOpen) {
+        boxNav.classList.add("show");
+        boxNav.classList.remove("header-hidden");
+      } else if (isScrollingDown) {
+        boxNav.classList.remove("show");
+        boxNav.classList.add("header-hidden");
       } else {
-        boxNav.classList.toggle("show", sections.length >= 2);
+        const shouldShow = isHome ? (scrollY > 100 && sections.length >= 2) : (sections.length >= 2);
+        if (shouldShow) {
+          boxNav.classList.add("show");
+          boxNav.classList.remove("header-hidden");
+        } else {
+          boxNav.classList.remove("show");
+          boxNav.classList.remove("header-hidden");
+        }
       }
     }
+
+    if (headerEl) {
+      if (menuOpen) {
+        headerEl.classList.remove("header-hidden");
+        if (rightHeaderEl) rightHeaderEl.classList.remove("header-hidden");
+        if (optionHeaderEl) optionHeaderEl.classList.remove("header-hidden");
+      } else if (isScrollingDown) {
+        headerEl.classList.add("header-hidden");
+        if (rightHeaderEl) rightHeaderEl.classList.add("header-hidden");
+        if (optionHeaderEl) optionHeaderEl.classList.add("header-hidden");
+      } else {
+        headerEl.classList.remove("header-hidden");
+        if (rightHeaderEl) rightHeaderEl.classList.remove("header-hidden");
+        if (optionHeaderEl) optionHeaderEl.classList.remove("header-hidden");
+      }
+    }
+    
+    lastScrollY = scrollY;
 
     // Tính targetNavIndex
     let targetNavIndex = currentActiveIndex;

@@ -3341,7 +3341,7 @@ body.zoom-active .slidebox-pagination {
   }
 
   /* 10. Box-nav (menu chấm góc trái) – luôn hiện, không cần scroll > 100px */
-  #home-page .box-nav {
+  #home-page .box-nav:not(.header-hidden) {
     opacity: 1 !important;
     pointer-events: auto !important;
     transform: translate(0, -50%) !important;
