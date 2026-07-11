@@ -9,6 +9,7 @@ import {
   hoverEvents,
 } from "../js/modules/option.js";
 window.ZoomPic = ZoomPic;
+window.colEffect = colEffect;
 window.Mobile = window.matchMedia("(max-width: 1100px)");
 
 // SmoothScroll đã bị gỡ bỏ — dùng CSS scroll-behavior: smooth trên container
