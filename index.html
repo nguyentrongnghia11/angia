@@ -12895,7 +12895,7 @@ L53.2,50l11.2-11.2C65.2,38,65.2,36.6,64.3,35.7z" />
 						</div>
 					</li>
 					<li class="nav-item" data-id="filter-text"><a class="link-scroll link-hoz" href="#"
-							data-page="home-map" data-name="map-page" data-text="Nhà mẫu">Nhà mẫu</a><span
+							data-page="home-showroom" data-name="map-page" data-text="Nhà mẫu">Nhà mẫu</a><span
 							class="icon parent"></span>
 						<div class="class-hidden link-change-url" data-hrefen="#" data-hrefvi="#" data-title="Nhà mẫu"
 							data-description="The Gió Riverside" data-keyword="The Gió Riverside"
@@ -12986,7 +12986,7 @@ c0.78-0.78,0.79-2.04,0.01-2.83c0,0-0.01-0.01-0.01-0.01V15.52z" />
 						aria-label="click"></button><span>Tầng 04</span></li>
 				<li class="box-nav-button"><button class="click" data-page="floor-05-39"
 						aria-label="click"></button><span>Tầng 05-39</span></li>
-				<li class="box-nav-button"><button class="click" data-page="home-map"
+				<li class="box-nav-button"><button class="click" data-page="home-showroom"
 						aria-label="click"></button><span>Nhà mẫu</span></li>
 				<li class="box-nav-button"><button class="click" data-page="home-legal"
 						aria-label="click"></button><span>Pháp lý</span></li>
@@ -20115,7 +20115,7 @@ l1.2-7.1L394.3,34.5z" />
 			</div>
 
 
-			<div class="group-central home-map dark" data-name="home-map">
+			<!-- <div class="group-central home-map dark" data-name="home-map">
 				<div class="slide-inner">
 					<div class="bg-inner bg-cover lazy" data-bg="pictures/catalog/background/bg2.svg"></div>
 				</div>
@@ -20143,7 +20143,239 @@ l1.2-7.1L394.3,34.5z" />
 							loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 					</div>
 				</div>
-			</div>
+			</div> -->
+			<div class="group-central home-showroom light" data-name="home-showroom" style="position: relative; overflow: hidden; padding: 64px 0 72px; background:#fff;">
+    
+    <div class="slide-inner" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+        <div class="bg-inner bg-cover lazy" style="width: 100%; height: 100%; background: #fff;"></div>
+    </div>
+    
+    <style>
+        .showroom-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+        /* Header chứa tiêu đề phối màu Teal-Gold & Nút điều hướng */
+        .showroom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 30px;
+        }
+        .showroom-title {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+        }
+        .showroom-title h2 {
+            color: #0c4a54; /* Màu xanh teal sẫm */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 1.5px;
+            line-height: 1;
+        }
+        .showroom-title span {
+            color: #cbb089; /* Màu vàng đồng */
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 1;
+        }
+        /* Mũi tên điều hướng */
+        .showroom-controls {
+            display: flex;
+            gap: 12px;
+        }
+        .showroom-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid #cbb089;
+            background: transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .showroom-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: #cbb089;
+            transition: fill 0.3s ease;
+        }
+        .showroom-btn:hover {
+            background-color: #cbb089;
+        }
+        .showroom-btn:hover svg {
+            fill: #ffffff;
+        }
+        /* Vùng chạy Slider */
+        .showroom-wrapper {
+            overflow: visible; 
+            width: 100%;
+        }
+        .showroom-track {
+            display: flex;
+            gap: 30px;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        /* Card ảnh viền Gold */
+        .showroom-item {
+            background:#fff;
+            min-width: calc((100% - 30px) / 2.15); /* Hiện 2 ảnh và lấp ló ảnh thứ 3 */
+            box-sizing: border-box;
+            border: 4px solid #cbb089;
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            aspect-ratio: 16 / 10;
+        }
+        .showroom-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }/* Responsive */
+        @media (max-width: 1024px) {
+            .showroom-item {
+                background:#fff;
+                min-width: calc((100% - 20px) / 1.5);
+            }
+        }
+        @media (max-width: 768px) {
+            .showroom-content { padding: 0 20px; }
+            .showroom-item {
+                background:#fff;
+                min-width: 100%;
+            }
+            .showroom-title h2 { font-size: 24px; }
+            .showroom-title span { font-size: 18px; }
+        }
+    </style>
+
+    <div class="showroom-content ani-item">
+        
+        <div class="showroom-header">
+            <div class="showroom-title">
+                <h2>Nhà mẫu</h2>
+                <span>Căn 2PN</span>
+            </div>
+            <div class="showroom-controls">
+                <button class="showroom-btn" id="slidePrev">
+                    <svg viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/></svg>
+                </button>
+                <button class="showroom-btn" id="slideNext">
+                    <svg viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="showroom-wrapper">
+            <div class="showroom-track" id="showroomTrack">
+                <div class="showroom-item">
+                    <img src="pictures/catalog/library/khai-truong-can-ho-mau/ktchm20.2-1.jpg" alt="Phòng khách">
+                </div>
+                <div class="showroom-item">
+                    <img src="pictures/catalog/tintuc/can-ho-mau/1.jpg" alt="Phòng ăn & Bếp">
+                </div>
+                <div class="showroom-item">
+                    <img src="pictures/catalog/lien-he/lobby.jpg" alt="Phòng ngủ master">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const track = document.getElementById('showroomTrack');
+            const prev = document.getElementById('slidePrev');
+            const next = document.getElementById('slideNext');
+            if (!track || !prev || !next) return;
+
+            const originalItems = Array.from(track.querySelectorAll('.showroom-item'));
+            if (originalItems.length < 2) return;
+
+            let currentIndex = 0;
+            let isAnimating = false;
+
+            function getVisibleCount() {
+                return window.innerWidth > 768 ? 2 : 1;
+            }
+
+            function getStepWidth() {
+                const item = track.querySelector('.showroom-item');
+                if (!item) return 0;
+                const styles = window.getComputedStyle(track);
+                const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+                return item.getBoundingClientRect().width + gap;
+            }
+
+            function render() {
+                const step = getStepWidth();
+                track.style.transform = `translateX(-${currentIndex * step}px)`;
+            }
+
+            function goTo(index, animate = true) {
+                currentIndex = index;
+                track.style.transition = animate ? 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+                render();
+                if (!animate) {
+                    void track.offsetHeight;
+                    track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                }
+            }
+
+            function setupInfiniteTrack() {
+                const clones = track.querySelectorAll('.showroom-item[data-clone="true"]');
+                clones.forEach((clone) => clone.remove());
+
+                originalItems.forEach((item) => {
+                    const clone = item.cloneNode(true);
+                    clone.setAttribute('data-clone', 'true');
+                    track.appendChild(clone);
+                });
+
+                currentIndex = 0;
+                goTo(currentIndex, false);
+            }
+
+            setupInfiniteTrack();
+
+            next.addEventListener('click', function () {
+                if (isAnimating) return;
+                isAnimating = true;
+                goTo(currentIndex + 1, true);
+            });
+
+            prev.addEventListener('click', function () {
+                if (isAnimating) return;
+                isAnimating = true;
+                goTo(currentIndex - 1, true);
+            });
+
+            track.addEventListener('transitionend', function () {
+                const total = originalItems.length;
+
+                if (currentIndex >= total) {
+                    goTo(0, false);
+                } else if (currentIndex < 0) {
+                    goTo(total - 1, false);
+                }
+
+                isAnimating = false;
+            });
+
+            window.addEventListener('resize', function () {
+                goTo(currentIndex, false);
+            });
+        });
+    </script>
+</div>
 
 			<!-- ========================== Liên hệ ========================= -->
 		</div>
@@ -21537,3 +21769,6 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 </body>
 
 </html>
+
+
+
