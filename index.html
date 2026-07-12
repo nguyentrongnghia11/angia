@@ -1455,6 +1455,34 @@
 			font-weight: 400
 		}
 
+		/* Shared section heading: follows the original Tiện ích h2 spacing and typography. */
+		.section-title-standard {
+			font-family: Newsreader, serif !important;
+			font-optical-sizing: auto;
+			font-weight: 300 !important;
+			font-size: var(--titleFontBig) !important;
+			line-height: 1.2 !important;
+			letter-spacing: 0 !important;
+			text-transform: none !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+
+		/* Align the custom carousel headings to the mobile spacing used by Tiện ích. */
+		@media screen and (max-width: 768px) {
+			.news-homepage .content-center,
+			.showroom-content {
+				padding: 10vw 5% 0 !important;
+			}
+
+			.news-header,
+			.progress-header,
+			.showroom-header {
+				margin: 0 0 30px !important;
+				padding: 0 !important;
+			}
+		}
+
 		.title-main h3 {
 			font-size: var(--titleFontSmall)
 		}
@@ -19200,17 +19228,18 @@ l1.2-7.1L394.3,34.5z" />
 				</div>
 			</div>
 			<!-- ========================== Pháp lý========================== -->
-			<div class="group-central home-legal dark" data-name="home-legal">
+			<div class="group-central home-legal dark" data-name="home-legal"
+				style="height: auto !important; min-height: 0 !important; overflow: visible !important;">
 				<div class="slide-inner">
 					<div class="bg-inner bg-cover lazy" data-bg="pictures/catalog/background/bg2.svg"></div>
 				</div>
 				<div class="content-main layout-move"
-					style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; box-sizing: border-box; min-height: 100vh;">
-					<div class="content-center" style="max-width: 800px; margin-bottom: 2.5rem; width: 100%;">
+					style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; box-sizing: border-box; height: auto !important; min-height: 0 !important;">
+					<div class="content-center" style="max-width: 800px; width: 100%;">
 						<div class="title-main break white-text column col-short ani-item"
 							style="display: block; opacity: 1 !important; transform: none !important;">
-							<h2
-								style="font-family: Montserrat, sans-serif; font-size: 3rem; font-weight: 700; text-transform: uppercase; color: #ffffff; margin-bottom: 1.5rem; letter-spacing: 2px;">
+							<h2 class="section-title-standard"
+								style="font-family: Montserrat, sans-serif; font-size: 3rem; font-weight: 700; text-transform: uppercase; color: #ffffff; letter-spacing: 2px;">
 								Pháp lý</h2>
 						</div>
 						<div class="box-txt white-text column col-short ani-item"
@@ -19280,22 +19309,24 @@ l1.2-7.1L394.3,34.5z" />
 
 
 			<!-- ========================== Chính sách=========================== -->
-			<div class="group-central home-policy dark" data-name="home-policy">
+			<div class="group-central home-policy dark" data-name="home-policy"
+				style="height: auto !important; min-height: 0 !important; overflow: visible !important;">
 				<div class="slide-inner">
 					<div class="bg-inner lazy"></div>
 				</div>
-				<div class="content-main layout-move">
+				<div class="content-main layout-move"
+					style="position: relative !important; height: auto !important; min-height: 0 !important;">
 					<div class="content-center"
 						style="text-align:center; max-width: 1360px; margin: 0 auto; padding: 0 40px; box-sizing: border-box;">
 						<div class="title-main break white-text column col-short ani-item"
 							style="display: block; margin-bottom: 30px; text-align: center;">
-							<h2
+							<h2 class="section-title-standard"
 								style="font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 700; text-transform: uppercase; color: #ffffff; margin: 0; letter-spacing: 1.5px; line-height: 1;">
 								Chính sách</h2>
 						</div>
 						<div class="policy-img ani-item">
-							<img class="column lazy" data-src="img-chinhsach/csbnthegio.png"
-								style="max-width:80%;height:auto;" alt="Chính sách" loading="lazy">
+							<img class="column" src="img-chinhsach/csbnthegio.png"
+								style="max-width:90%;height:auto;" alt="Chính sách" loading="lazy">
 						</div>
 					</div>
 				</div>
@@ -19327,17 +19358,82 @@ l1.2-7.1L394.3,34.5z" />
 					}
 				}
 
+				.home-policy .content-main {
+					position: relative !important;
+					width: 100% !important;
+					height: auto !important;
+					min-height: 0 !important;
+					top: auto !important;
+					left: auto !important;
+					padding: 95px 30px 70px !important;
+					box-sizing: border-box !important;
+					z-index: 1 !important;
+					visibility: visible !important;
+				}
+
 				.home-policy .bg-inner {
-					opacity: 0;
-					transform: scale(1.03);
-					will-change: transform, opacity;
+					opacity: 1 !important;
+					transform: none !important;
+					will-change: unset !important;
+					animation: none !important;
 					background: var(--color-bg-circle-2) !important;
 				}
 
+				/* Keep the content above the decorative background in normal-scroll mode. */
+				.home-policy {
+					position: relative !important;
+					height: auto !important;
+					min-height: 0 !important;
+					isolation: isolate;
+					overflow: visible !important;
+				}
+
+				.home-policy .slide-inner {
+					position: absolute !important;
+					inset: 0;
+					height: 100% !important;
+					z-index: 0 !important;
+				}
+
+				.home-policy .content-center {
+					width: 100% !important;
+					max-width: 1500px !important;
+					box-sizing: border-box !important;
+					position: relative !important;
+					z-index: 2 !important;
+					visibility: visible !important;
+				}
+
+				.home-policy .layout-move .column {
+					will-change: unset !important;
+					transform: none !important;
+				}
+
 				.home-policy .policy-img {
-					opacity: 0;
-					transform: translateY(18px);
-					will-change: transform, opacity;
+					opacity: 1 !important;
+					transform: none !important;
+					will-change: unset !important;
+					animation: none !important;
+					visibility: visible !important;
+					position: relative !important;
+					z-index: 2 !important;
+				}
+
+				/* This section is in normal scroll, so do not wait for slider animation classes. */
+				.home-policy .ani-item,
+				.home-policy .text-ani-item .char {
+					opacity: 1 !important;
+					transform: none !important;
+					animation: none !important;
+				}
+
+				.home-policy .policy-img img {
+					max-width: 100% !important;
+					max-height: none !important;
+					width: 100% !important;
+					height: auto !important;
+					display: block;
+					margin: 0 auto;
 				}
 
 				.home-policy.in-view .bg-inner {
@@ -19357,10 +19453,13 @@ l1.2-7.1L394.3,34.5z" />
 
 					/* Bảo đảm khung nền Chính sách hiển thị trên mobile */
 					.home-policy .slide-inner {
-						/* Giữ tỉ lệ nền ~16:9 giống desktop */
-						height: calc(100vw * 0.5625) !important;
-						min-height: 300px !important;
-						position: relative !important;
+						position: absolute !important;
+						top: 0;
+						left: 0;
+						width: 100% !important;
+						height: 100% !important;
+						min-height: 0 !important;
+						z-index: 1 !important;
 					}
 
 					.home-policy .bg-inner {
@@ -19373,22 +19472,28 @@ l1.2-7.1L394.3,34.5z" />
 					}
 
 					.home-policy .content-main {
-						position: absolute !important;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						display: flex !important;
-						align-items: center !important;
-						justify-content: center !important;
+						position: relative !important;
+						top: auto !important;
+						left: auto !important;
+						right: auto !important;
+						bottom: auto !important;
+						display: block !important;
 						opacity: 1 !important;
 						visibility: visible !important;
 						z-index: 5 !important;
-						padding: 0 !important;
+						padding: 40px 0 !important;
 						background: transparent !important;
 					}
 
-					.home-policy .content-center,
+					.home-policy .content-center {
+						display: block !important;
+						opacity: 1 !important;
+						visibility: visible !important;
+						padding: 0 10px !important;
+						width: 100% !important;
+						box-sizing: border-box !important;
+					}
+
 					.home-policy .policy-img {
 						display: block !important;
 						opacity: 1 !important;
@@ -19396,7 +19501,8 @@ l1.2-7.1L394.3,34.5z" />
 					}
 
 					.home-policy .policy-img img {
-						max-width: 76% !important;
+						max-width: 100% !important;
+						width: 100% !important;
 						height: auto !important;
 					}
 
@@ -19440,6 +19546,74 @@ l1.2-7.1L394.3,34.5z" />
 
 
 			<!-- ========================= Thư viện hình ảnh======================= -->
+			<style>
+				/* Mobile galleries: horizontal, swipeable carousel instead of a vertical list. */
+				@media screen and (max-width: 1100px) {
+					.picture-library .slide-inner {
+						display: none !important;
+					}
+
+					.picture-library .slide-library,
+					.video-library .slide-library {
+						width: calc(100% - 24px);
+						max-width: none;
+						margin: 0 auto;
+					}
+
+					.picture-library .slidebox-track,
+					.video-library .slidebox-track {
+						overflow-x: auto !important;
+						overflow-y: visible !important;
+						scroll-snap-type: x mandatory;
+						scroll-behavior: smooth;
+						-webkit-overflow-scrolling: touch;
+						touch-action: pan-x;
+						scrollbar-width: none;
+					}
+
+					.picture-library .slidebox-track::-webkit-scrollbar,
+					.video-library .slidebox-track::-webkit-scrollbar {
+						display: none;
+					}
+
+					.picture-library .library-box .slidebox-list,
+					.video-library .library-box .slidebox-list {
+						display: flex !important;
+						width: 100%;
+						height: auto;
+						gap: 0;
+						padding: 0 0 12px;
+						transform: none !important;
+					}
+
+					.picture-library .item-album.slidebox-item,
+					.video-library .item-video.slidebox-item {
+						flex: 0 0 100%;
+						width: 100% !important;
+						margin: 0 !important;
+						scroll-snap-align: start;
+					}
+
+					.picture-library .pic-library,
+					.video-library .pic-library {
+						width: 100%;
+						height: auto;
+						aspect-ratio: 16 / 9;
+					}
+
+					.picture-library .pic-library .pic-img,
+					.video-library .pic-library .pic-img {
+						height: 100%;
+					}
+
+					.picture-library .library-box .pic-img img,
+					.video-library .library-box .pic-img img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+				}
+			</style>
 			<div class="group-central library picture-library light" data-name="picture-library"
 				data-href="https://thegio.vn/thu-vien/hinh-anh.html" data-hrefen="https://thegio.vn/library/albums.html"
 				data-hrefvi="https://thegio.vn/thu-vien/hinh-anh.html" data-title="Hình ảnh"
@@ -19451,7 +19625,7 @@ l1.2-7.1L394.3,34.5z" />
 					<div class="text-decor column col-bottom ani-item"></div>
 					<div class="content-center column col-short">
 						<div class="title-main break white-text ani-item">
-							<h2 class="text-ani-item">Hình ảnh</h2>
+							<h2 class="text-ani-item section-title-standard">Hình ảnh</h2>
 						</div>
 					</div>
 					<div class="library-box library-box-album">
@@ -19646,7 +19820,7 @@ l1.2-7.1L394.3,34.5z" />
 					<div class="text-decor column col-bottom ani-item"></div>
 					<div class="content-center column col-short">
 						<div class="title-main break white-text ani-item">
-							<h2 class="text-ani-item">Video</h2>
+							<h2 class="text-ani-item section-title-standard">Video</h2>
 						</div>
 					</div>
 					<div class="library-box library-box-album">
@@ -19781,6 +19955,53 @@ l1.2-7.1L394.3,34.5z" />
 					</div>
 				</div>
 			</div>
+			<script>
+				// Auto-scroll the mobile image and video carousels every 3 seconds.
+				document.addEventListener('DOMContentLoaded', function () {
+					if (!window.matchMedia('(max-width: 1100px)').matches) return;
+
+					document.querySelectorAll('.picture-library .slidebox-track, .video-library .slidebox-track').forEach(function (track) {
+						// The original lazy-loader only observes vertically visible items.
+						// Load every carousel image so an off-screen slide never stays blank.
+						track.querySelectorAll('img.lazy[data-src]').forEach(function (image) {
+							if (!image.getAttribute('src')) {
+								image.setAttribute('src', image.dataset.src);
+							}
+							image.classList.remove('lazy');
+						});
+
+						var items = track.querySelectorAll('.slidebox-item');
+						if (items.length < 2) return;
+
+						var timer;
+						function getStep() {
+							var item = items[0];
+							var list = track.querySelector('.slidebox-list');
+							var styles = window.getComputedStyle(list);
+							var gap = parseFloat(styles.columnGap || styles.gap) || 0;
+							return item.getBoundingClientRect().width + gap;
+						}
+
+						function nextSlide() {
+							var step = getStep();
+							if (!step) return;
+							var isLast = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+							track.scrollTo({ left: isLast ? 0 : track.scrollLeft + step, behavior: 'smooth' });
+						}
+
+						function start() {
+							clearInterval(timer);
+							timer = setInterval(nextSlide, 3000);
+						}
+
+						track.addEventListener('touchstart', function () { clearInterval(timer); }, { passive: true });
+						track.addEventListener('touchend', start, { passive: true });
+						track.addEventListener('mouseenter', function () { clearInterval(timer); });
+						track.addEventListener('mouseleave', start);
+						start();
+					});
+				});
+			</script>
 			<div class="group-central library brochure-library dark" data-name="brochure-library"
 				data-href="https://thegio.vn/thu-vien/e-catalogue.html"
 				data-hrefen="https://thegio.vn/library/e-catalogue-.html"
@@ -20025,6 +20246,56 @@ l1.2-7.1L394.3,34.5z" />
 					}
 
 					@media (max-width: 768px) {
+						.news-homepage .content-center {
+							padding: 0 20px;
+						}
+
+						/* Mobile: card dọc để ảnh và nội dung có đủ không gian hiển thị. */
+						.news-homepage .news-track .link-page {
+							padding: 0;
+							background: rgba(255, 255, 255, 0.14) !important;
+							border: 1px solid rgba(255, 255, 255, 0.18);
+							border-radius: 14px;
+							overflow: hidden;
+							box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+						}
+
+						.news-homepage .news-track .link-page .box-news {
+							display: block !important;
+						}
+
+						.news-homepage .news-track .link-page .pic-thumb {
+							width: 100%;
+							height: clamp(155px, 52vw, 210px);
+							aspect-ratio: auto;
+						}
+
+						.news-homepage .news-track .link-page .pic-thumb .pic-img,
+						.news-homepage .news-track .link-page .pic-thumb .pic-img img {
+							height: 100% !important;
+						}
+
+						.news-homepage .news-track .link-page .head-text {
+							width: 100%;
+							min-height: 0;
+							padding: 14px 16px 16px;
+							box-sizing: border-box;
+						}
+
+						.news-homepage .news-track .link-page .date-thumb {
+							margin: 0 0 10px;
+							padding: 0.55rem 0.7rem;
+							font-size: 0.72rem;
+						}
+
+						.news-homepage .news-track .link-page .head-text h3 {
+							padding: 0;
+							margin: 0;
+							font-size: 0.95rem;
+							line-height: 1.45;
+							-webkit-line-clamp: 3;
+						}
+
 						.news-header {
 							flex-direction: column;
 							align-items: center;
@@ -20042,6 +20313,10 @@ l1.2-7.1L394.3,34.5z" />
 							width: 100%;
 							min-width: 100%;
 						}
+
+						.news-title h2 {
+							font-size: 24px;
+						}
 					}
 				</style>
 
@@ -20053,7 +20328,7 @@ l1.2-7.1L394.3,34.5z" />
 					<div class="content-center">
 						<div class="news-header">
 							<div class="news-title">
-								<h2>Tin tức</h2>
+								<h2 class="section-title-standard">Tin tức</h2>
 							</div>
 						</div>
 						<div class="news-carousel-container">
@@ -20370,7 +20645,6 @@ l1.2-7.1L394.3,34.5z" />
 						z-index: 2;
 						max-width: 1360px;
 						margin: 0 auto;
-						padding: 0 40px;
 						box-sizing: border-box;
 					}
 
@@ -20501,9 +20775,6 @@ l1.2-7.1L394.3,34.5z" />
 					}
 
 					@media (max-width: 768px) {
-						.progress-content {
-							padding: 0 20px;
-						}
 
 						.progress-item {
 							min-width: 100%;
@@ -20541,7 +20812,7 @@ l1.2-7.1L394.3,34.5z" />
 				<div class="progress-content ani-item">
 					<div class="progress-header">
 						<div class="progress-title">
-							<h2>Cập nhật tiến độ mới nhất</h2>
+							<h2 class="section-title-standard">Cập nhật tiến độ mới nhất</h2>
 						</div>
 						<div class="progress-controls">
 							<button class="progress-btn" id="progressPrev">
@@ -20961,12 +21232,17 @@ l1.2-7.1L394.3,34.5z" />
 					<div class="showroom-header">
 						<div class="showroom-title-box">
 							<div class="showroom-title">
-								<h2>Nhà mẫu</h2>
+								<h2 class="section-title-standard">Nhà mẫu</h2>
 							</div>
 							<div class="showroom-desc">
-								<p>Căn hộ ven sông The Gió Riverside Dĩ An Bình Dương với lối thiết kế hài hòa, ứng dụng phong cách harmonious living tạo nên không gian cân bằng tính thẩm mỹ, công năng và thiên nhiên.</p>
-								<p>Căn hộ được thiết kế tối ưu diện tích với nhiều không gian như phòng khách có ban công kiểu Juliette (không nhô ra khỏi tòa nhà), 2 phòng ngủ và 2 WC, khu vực bếp, lô-gia rộng rãi.</p>
-								<p>Đặc biệt, căn hộ được Chủ đầu tư An Gia tinh tế sử dụng màu sắc sáng ấm, trung tính tạo cảm giác dễ chịu.</p>
+								<p>Căn hộ ven sông The Gió Riverside Dĩ An Bình Dương với lối thiết kế hài hòa, ứng dụng
+									phong cách harmonious living tạo nên không gian cân bằng tính thẩm mỹ, công năng và
+									thiên nhiên.</p>
+								<p>Căn hộ được thiết kế tối ưu diện tích với nhiều không gian như phòng khách có ban
+									công kiểu Juliette (không nhô ra khỏi tòa nhà), 2 phòng ngủ và 2 WC, khu vực bếp,
+									lô-gia rộng rãi.</p>
+								<p>Đặc biệt, căn hộ được Chủ đầu tư An Gia tinh tế sử dụng màu sắc sáng ấm, trung tính
+									tạo cảm giác dễ chịu.</p>
 							</div>
 						</div>
 						<div class="showroom-controls">
@@ -21132,390 +21408,429 @@ l1.2-7.1L394.3,34.5z" />
 			</div>
 
 			<!-- ========================== Liên hệ ========================= -->
-		</div>
-		<div class="group-central home-contact light" data-name="home-contact">
-			<div class="slide-inner">
-				<div class="bg-inner"></div>
-			</div>
-			<div class="content-main layout-move">
+			<style>
+				/* Mobile fallback: keep the showroom and contact sections in normal document flow.
+			   This avoids the 100vh slider clipping the Contact section after the showroom. */
+				@media screen and (max-width: 1100px) {
+					.box-slider {
+						height: auto !important;
+						overflow: visible !important;
+					}
+
+					.box-slider .group-central.home-showroom {
+						height: auto !important;
+						min-height: 0 !important;
+						overflow: visible !important;
+					}
+
+					.box-slider .group-central.home-contact {
+						position: relative !important;
+						display: block !important;
+						height: auto !important;
+						min-height: 100vh !important;
+						overflow: visible !important;
+						opacity: 1 !important;
+						pointer-events: auto !important;
+						background: var(--color-bg-gradient) !important;
+					}
+
+					.box-slider .group-central.home-contact .content-main {
+						position: relative !important;
+						height: auto !important;
+						min-height: 100vh !important;
+						padding: 4rem 0 !important;
+						overflow: visible !important;
+					}
+				}
+			</style>
+			<div class="group-central home-contact light" data-name="home-contact">
+				<div class="slide-inner">
+					<div class="bg-inner"></div>
+				</div>
+				<div class="content-main layout-move">
 
 
-				<!-- Block 2: Chuyên viên tư vấn -->
-				<div class="contact-agents-section home-news ani-item" style="width: 100%; margin-bottom: 3rem;">
-					<div class="content-center">
-						<div class="title-main break white-text column col-short">
-							<h2 class="text-ani-item"
-								style="font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; text-align: center; margin-bottom: 2rem; letter-spacing: 1px;">
-								Chuyên viên tư vấn</h2>
-						</div>
+					<!-- Block 2: Chuyên viên tư vấn -->
+					<div class="contact-agents-section home-news ani-item" style="width: 100%; margin-bottom: 3rem;">
+						<div class="content-center">
+							<div class="title-main break white-text column col-short">
+								<h2 class="text-ani-item section-title-standard"
+									style="font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; text-align: center; margin-bottom: 2rem; letter-spacing: 1px;">
+									Chuyên viên tư vấn</h2>
+							</div>
 
-						<style>
-							/* Override default flexbox layout để title lên trên */
-							.home-news .content-center {
-								display: block !important;
-								width: 100% !important;
-								margin: 0 !important;
-								text-align: center !important;
-							}
+							<style>
+								/* Override default flexbox layout để title lên trên */
+								.home-news .content-center {
+									display: block !important;
+									width: 100% !important;
+									margin: 0 !important;
+									text-align: center !important;
+								}
 
-							.home-news .title-main {
-								width: 100% !important;
-								margin-bottom: 3rem !important;
-							}
+								.home-news .title-main {
+									width: 100% !important;
+									margin-bottom: 3rem !important;
+								}
 
-							/* Professional Team Layout - 3 Equal Rectangle Cards */
-							.home-news .wrap-news {
-								display: flex;
-								gap: 2rem;
-								max-width: 1200px;
-								margin: -2rem auto 0;
-								justify-content: center;
-								align-items: flex-start;
-								padding: 0 2rem;
-								position: relative !important;
-								width: 100% !important;
-							}
-
-							.home-news .item-news-home {
-								flex: 1 1 0 !important;
-								width: 100% !important;
-								max-width: 380px !important;
-								min-width: 350px !important;
-								background: transparent !important;
-								border: none !important;
-								border-radius: 12px !important;
-								padding: 1.5rem !important;
-								text-align: center !important;
-								display: flex !important;
-								flex-direction: column !important;
-								align-items: center !important;
-								min-height: 480px !important;
-								height: auto !important;
-							}
-
-							.home-news .box-news {
-								flex-direction: column;
-								align-items: center;
-								text-align: center;
-								width: 100%;
-								height: 100%;
-							}
-
-							.home-news .pic-news-home {
-								border-radius: 12px !important;
-								width: auto !important;
-								height: auto !important;
-								display: block !important;
-								margin: 0 auto 1rem !important;
-								flex-shrink: 0 !important;
-								max-width: 100% !important;
-								overflow: visible !important;
-							}
-
-							.home-news .txt-news-home {
-								flex: 1;
-								display: flex;
-								flex-direction: column;
-								align-items: center;
-								padding: 1rem 0.5rem;
-								margin: 0;
-								width: 100%;
-								max-width: 100%;
-								height: auto;
-								text-align: center;
-								position: relative;
-							}
-
-							.home-news .txt-news-home h3 {
-								font-size: 1.1rem !important;
-								font-weight: 700 !important;
-								margin-bottom: 1.2rem !important;
-								text-transform: none !important;
-								color: white !important;
-								line-height: 1.4 !important;
-								text-align: center !important;
-								letter-spacing: 1px !important;
-							}
-
-							.home-news .txt-news-home p {
-								font-size: 0.9rem !important;
-								line-height: 1.6 !important;
-								color: white !important;
-								margin: 0 !important;
-								text-align: center !important;
-								font-style: normal !important;
-								padding: 0 0.5rem !important;
-								word-break: normal !important;
-								white-space: normal !important;
-								overflow-wrap: normal !important;
-							}
-
-							@media (max-width: 768px) {
+								/* Professional Team Layout - 3 Equal Rectangle Cards */
 								.home-news .wrap-news {
-									flex-direction: column;
-									gap: 1.5rem;
-									max-width: 400px;
-									padding: 0 1rem;
+									display: flex;
+									gap: 2rem;
+									max-width: 1200px;
+									margin: -2rem auto 0;
+									justify-content: center;
+									align-items: flex-start;
+									padding: 0 2rem;
+									position: relative !important;
+									width: 100% !important;
 								}
 
 								.home-news .item-news-home {
-									max-width: 100%;
-									min-height: 300px;
-								}
-
-								.home-news .pic-news-home {
-									height: 150px;
-								}
-
-								.home-news .txt-news-home h3 {
-									font-size: 1.1rem;
-								}
-
-								.home-news .txt-news-home p {
-									font-size: 0.85rem;
-								}
-							}
-
-							.staff-info {
-								background: transparent;
-								border-radius: 8px;
-								width: 100%;
-								margin: 0;
-								min-height: 120px;
-								padding: 1rem;
-								display: flex;
-								align-items: center;
-								justify-content: center;
-								box-sizing: border-box;
-								text-align: center;
-							}
-
-							.staff-info p {
-								font-size: 0.8rem !important;
-								line-height: 1.4 !important;
-								color: white !important;
-								margin: 0 !important;
-								text-align: center !important;
-								font-style: italic !important;
-								padding: 0 !important;
-								word-break: normal !important;
-								white-space: normal !important;
-								overflow-wrap: break-word !important;
-								display: block !important;
-								width: 100% !important;
-								hyphens: auto !important;
-							}
-
-							.home-news .item-news-home {
-								flex: 1 1 0 !important;
-								width: 100% !important;
-								max-width: 380px !important;
-								min-width: 300px !important;
-								background: transparent !important;
-								border: none !important;
-								border-radius: 12px !important;
-								padding: 1rem !important;
-								text-align: center !important;
-								display: flex !important;
-								flex-direction: column !important;
-								align-items: center !important;
-								min-height: auto !important;
-								height: auto !important;
-							}
-
-							@media (max-width: 768px) {
-								.home-news .content-center>div:first-child {
-									margin-bottom: 1.5rem !important;
-								}
-
-								.home-news .content-center>div:first-child h2 {
-									font-size: 2rem !important;
-									margin-bottom: 0 !important;
-								}
-
-								.home-news .wrap-news {
+									flex: 1 1 0 !important;
+									width: 100% !important;
+									max-width: 380px !important;
+									min-width: 350px !important;
+									background: transparent !important;
+									border: none !important;
+									border-radius: 12px !important;
+									padding: 1.5rem !important;
+									text-align: center !important;
 									display: flex !important;
 									flex-direction: column !important;
-									gap: 2rem !important;
-									width: 100% !important;
-									max-width: 100% !important;
-									margin: 0 auto !important;
-									padding: 0 1rem !important;
-									position: relative !important;
-									z-index: 1 !important;
-								}
-
-								.home-news .item-news-home {
-									position: relative !important;
-									width: 100% !important;
-									max-width: 100% !important;
-									min-height: auto !important;
-									height: auto !important;
-									padding: 1.5rem !important;
-									margin: 0 !important;
-									background: rgba(255, 255, 255, 0.1) !important;
-									border-radius: 15px !important;
-									display: flex !important;
-									flex-direction: row !important;
 									align-items: center !important;
-									gap: 1.5rem !important;
-									flex: none !important;
-									transform: none !important;
-									left: auto !important;
-									top: auto !important;
+									min-height: 480px !important;
+									height: auto !important;
 								}
 
 								.home-news .box-news {
-									width: 100% !important;
-									height: auto !important;
-									display: flex !important;
-									flex-direction: row !important;
-									align-items: center !important;
-									padding: 0 !important;
-									margin: 0 !important;
+									flex-direction: column;
+									align-items: center;
+									text-align: center;
+									width: 100%;
+									height: 100%;
 								}
 
 								.home-news .pic-news-home {
-									width: auto !important;
-									min-width: 140px !important;
-									height: auto !important;
-									max-width: 140px !important;
 									border-radius: 12px !important;
-									overflow: visible !important;
+									width: auto !important;
+									height: auto !important;
+									display: block !important;
+									margin: 0 auto 1rem !important;
 									flex-shrink: 0 !important;
-									position: relative !important;
-								}
-
-								.home-news .pic-news-home img {
-									width: auto !important;
-									height: auto !important;
 									max-width: 100% !important;
-									object-fit: contain !important;
-									border-radius: 12px !important;
+									overflow: visible !important;
 								}
 
 								.home-news .txt-news-home {
-									flex: 1 !important;
-									text-align: left !important;
-									padding: 0 !important;
-									margin: 0 !important;
+									flex: 1;
+									display: flex;
+									flex-direction: column;
+									align-items: center;
+									padding: 1rem 0.5rem;
+									margin: 0;
+									width: 100%;
+									max-width: 100%;
+									height: auto;
+									text-align: center;
+									position: relative;
 								}
 
 								.home-news .txt-news-home h3 {
 									font-size: 1.1rem !important;
-									font-weight: 600 !important;
+									font-weight: 700 !important;
+									margin-bottom: 1.2rem !important;
+									text-transform: none !important;
 									color: white !important;
-									margin: 0 0 0.5rem 0 !important;
-									padding: 0 !important;
-									line-height: 1.3 !important;
-								}
-
-								.home-news .staff-info {
-									margin: 0 !important;
-									padding: 0 !important;
-								}
-
-								.home-news .staff-info p {
-									font-size: 0.9rem !important;
 									line-height: 1.4 !important;
-									color: rgba(255, 255, 255, 0.9) !important;
-									margin: 0 !important;
-									padding: 0 !important;
+									text-align: center !important;
+									letter-spacing: 1px !important;
 								}
-							}
-						</style>
 
-						<script>
-							function matchTextWidthToImage() {
-								setTimeout(() => {
-									const items = document.querySelectorAll('.home-news .item-news-home');
-									items.forEach(item => {
-										const img = item.querySelector('.pic-news-home img');
-										const textContainer = item.querySelector('.txt-news-home');
-										if (img && textContainer && img.offsetWidth > 0) {
-											const imgWidth = img.offsetWidth;
-											textContainer.style.width = imgWidth + 'px';
-											textContainer.style.maxWidth = imgWidth + 'px';
-											const staffInfo = textContainer.querySelector('.staff-info');
-											if (staffInfo) {
-												staffInfo.style.width = imgWidth + 'px';
-												staffInfo.style.maxWidth = imgWidth + 'px';
+								.home-news .txt-news-home p {
+									font-size: 0.9rem !important;
+									line-height: 1.6 !important;
+									color: white !important;
+									margin: 0 !important;
+									text-align: center !important;
+									font-style: normal !important;
+									padding: 0 0.5rem !important;
+									word-break: normal !important;
+									white-space: normal !important;
+									overflow-wrap: normal !important;
+								}
+
+								@media (max-width: 768px) {
+									.home-news .wrap-news {
+										flex-direction: column;
+										gap: 1.5rem;
+										max-width: 400px;
+										padding: 0 1rem;
+									}
+
+									.home-news .item-news-home {
+										max-width: 100%;
+										min-height: 300px;
+									}
+
+									.home-news .pic-news-home {
+										height: 150px;
+									}
+
+									.home-news .txt-news-home h3 {
+										font-size: 1.1rem;
+									}
+
+									.home-news .txt-news-home p {
+										font-size: 0.85rem;
+									}
+								}
+
+								.staff-info {
+									background: transparent;
+									border-radius: 8px;
+									width: 100%;
+									margin: 0;
+									min-height: 120px;
+									padding: 1rem;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									box-sizing: border-box;
+									text-align: center;
+								}
+
+								.staff-info p {
+									font-size: 0.8rem !important;
+									line-height: 1.4 !important;
+									color: white !important;
+									margin: 0 !important;
+									text-align: center !important;
+									font-style: italic !important;
+									padding: 0 !important;
+									word-break: normal !important;
+									white-space: normal !important;
+									overflow-wrap: break-word !important;
+									display: block !important;
+									width: 100% !important;
+									hyphens: auto !important;
+								}
+
+								.home-news .item-news-home {
+									flex: 1 1 0 !important;
+									width: 100% !important;
+									max-width: 380px !important;
+									min-width: 300px !important;
+									background: transparent !important;
+									border: none !important;
+									border-radius: 12px !important;
+									padding: 1rem !important;
+									text-align: center !important;
+									display: flex !important;
+									flex-direction: column !important;
+									align-items: center !important;
+									min-height: auto !important;
+									height: auto !important;
+								}
+
+								@media (max-width: 768px) {
+									.home-news .content-center>div:first-child {
+										margin-bottom: 1.5rem !important;
+									}
+
+									.home-news .content-center>div:first-child h2 {
+										font-size: 2rem !important;
+										margin-bottom: 0 !important;
+									}
+
+									.home-news .wrap-news {
+										display: flex !important;
+										flex-direction: column !important;
+										gap: 2rem !important;
+										width: 100% !important;
+										max-width: 100% !important;
+										margin: 0 auto !important;
+										padding: 0 1rem !important;
+										position: relative !important;
+										z-index: 1 !important;
+									}
+
+									.home-news .item-news-home {
+										position: relative !important;
+										width: 100% !important;
+										max-width: 100% !important;
+										min-height: auto !important;
+										height: auto !important;
+										padding: 1.5rem !important;
+										margin: 0 !important;
+										background: rgba(255, 255, 255, 0.1) !important;
+										border-radius: 15px !important;
+										display: flex !important;
+										flex-direction: row !important;
+										align-items: center !important;
+										gap: 1.5rem !important;
+										flex: none !important;
+										transform: none !important;
+										left: auto !important;
+										top: auto !important;
+									}
+
+									.home-news .box-news {
+										width: 100% !important;
+										height: auto !important;
+										display: flex !important;
+										flex-direction: row !important;
+										align-items: center !important;
+										padding: 0 !important;
+										margin: 0 !important;
+									}
+
+									.home-news .pic-news-home {
+										width: auto !important;
+										min-width: 140px !important;
+										height: auto !important;
+										max-width: 140px !important;
+										border-radius: 12px !important;
+										overflow: visible !important;
+										flex-shrink: 0 !important;
+										position: relative !important;
+									}
+
+									.home-news .pic-news-home img {
+										width: auto !important;
+										height: auto !important;
+										max-width: 100% !important;
+										object-fit: contain !important;
+										border-radius: 12px !important;
+									}
+
+									.home-news .txt-news-home {
+										flex: 1 !important;
+										text-align: left !important;
+										padding: 0 !important;
+										margin: 0 !important;
+									}
+
+									.home-news .txt-news-home h3 {
+										font-size: 1.1rem !important;
+										font-weight: 600 !important;
+										color: white !important;
+										margin: 0 0 0.5rem 0 !important;
+										padding: 0 !important;
+										line-height: 1.3 !important;
+									}
+
+									.home-news .staff-info {
+										margin: 0 !important;
+										padding: 0 !important;
+									}
+
+									.home-news .staff-info p {
+										font-size: 0.9rem !important;
+										line-height: 1.4 !important;
+										color: rgba(255, 255, 255, 0.9) !important;
+										margin: 0 !important;
+										padding: 0 !important;
+									}
+								}
+							</style>
+
+							<script>
+								function matchTextWidthToImage() {
+									setTimeout(() => {
+										const items = document.querySelectorAll('.home-news .item-news-home');
+										items.forEach(item => {
+											const img = item.querySelector('.pic-news-home img');
+											const textContainer = item.querySelector('.txt-news-home');
+											if (img && textContainer && img.offsetWidth > 0) {
+												const imgWidth = img.offsetWidth;
+												textContainer.style.width = imgWidth + 'px';
+												textContainer.style.maxWidth = imgWidth + 'px';
+												const staffInfo = textContainer.querySelector('.staff-info');
+												if (staffInfo) {
+													staffInfo.style.width = imgWidth + 'px';
+													staffInfo.style.maxWidth = imgWidth + 'px';
+												}
+												const title = textContainer.querySelector('h3');
+												if (title) {
+													title.style.width = imgWidth + 'px';
+													title.style.maxWidth = imgWidth + 'px';
+												}
 											}
-											const title = textContainer.querySelector('h3');
-											if (title) {
-												title.style.width = imgWidth + 'px';
-												title.style.maxWidth = imgWidth + 'px';
-											}
-										}
-									});
-								}, 500);
-							}
-							document.addEventListener('DOMContentLoaded', matchTextWidthToImage);
-							window.addEventListener('resize', matchTextWidthToImage);
-							if (document.readyState === 'loading') {
+										});
+									}, 500);
+								}
 								document.addEventListener('DOMContentLoaded', matchTextWidthToImage);
-							} else {
-								matchTextWidthToImage();
-							}
-						</script>
+								window.addEventListener('resize', matchTextWidthToImage);
+								if (document.readyState === 'loading') {
+									document.addEventListener('DOMContentLoaded', matchTextWidthToImage);
+								} else {
+									matchTextWidthToImage();
+								}
+							</script>
 
-						<div class="wrap-news">
-							<!-- CARD 1: Mr. LÊ HIẾU -->
-							<div class="item-news-home ani-item">
-								<div class="box-news">
-									<div class="pic-news-home">
-										<img src="./img-agents/mr._le_hieu_-_web.jpg" alt="Mr. Lê Hiếu"
-											style="width: auto; height: auto; max-width: 140%; object-fit: contain; border-radius: 8px;">
+							<div class="wrap-news">
+								<!-- CARD 1: Mr. LÊ HIẾU -->
+								<div class="item-news-home ani-item">
+									<div class="box-news">
+										<div class="pic-news-home">
+											<img src="./img-agents/mr._le_hieu_-_web.jpg" alt="Mr. Lê Hiếu"
+												style="width: auto; height: auto; max-width: 140%; object-fit: contain; border-radius: 8px;">
+										</div>
+										<div class="txt-news-home white-text">
+											<h3>Mr. LÊ HIẾU</h3>
+											<div class="staff-info">
+												<p>"Sales Inhouse trực thuộc Chủ đầu tư An Gia. Từng tham gia phân phối
+													thành công nhiều dự án tiêu biểu như Westgate, The Sóng, River
+													Panorama,
+													Sky89…"</p>
+											</div>
+										</div>
 									</div>
-									<div class="txt-news-home white-text">
-										<h3>Mr. LÊ HIẾU</h3>
-										<div class="staff-info">
-											<p>"Sales Inhouse trực thuộc Chủ đầu tư An Gia. Từng tham gia phân phối
-												thành công nhiều dự án tiêu biểu như Westgate, The Sóng, River Panorama,
-												Sky89…"</p>
+								</div>
+
+								<!-- CARD 2: Ms. HẢI TRÂN -->
+								<div class="item-news-home ani-item">
+									<div class="box-news">
+										<div class="pic-news-home">
+											<img src="./img-agents/ms._hai_tran_-_web.jpg" alt="Ms. Hải Trân"
+												style="width: auto; height: auto; max-width: 140%; object-fit: contain; border-radius: 8px;">
+										</div>
+										<div class="txt-news-home white-text">
+											<h3>Ms. HẢI TRÂN</h3>
+											<div class="staff-info">
+												<p>"Cử nhân Kinh tế Đối ngoại, Thạc sĩ Bất động sản. Được đào tạo chuyên
+													sâu
+													tại Thái Lan, hiện là Ủy viên Ban Đào tạo VARS. Sales Inhouse trực
+													thuộc
+													Chủ đầu tư An Gia."</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- CARD 3: Mr. ĐÌNH TIẾN -->
+								<div class="item-news-home ani-item">
+									<div class="box-news">
+										<div class="pic-news-home">
+											<img src="./img-agents/mr._tien_-_web.jpg" alt="Mr. Đình Tiến"
+												style="width: auto; height: auto; max-width: 140%; object-fit: contain; border-radius: 8px;">
+										</div>
+										<div class="txt-news-home white-text">
+											<h3>Mr. ĐÌNH TIẾN</h3>
+											<div class="staff-info">
+												<p>"Phó Chánh Văn phòng Hội Môi giới Bất động sản Việt Nam (Chánh Văn
+													phòng
+													VARS Miền Nam), Người kết nối thông tin BĐS, Chuyên gia chuyển đổi
+													số
+													doanh nghiệp BĐS."</p>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<!-- CARD 2: Ms. HẢI TRÂN -->
-							<div class="item-news-home ani-item">
-								<div class="box-news">
-									<div class="pic-news-home">
-										<img src="./img-agents/ms._hai_tran_-_web.jpg" alt="Ms. Hải Trân"
-											style="width: auto; height: auto; max-width: 140%; object-fit: contain; border-radius: 8px;">
-									</div>
-									<div class="txt-news-home white-text">
-										<h3>Ms. HẢI TRÂN</h3>
-										<div class="staff-info">
-											<p>"Cử nhân Kinh tế Đối ngoại, Thạc sĩ Bất động sản. Được đào tạo chuyên sâu
-												tại Thái Lan, hiện là Ủy viên Ban Đào tạo VARS. Sales Inhouse trực thuộc
-												Chủ đầu tư An Gia."</p>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- CARD 3: Mr. ĐÌNH TIẾN -->
-							<div class="item-news-home ani-item">
-								<div class="box-news">
-									<div class="pic-news-home">
-										<img src="./img-agents/mr._tien_-_web.jpg" alt="Mr. Đình Tiến"
-											style="width: auto; height: auto; max-width: 140%; object-fit: contain; border-radius: 8px;">
-									</div>
-									<div class="txt-news-home white-text">
-										<h3>Mr. ĐÌNH TIẾN</h3>
-										<div class="staff-info">
-											<p>"Phó Chánh Văn phòng Hội Môi giới Bất động sản Việt Nam (Chánh Văn phòng
-												VARS Miền Nam), Người kết nối thông tin BĐS, Chuyên gia chuyển đổi số
-												doanh nghiệp BĐS."</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- <div class="wrap-view-more white-text column col-short ani-item" data-id="filter-text"
+							<!-- <div class="wrap-view-more white-text column col-short ani-item" data-id="filter-text"
 							style="margin-top: 2rem;">
 							<a class="view-more blue link-load" href="https://angia.org.vn/tin-tuc.html"
 								aria-label="link-load">
@@ -21523,156 +21838,311 @@ l1.2-7.1L394.3,34.5z" />
 								<svg class="icon-button" viewBox="0 0 100 100"></svg>
 							</a>
 						</div> -->
+						</div>
 					</div>
-				</div>
 
-				<!-- Block 1: Những dự án nổi bật -->
-				<div class="contact-projects-section ani-item">
-					<div class="title-main break white-text column col-short">
-						<h2 class="text-ani-item"
-							style="font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; text-align: center; margin-bottom: 2rem; letter-spacing: 1px;">
-							Những dự án nổi bật</h2>
+					<!-- Block 1: Những dự án nổi bật -->
+					<div class="contact-projects-section ani-item">
+						<div class="title-main break white-text column col-short">
+							<h2 class="text-ani-item"
+								style="font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; text-align: center; margin-bottom: 2rem; letter-spacing: 1px;">
+								Những dự án nổi bật</h2>
+						</div>
+						<div class="projects-list-horizontal">
+							<div class="project-item">
+								<svg class="ta-icon" style="fill: none; stroke: currentColor; stroke-width: 2;"
+									viewBox="0 0 24 24">
+									<path d="M12 2L2 9l10 13 10-13-10-7z M2 9h20 M12 2v20 M7 9l5 13 5-13" />
+								</svg>
+								<a href="https://angia.org.vn/vi-tri-nha-mau.html">Khu Đô Thị Eco Retreat Long An</a>
+							</div>
+							<div class="project-item">
+								<svg class="ta-icon" style="fill: none; stroke: currentColor; stroke-width: 2;"
+									viewBox="0 0 24 24">
+									<path d="M12 2L2 9l10 13 10-13-10-7z M2 9h20 M12 2v20 M7 9l5 13 5-13" />
+								</svg>
+								<a href="https://angia.org.vn/">The Gió Riverside</a>
+							</div>
+							<div class="project-item">
+								<svg class="ta-icon" style="fill: none; stroke: currentColor; stroke-width: 2;"
+									viewBox="0 0 24 24">
+									<path d="M12 2L2 9l10 13 10-13-10-7z M2 9h20 M12 2v20 M7 9l5 13 5-13" />
+								</svg>
+								<a href="https://angia.org.vn/vi-tri-nha-mau.html">Vinhomes Green Paradise</a>
+							</div>
+						</div>
 					</div>
-					<div class="projects-list-horizontal">
-						<div class="project-item">
-							<svg class="ta-icon" style="fill: none; stroke: currentColor; stroke-width: 2;"
-								viewBox="0 0 24 24">
-								<path d="M12 2L2 9l10 13 10-13-10-7z M2 9h20 M12 2v20 M7 9l5 13 5-13" />
-							</svg>
-							<a href="https://angia.org.vn/vi-tri-nha-mau.html">Khu Đô Thị Eco Retreat Long An</a>
-						</div>
-						<div class="project-item">
-							<svg class="ta-icon" style="fill: none; stroke: currentColor; stroke-width: 2;"
-								viewBox="0 0 24 24">
-								<path d="M12 2L2 9l10 13 10-13-10-7z M2 9h20 M12 2v20 M7 9l5 13 5-13" />
-							</svg>
-							<a href="https://angia.org.vn/">The Gió Riverside</a>
-						</div>
-						<div class="project-item">
-							<svg class="ta-icon" style="fill: none; stroke: currentColor; stroke-width: 2;"
-								viewBox="0 0 24 24">
-								<path d="M12 2L2 9l10 13 10-13-10-7z M2 9h20 M12 2v20 M7 9l5 13 5-13" />
-							</svg>
-							<a href="https://angia.org.vn/vi-tri-nha-mau.html">Vinhomes Green Paradise</a>
-						</div>
-					</div>
-				</div>
 
-				<div class="box-contact-main">
-					<div class="partner-info white-text column ani-item">
-						<h2>Đầu tư và phát triển bởi</h2>
-						<div class="item-logo"><img class="lazy"
-								data-src="https://thegio.vn/pictures/catalog/partners/angia-logo.svg"
-								alt="Đầu tư và phát triển bởi" loading="lazy"></div>
-					</div>
-					<div class="partner-info white-text column ani-item">
-						<div class="slidebox slide-logo">
-							<div class="slidebox-track">
-								<div class="slidebox-list">
-									<div class="slidebox-item box-partner">
-										<h3>Đối tác thi công </h3>
-										<div class="logo-partner"> <img
-												src="pictures/catalog/lien-he/Logo-Ricons150x70.png"
-												alt="Đối tác thi công " loading="lazy"> </div>
+					<div class="box-contact-main">
+						<div class="partner-info white-text column ani-item">
+							<h2>Đầu tư và phát triển bởi</h2>
+							<div class="item-logo"><img class="lazy"
+									data-src="https://thegio.vn/pictures/catalog/partners/angia-logo.svg"
+									alt="Đầu tư và phát triển bởi" loading="lazy"></div>
+						</div>
+						<div class="partner-info white-text column ani-item">
+							<div class="slidebox slide-logo">
+								<div class="slidebox-track">
+									<div class="slidebox-list">
+										<div class="slidebox-item box-partner">
+											<h3>Đối tác thi công </h3>
+											<div class="logo-partner"> <img
+													src="pictures/catalog/lien-he/Logo-Ricons150x70.png"
+													alt="Đối tác thi công " loading="lazy"> </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="partner-info white-text column ani-item">
+							<h3>Phân phối & tiếp thị</h3>
+							<div class="slidebox list-logo-marquee auto-scroll">
+								<div class="slidebox-track">
+									<div class="slidebox-list">
+										<div class="slidebox-item item-part">
+											<div class="item-logo"><img src="pictures/catalog/partners/1.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/2.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/3.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/4.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/5.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/6.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/7.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/8.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/9.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/10-1.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/11.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/12.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/13.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/14.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/15.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/16.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/17.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/18.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/19.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/20.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/21.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/22.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/23.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/24.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/25.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/26.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/27.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/28.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/29.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/30.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+											<div class="item-logo"><img src="pictures/catalog/partners/31-1.png"
+													alt="Phân phối & tiếp thị" loading="lazy"></div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="partner-info white-text column ani-item">
-						<h3>Phân phối & tiếp thị</h3>
-						<div class="slidebox list-logo-marquee auto-scroll">
-							<div class="slidebox-track">
-								<div class="slidebox-list">
-									<div class="slidebox-item item-part">
-										<div class="item-logo"><img src="pictures/catalog/partners/1.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/2.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/3.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/4.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/5.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/6.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/7.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/8.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/9.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/10-1.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/11.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/12.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/13.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/14.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/15.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/16.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/17.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/18.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/19.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/20.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/21.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/22.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/23.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/24.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/25.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/26.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/27.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/28.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/29.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/30.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-										<div class="item-logo"><img src="pictures/catalog/partners/31-1.png"
-												alt="Phân phối & tiếp thị" loading="lazy"></div>
-									</div>
-								</div>
-							</div>
+					<div class="company-info white-text ani-item">
+						<h3>TẬP ĐOÀN BẤT ĐỘNG SẢN AN GIA</h3>
+						<div class="box-txt">
+							<p><span class="address"></span>60 Nguyễn Đình Chiểu, Phường Tân Định,
+								TP. Hồ Chí Minh</p>
+							<p><a href="tel:0797096034" target="_blank" rel="noopener nofollow"><span
+										class="element-nhay-giat"><span class="web"></span>Hotline:
+										0797096034</span></a></p>
 						</div>
+						<div class="box-txt"><i>(*) Chúng tôi đặc biệt cẩn trọng trong việc
+								chuẩn bị nội dung trên website này. Các thông tin/hình ảnh/bản
+								vẽ chỉ thể hiện thông số kỹ thuật, tính thẩm mỹ và sự sáng tạo
+								tại thời điểm được đăng tải và mang tính chất tham khảo, không
+								đại diện chính xác cho điều kiện xây dựng thực tế và không mang
+								tính đại diện hay là một phần của hợp đồng.</i></div>
 					</div>
 				</div>
-				<div class="company-info white-text ani-item">
-					<h3>TẬP ĐOÀN BẤT ĐỘNG SẢN AN GIA</h3>
-					<div class="box-txt">
-						<p><span class="address"></span>60 Nguyễn Đình Chiểu, Phường Tân Định,
-							TP. Hồ Chí Minh</p>
-						<p><a href="tel:0797096034" target="_blank" rel="noopener nofollow"><span
-									class="element-nhay-giat"><span class="web"></span>Hotline:
-									0797096034</span></a></p>
-					</div>
-					<div class="box-txt"><i>(*) Chúng tôi đặc biệt cẩn trọng trong việc
-							chuẩn bị nội dung trên website này. Các thông tin/hình ảnh/bản
-							vẽ chỉ thể hiện thông số kỹ thuật, tính thẩm mỹ và sự sáng tạo
-							tại thời điểm được đăng tải và mang tính chất tham khảo, không
-							đại diện chính xác cho điều kiện xây dựng thực tế và không mang
-							tính đại diện hay là một phần của hợp đồng.</i></div>
-				</div>
+				<div class="text-decor ani-item"></div>
 			</div>
-			<div class="text-decor ani-item"></div>
 		</div>
-		</div>
+		<style>
+			/* Legal section in normal flow: background stays behind, content defines its height. */
+			.home-legal {
+				position: relative !important;
+				height: auto !important;
+				min-height: 0 !important;
+				overflow: visible !important;
+				opacity: 1 !important;
+			}
+
+			.home-legal .slide-inner {
+				position: absolute !important;
+				inset: 0;
+				height: 100% !important;
+				z-index: 0 !important;
+			}
+
+			.home-legal .content-main {
+				position: relative !important;
+				height: auto !important;
+				min-height: 0 !important;
+				z-index: 2 !important;
+				visibility: visible !important;
+			}
+
+			.home-legal .ani-item {
+				opacity: 1 !important;
+				transform: none !important;
+			}
+
+			/* Legal carousel uses the same visual system as the Nhà mẫu carousel. */
+			.home-legal .gallery-carousel {
+				width: 100% !important;
+				max-width: 1100px !important;
+				height: auto !important;
+				aspect-ratio: auto !important;
+				border: 0;
+				box-sizing: border-box;
+				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+			}
+
+			.home-legal .gallery-carousel .carousel-track {
+				display: flex !important;
+				gap: 30px;
+				height: auto !important;
+			}
+
+			.home-legal .gallery-carousel .carousel-slide {
+				min-width: 60% !important;
+				height: 550px !important;
+				aspect-ratio: auto;
+				box-sizing: border-box;
+				border: 4px solid #cbb089;
+				border-radius: 4px;
+				overflow: hidden;
+			}
+
+			.home-legal .gallery-carousel .carousel-slide img {
+				width: 100% !important;
+				height: 100% !important;
+				object-fit: cover;
+			}
+
+			.home-legal .gallery-carousel .carousel-prev,
+			.home-legal .gallery-carousel .carousel-next {
+				width: 52px !important;
+				height: 52px !important;
+				border: 2px solid #e2c28d !important;
+				background: rgba(9, 28, 38, 0.9) !important;
+				color: #ffffff !important;
+				font-size: 1.55rem !important;
+				font-weight: 700;
+				opacity: 1 !important;
+				box-shadow: 0 5px 16px rgba(0, 0, 0, 0.45) !important;
+				backdrop-filter: none !important;
+			}
+
+			.home-legal .gallery-carousel .carousel-prev:hover,
+			.home-legal .gallery-carousel .carousel-next:hover {
+				background: #cbb089 !important;
+				color: #ffffff !important;
+			}
+
+			.home-legal .gallery-carousel .carousel-dots {
+				display: none !important;
+			}
+
+			@media screen and (max-width: 1024px) {
+				.home-legal .gallery-carousel .carousel-slide {
+					min-width: calc((100% - 20px) / 1.5) !important;
+					height: 340px !important;
+				}
+			}
+
+			@media screen and (max-width: 768px) {
+				.home-legal .gallery-carousel .carousel-slide {
+					min-width: 100% !important;
+					height: 260px !important;
+				}
+			}
+
+			/* Legal: remove its legacy 2.5rem spacing and keep one consistent carousel gap. */
+			.home-legal .content-center {
+				margin: 0 0 30px !important;
+				padding: 0 !important;
+			}
+
+			.home-legal .box-txt p {
+				margin: 0 !important;
+			}
+
+			/* Final mobile heading rhythm — shared by the sections below and based on Tiện ích. */
+			@media screen and (max-width: 768px) {
+				.home-legal .content-main,
+				.home-policy .content-main {
+					padding: 10vw 5% !important;
+				}
+
+				.picture-library .content-center,
+				.video-library .content-center,
+				.news-homepage .content-center,
+				.showroom-content,
+				.contact-agents-section .content-center {
+					padding: 10vw 5% 0 !important;
+				}
+
+				/* The progress section already has outer spacing; avoid adding a second top gap. */
+				.progress-content {
+					padding: 0 5% !important;
+				}
+
+				.home-legal .title-main,
+				.home-policy .title-main,
+				.picture-library .title-main,
+				.video-library .title-main,
+				.news-header,
+				.progress-header,
+				.showroom-header,
+				.contact-agents-section .title-main {
+					margin: 0 0 30px !important;
+					padding: 0 !important;
+				}
+
+				/* Keep carousel spacing consistent: the gap comes only from its heading block. */
+				.progress-wrapper,
+				.home-legal .gallery-carousel {
+					margin-top: 0 !important;
+					padding-top: 0 !important;
+				}
+
+				.home-legal .content-center {
+					margin-bottom: 30px !important;
+				}
+			}
+		</style>
 	</main>
 
 
@@ -22155,13 +22625,21 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 				const prevBtn = carousel.querySelector(".carousel-prev");
 				const nextBtn = carousel.querySelector(".carousel-next");
 				const dots = Array.from(carousel.querySelectorAll(".carousel-dot"));
+				const isLegalCarousel = carousel.closest(".home-legal") !== null;
 				let currentIndex = 0;
 				let startX = 0;
 				let isDragging = false;
 				let autoSlideInterval;
 
 				const updateCarousel = (index) => {
-					track.style.transform = `translateX(-${index * 100}%)`;
+					if (isLegalCarousel) {
+						const styles = window.getComputedStyle(track);
+						const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+						const step = slides[0].getBoundingClientRect().width + gap;
+						track.style.transform = `translateX(-${index * step}px)`;
+					} else {
+						track.style.transform = `translateX(-${index * 100}%)`;
+					}
 					dots.forEach((dot, idx) => {
 						if (idx === index) {
 							dot.classList.add("active");
@@ -22246,6 +22724,7 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 				// Pause auto-slide when mouse enters, resume when leaves
 				carousel.addEventListener("mouseenter", stopAutoSlide);
 				carousel.addEventListener("mouseleave", startAutoSlide);
+				window.addEventListener("resize", () => updateCarousel(currentIndex));
 
 				// Start auto-slide initially
 				startAutoSlide();
