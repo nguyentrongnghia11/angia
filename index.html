@@ -708,8 +708,8 @@
 		}
 
 		html {
-			-webkit-user-select: none;
-			user-select: none;
+			-webkit-user-select: text;
+			user-select: text;
 			-webkit-font-smoothing: antialiased;
 			text-rendering: optimizeLegibility
 		}
@@ -1909,8 +1909,8 @@
 			width: 100%;
 			height: 100vh;
 			overflow: hidden;
-			-webkit-user-select: none;
-			user-select: none
+			-webkit-user-select: text;
+			user-select: text
 		}
 
 		.group-central {
@@ -3041,6 +3041,7 @@
 		.home-facilities .bg-inner {
 			background: var(--color-bg-circle-2)
 		}
+
 
 		.home-facilities .bgcanvas {
 			top: 65%
@@ -7088,7 +7089,7 @@
 		}
 
 		.progress {
-			background-color: var(--color-highlight)
+			background: var(--color-bg-circle-2)
 		}
 
 		.progress .slide-inner .title-main {
@@ -7112,11 +7113,7 @@
 		}
 
 		.progress .text-decor {
-			transform: rotate(-90deg) translate(2vw, 8vw);
-			right: 0;
-			bottom: 15vw;
-			width: 30vw;
-			height: calc(300/700*30vw)
+			bottom: -2vw
 		}
 
 		.progress .text-decor-cover {
@@ -19283,14 +19280,19 @@ l1.2-7.1L394.3,34.5z" />
 
 
 			<!-- ========================== Chính sách=========================== -->
-			<div class="group-central home-policy light" data-name="home-policy">
+			<div class="group-central home-policy dark" data-name="home-policy">
 				<div class="slide-inner">
-					<div class="bg-inner lazy" data-bg="img-chinhsach/nền%20CS-100.jpg"
-						style="background-position:center center;background-repeat:no-repeat;background-size:cover;">
-					</div>
+					<div class="bg-inner lazy"></div>
 				</div>
 				<div class="content-main layout-move">
-					<div class="content-center" style="text-align:center;">
+					<div class="content-center"
+						style="text-align:center; max-width: 1360px; margin: 0 auto; padding: 0 40px; box-sizing: border-box;">
+						<div class="title-main break white-text column col-short ani-item"
+							style="display: block; margin-bottom: 30px; text-align: center;">
+							<h2
+								style="font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 700; text-transform: uppercase; color: #ffffff; margin: 0; letter-spacing: 1.5px; line-height: 1;">
+								Chính sách</h2>
+						</div>
 						<div class="policy-img ani-item">
 							<img class="column lazy" data-src="img-chinhsach/csbnthegio.png"
 								style="max-width:80%;height:auto;" alt="Chính sách" loading="lazy">
@@ -19329,6 +19331,7 @@ l1.2-7.1L394.3,34.5z" />
 					opacity: 0;
 					transform: scale(1.03);
 					will-change: transform, opacity;
+					background: var(--color-bg-circle-2) !important;
 				}
 
 				.home-policy .policy-img {
@@ -19365,10 +19368,8 @@ l1.2-7.1L394.3,34.5z" />
 						display: block !important;
 						background-position: center center !important;
 						background-repeat: no-repeat !important;
-						/* Hiển thị trọn khung nền như desktop */
-						background-size: contain !important;
-						background-color: #0b3a42;
-						/* fallback viền nếu còn khoảng trống */
+						background-size: cover !important;
+						background: var(--color-bg-circle-2) !important;
 					}
 
 					.home-policy .content-main {
@@ -19818,156 +19819,404 @@ l1.2-7.1L394.3,34.5z" />
 
 
 			<!-- ============================ Tin tức ========================= -->
-			<div class="group-central home-news news-homepage light" data-name="news">
+			<div class="group-central home-news news-homepage dark" data-name="news">
+
+
+				<style>
+					/* --- CLEANED & OPTIMIZED STYLES --- */
+
+					.news-homepage .content-center {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						width: 100%;
+						max-width: 1360px;
+						margin: 0 auto;
+						padding: 0 40px;
+						box-sizing: border-box;
+						position: relative;
+					}
+
+					/* Header & Title */
+					.news-header {
+						display: flex;
+						justify-content: center;
+						align-items: flex-end;
+						position: relative;
+						width: 100%;
+						margin-bottom: 30px;
+					}
+
+					.news-title h2 {
+						color: #ffffff;
+						font-family: 'Montserrat', sans-serif;
+						font-size: 32px;
+						font-weight: 700;
+						text-transform: uppercase;
+						margin: 0;
+						letter-spacing: 1.5px;
+						line-height: 1;
+					}
+
+					.news-carousel-container {
+						position: relative;
+						width: 100%;
+					}
+
+					/* Controls */
+					.news-controls {
+						position: absolute;
+						left: 0;
+						right: 0;
+						top: 50%;
+						/* Tự động căn giữa theo chiều cao của toàn bộ Card */
+						transform: translateY(-50%);
+						display: flex;
+						justify-content: space-between;
+						width: 100%;
+						pointer-events: none;
+						z-index: 30;
+					}
+
+					.news-btn {
+						width: 50px;
+						height: 50px;
+						border: 1px solid #cbb089;
+						background: rgba(0, 0, 0, 0.5);
+						border-radius: 50%;
+						cursor: pointer;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						transition: all 0.3s ease;
+						pointer-events: auto;
+					}
+
+					.news-btn#newsPrev {
+						margin-left: -60px;
+					}
+
+					.news-btn#newsNext {
+						margin-right: -60px;
+					}
+
+					/* Responsive button adjustment to prevent clipping on tablet */
+					@media (max-width: 1024px) {
+						.news-btn#newsPrev {
+							margin-left: -15px;
+						}
+
+						.news-btn#newsNext {
+							margin-right: -15px;
+						}
+					}
+
+					.news-btn svg {
+						width: 20px;
+						height: 20px;
+						fill: #cbb089;
+						transition: fill 0.3s ease;
+					}
+
+					.news-btn:hover {
+						background-color: #cbb089 !important;
+					}
+
+					.news-btn:hover svg {
+						fill: #ffffff !important;
+					}
+
+					/* Slider Core Structure */
+					.news-wrapper {
+						overflow: hidden;
+						width: 100%;
+					}
+
+					.news-track {
+						display: flex;
+						flex-direction: row;
+						flex-wrap: nowrap;
+						gap: 30px;
+						transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+					}
+
+					.news-track .link-page {
+						flex-shrink: 0;
+						background-color: var(--color-normal-alpha-05) !important;
+						width: calc((100% - 60px) / 3);
+						min-width: calc((100% - 60px) / 3);
+						box-sizing: border-box;
+						display: block;
+						padding: 10px;
+					}
+
+					.news-track .link-page .box-news {
+						display: block;
+						width: 100%;
+						height: 100%;
+					}
+
+					/* Thumbnails & Typography */
+					.news-homepage .pic-thumb {
+						position: relative;
+						display: block;
+						width: 100%;
+						aspect-ratio: 16/9;
+					}
+
+					.news-homepage .pic-thumb .pic-img,
+					.news-homepage .pic-thumb .pic-img img {
+						position: relative;
+						width: 100%;
+						height: 100%;
+					}
+
+					.news-homepage .pic-thumb .pic-img img {
+						top: 0;
+						left: 0;
+						object-fit: cover;
+						transform: none;
+					}
+
+					.news-homepage .date-thumb {
+						font-size: 0.85rem;
+						line-height: 1;
+						font-weight: 500;
+						color: #ffffff;
+						background-color: var(--color-normal-brown);
+						padding: 0.8rem 1rem;
+						margin: 0 0 0.8rem;
+						width: auto;
+						display: inline-block;
+						text-align: center;
+					}
+
+					.news-homepage .head-text {
+						color: var(--color-white);
+						text-align: left;
+						white-space: normal;
+						min-height: 8rem;
+						display: block;
+						width: 100%;
+						padding: 1rem 0 0;
+					}
+
+					.news-homepage .head-text h3 {
+						font-size: 1rem;
+						line-height: 1.4;
+						font-weight: 400;
+						font-style: italic;
+						color: #ffffff;
+						margin: 0 0 1rem;
+						padding: 0 0.8rem;
+						display: -webkit-box;
+						-webkit-line-clamp: 3;
+						-webkit-box-orient: vertical;
+						overflow: hidden;
+						text-shadow: 0 1px 1px var(--color-black-alpha-02);
+					}
+
+					/* Responsive Breakpoints */
+					@media (max-width: 1024px) {
+						.news-track .link-page {
+							width: calc((100% - 30px) / 2);
+							min-width: calc((100% - 30px) / 2);
+						}
+					}
+
+					@media (max-width: 768px) {
+						.news-header {
+							flex-direction: column;
+							align-items: center;
+							gap: 15px;
+						}
+
+						.news-controls {
+							position: static;
+							justify-content: center;
+							transform: none;
+							margin-top: 15px;
+						}
+
+						.news-track .link-page {
+							width: 100%;
+							min-width: 100%;
+						}
+					}
+				</style>
+
 				<div class="slide-inner">
-					<div class="bg-inner bg-cover lazy" data-bg="pictures/catalog/background/4.jpg"></div>
+					<div class="bg-inner bg-cover lazy" data-bg="pictures/catalog/background/bg2.svg"></div>
 				</div>
 				<div class="content-main layout-move">
 					<div class="text-decor ani-item"></div>
 					<div class="content-center">
-						<div class="title-main break white-text column col-bottom ani-item"
-							style="text-align: center; width: 100% !important; display: block !important;">
-							<h2 class="text-ani-item"
-								style="text-align: center !important; width: 100% !important; margin: 0 auto !important;">
-								Tin tức</h2>
-						</div>
-						<div class="wrap-news">
-							<div class="link-page ani-item">
-								<div class="box-news">
-									<div class="pic-thumb">
-										<div class="new-icon"></div>
-										<div class="pic-img"><img class="lazy"
-												data-src="https://thegio.vn/pictures/catalog/tintuc/phase-3/250828fnv17.jpg"
-												alt="AN GIA (AGG) RA MẮT TÒA THÁP ĐẸP NHẤT DỰ ÁN THE GIÓ RIVERSIDE">
-										</div>
-									</div>
-									<div class="head-text">
-										<div class="date-thumb">08-09-2025</div>
-										<h3>AN GIA (AGG) RA MẮT TÒA THÁP ĐẸP NHẤT DỰ ÁN THE GIÓ RIVERSIDE</h3>
-										<a class="view-news link-load"
-											href="tin-tuc/an-gia-agg-ra-mat-toa-thap-dep-nhat-du-an-the-gio-riverside.html"
-											data-name="news-376"></a>
-										<div class="class-hidden link-change-url"
-											data-title="AN GIA (AGG) RA MẮT TÒA THÁP ĐẸP NHẤT DỰ ÁN THE GIÓ RIVERSIDE"
-											data-description="Sau thành công của tháp Gió Nam và giai đoạn 1 của tháp Gió Đông, Tập đoàn BĐS An Gia (AGG) tiếp tục ra mắt giỏ hàng cuối, gồm những căn hộ đẹp nhất tháp Gió Đông của dự án The Gió Riverside."
-											data-keyword="agg; angia; angiagroup; thegioriverside; thegio"
-											aria-label="linkchangeurl"></div>
-									</div>
-								</div>
-							</div>
-							<div class="link-page ani-item">
-								<div class="box-news">
-									<div class="pic-thumb">
-										<div class="new-icon"></div>
-										<div class="pic-img"><img class="lazy"
-												data-src="https://thegio.vn/pictures/catalog/thegiov1final-5k-2.jpg"
-												alt="THE GIÓ RIVERSIDE VÀ LỢI THẾ TIẾP GIÁP 2 TUYẾN METRO BÌNH DƯƠNG , ĐỒNG NAI ">
-										</div>
-									</div>
-									<div class="head-text">
-										<div class="date-thumb">20-06-2025</div>
-										<h3>THE GIÓ RIVERSIDE VÀ LỢI THẾ TIẾP GIÁP 2 TUYẾN METRO BÌNH DƯƠNG , ĐỒNG NAI
-										</h3>
-										<a class="view-news link-load"
-											href="tin-tuc/the-gio-riverside-va-loi-the-tiep-giap-2-tuyen-metro-binh-duong-dong-nai.html"
-											data-name="news-373"></a>
-										<div class="class-hidden link-change-url"
-											data-title="THE GIÓ RIVERSIDE VÀ LỢI THẾ TIẾP GIÁP 2 TUYẾN METRO BÌNH DƯƠNG , ĐỒNG NAI "
-											data-description="Nhờ lợi thế liền kề 2 nhà ga S0 và S2.1, The Gió Riverside đang trở thành điểm đến tiềm năng, đón đầu xu thế phát triển hạ tầng Metro liên vùng, mở rộng kết nối khu Đông và tạo dư địa tăng giá rõ nét trong trung - dài hạn."
-											data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
-											aria-label="linkchangeurl"></div>
-									</div>
-								</div>
-							</div>
-							<div class="link-page ani-item">
-								<div class="box-news">
-									<div class="pic-thumb">
-										<div class="pic-img"><img class="lazy"
-												data-src="https://thegio.vn/pictures/catalog/bhp.jpg"
-												alt="TÂM ĐIỂM ĐẦU TƯ CỦA SIÊU ĐÔ THỊ TP.HCM SAU SÁT NHẬP"></div>
-									</div>
-									<div class="head-text">
-										<div class="date-thumb">16-06-2025</div>
-										<h3>TÂM ĐIỂM ĐẦU TƯ CỦA SIÊU ĐÔ THỊ TP.HCM SAU SÁT NHẬP</h3>
-										<a class="view-news link-load"
-											href="tin-tuc/tam-diem-dau-tu-cua-sieu-do-thi-tp-hcm-sau-sat-nhap.html"
-											data-name="news-372"></a>
-										<div class="class-hidden link-change-url"
-											data-title="TÂM ĐIỂM ĐẦU TƯ CỦA SIÊU ĐÔ THỊ TP.HCM SAU SÁT NHẬP"
-											data-description="Đề án sáp nhập TP.HCM, Bình Dương và Bà Rịa - Vũng Tàu vừa chính thức được thông qua là cột mốc quan trọng đánh dấu giai đoạn tái cấu trúc toàn diện không gian đô thị, hạ tầng và dòng vốn đầu tư tại khu vực phía Nam."
-											data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
-											aria-label="linkchangeurl"></div>
-									</div>
-								</div>
-							</div>
-							<div class="link-page ani-item">
-								<div class="box-news">
-									<div class="pic-thumb">
-										<div class="pic-img"><img class="lazy"
-												data-src="https://thegio.vn/pictures/catalog/map.jpg"
-												alt="LOẠT HẠ TẦNG &quot; KHỦNG &quot; SẮP CÁN ĐÍCH , THỊ TRƯỜNG ĐỊA ỐC KHU ĐÔNG TĂNG NHIỆT">
-										</div>
-									</div>
-									<div class="head-text">
-										<div class="date-thumb">09-06-2025</div>
-										<h3>LOẠT HẠ TẦNG &quot; KHỦNG &quot; SẮP CÁN ĐÍCH , THỊ TRƯỜNG ĐỊA ỐC KHU ĐÔNG
-											TĂNG NHIỆT</h3>
-										<a class="view-news link-load"
-											href="tin-tuc/loat-ha-tang-khung-sap-can-dich-thi-truong-dia-oc-khu-dong-tang-nhiet.html"
-											data-name="news-369"></a>
-										<div class="class-hidden link-change-url"
-											data-title="LOẠT HẠ TẦNG &quot; KHỦNG &quot; SẮP CÁN ĐÍCH , THỊ TRƯỜNG ĐỊA ỐC KHU ĐÔNG TĂNG NHIỆT"
-											data-description="Các dự án nút giao Tân Vạn, đường Vành Đai 3, sân bay Long Thành và cao tốc Biên Hòa – Vũng Tàu dự kiến hoàn thiện cuối năm 2025, đang tạo ra hấp lực mạnh mẽ, tái kích hoạt dòng tiền đầu tư bất động sản tại các khu vực kết nối trực tiếp hạ tầng."
-											data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
-											aria-label="linkchangeurl"></div>
-									</div>
-								</div>
-							</div>
-							<div class="link-page ani-item">
-								<div class="box-news">
-									<div class="pic-thumb">
-										<div class="pic-img"><img class="lazy"
-												data-src="https://thegio.vn/pictures/catalog/tintuc/c06pool-dayfinalthap-gio-dong.jpg"
-												alt="CĂN HỘ VIEW SÔNG THE GIÓ RIVERSIDE - &quot;HÀNG HIẾM&quot; TẠI KHU ĐÔNG">
-										</div>
-									</div>
-									<div class="head-text">
-										<div class="date-thumb">02-06-2025</div>
-										<h3>CĂN HỘ VIEW SÔNG THE GIÓ RIVERSIDE - &quot;HÀNG HIẾM&quot; TẠI KHU ĐÔNG</h3>
-										<a class="view-news link-load"
-											href="tin-tuc/can-ho-view-song-the-gio-riverside-hang-hiem-tai-khu-dong.html"
-											data-name="news-368"></a>
-										<div class="class-hidden link-change-url"
-											data-title="CĂN HỘ VIEW SÔNG THE GIÓ RIVERSIDE - &quot;HÀNG HIẾM&quot; TẠI KHU ĐÔNG"
-											data-description="Các căn hộ tại tháp Gió Đông dự án The Gió Riverside sở hữu tầm nhìn hướng sông Đồng Nai, đối diện trung tâm trung tâm hành chính mới “Biên Hòa Đông phố” trong tương lai cùng các tiện ích cao cấp, góp phần định vị lối sống cao cấp tại khu Đông TP.HCM."
-											data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
-											aria-label="linkchangeurl"></div>
-									</div>
-								</div>
-							</div>
-							<div class="link-page ani-item">
-								<div class="box-news">
-									<div class="pic-thumb">
-										<div class="pic-img"><img class="lazy"
-												data-src="https://thegio.vn/pictures/catalog/tintuc/key-visual.jpg"
-												alt="AN GIA (AGG) RA MẮT THÁP GIÓ ĐÔNG DỰ ÁN THE GIÓ RIVERSIDE">
-										</div>
-									</div>
-									<div class="head-text">
-										<div class="date-thumb">28-05-2025</div>
-										<h3>AN GIA (AGG) RA MẮT THÁP GIÓ ĐÔNG DỰ ÁN THE GIÓ RIVERSIDE</h3>
-										<a class="view-news link-load"
-											href="tin-tuc/an-gia-agg-ra-mat-thap-gio-dong-du-an-the-gio-riverside.html"
-											data-name="news-367"></a>
-										<div class="class-hidden link-change-url"
-											data-title="AN GIA (AGG) RA MẮT THÁP GIÓ ĐÔNG DỰ ÁN THE GIÓ RIVERSIDE"
-											data-description="Sau thành công của tháp Gió Nam, Tập đoàn BĐS An Gia (AGG) tiếp tục triển khai ra mắt tháp Gió Đông, khởi động giai đoạn 2 của dự án The Gió Riverside."
-											data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
-											aria-label="linkchangeurl"></div>
-									</div>
-								</div>
+						<div class="news-header">
+							<div class="news-title">
+								<h2>Tin tức</h2>
 							</div>
 						</div>
+						<div class="news-carousel-container">
+							<div class="news-controls">
+								<button class="news-btn" id="newsPrev">
+									<svg viewBox="0 0 24 24">
+										<path
+											d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+									</svg>
+								</button>
+								<button class="news-btn" id="newsNext">
+									<svg viewBox="0 0 24 24">
+										<path
+											d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+									</svg>
+								</button>
+							</div>
+							<div class="news-wrapper">
+								<div class="news-track" id="newsTrack">
+									<div class="link-page ani-item">
+										<div class="box-news">
+											<div class="pic-thumb">
+												<div class="new-icon"></div>
+												<div class="pic-img"><img class="lazy"
+														data-src="https://thegio.vn/pictures/catalog/tintuc/phase-3/250828fnv17.jpg"
+														alt="AN GIA (AGG) RA MẮT TÒA THÁP ĐẸP NHẤT DỰ ÁN THE GIÓ RIVERSIDE">
+												</div>
+											</div>
+											<div class="head-text">
+												<div class="date-thumb">08-09-2025</div>
+												<h3>AN GIA (AGG) RA MẮT TÒA THÁP ĐẸP NHẤT DỰ ÁN THE GIÓ RIVERSIDE</h3>
+												<a class="view-news link-load"
+													href="tin-tuc/an-gia-agg-ra-mat-toa-thap-dep-nhat-du-an-the-gio-riverside.html"
+													data-name="news-376"></a>
+												<div class="class-hidden link-change-url"
+													data-title="AN GIA (AGG) RA MẮT TÒA THÁP ĐẸP NHẤT DỰ ÁN THE GIÓ RIVERSIDE"
+													data-description="Sau thành công của tháp Gió Nam và giai đoạn 1 của tháp Gió Đông, Tập đoàn BĐS An Gia (AGG) tiếp tục ra mắt giỏ hàng cuối, gồm những căn hộ đẹp nhất tháp Gió Đông của dự án The Gió Riverside."
+													data-keyword="agg; angia; angiagroup; thegioriverside; thegio"
+													aria-label="linkchangeurl"></div>
+											</div>
+										</div>
+									</div>
+									<div class="link-page ani-item">
+										<div class="box-news">
+											<div class="pic-thumb">
+												<div class="new-icon"></div>
+												<div class="pic-img"><img class="lazy"
+														data-src="https://thegio.vn/pictures/catalog/thegiov1final-5k-2.jpg"
+														alt="THE GIÓ RIVERSIDE VÀ LỢI THẾ TIẾP GIÁP 2 TUYẾN METRO BÌNH DƯƠNG , ĐỒNG NAI ">
+												</div>
+											</div>
+											<div class="head-text">
+												<div class="date-thumb">20-06-2025</div>
+												<h3>THE GIÓ RIVERSIDE VÀ LỢI THẾ TIẾP GIÁP 2 TUYẾN METRO BÌNH DƯƠNG ,
+													ĐỒNG
+													NAI
+												</h3>
+												<a class="view-news link-load"
+													href="tin-tuc/the-gio-riverside-va-loi-the-tiep-giap-2-tuyen-metro-binh-duong-dong-nai.html"
+													data-name="news-373"></a>
+												<div class="class-hidden link-change-url"
+													data-title="THE GIÓ RIVERSIDE VÀ LỢI THẾ TIẾP GIÁP 2 TUYẾN METRO BÌNH DƯƠNG , ĐỒNG NAI "
+													data-description="Nhờ lợi thế liền kề 2 nhà ga S0 và S2.1, The Gió Riverside đang trở thành điểm đến tiềm năng, đón đầu xu thế phát triển hạ tầng Metro liên vùng, mở rộng kết nối khu Đông và tạo dư địa tăng giá rõ nét trong trung - dài hạn."
+													data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
+													aria-label="linkchangeurl"></div>
+											</div>
+										</div>
+									</div>
+									<div class="link-page ani-item">
+										<div class="box-news">
+											<div class="pic-thumb">
+												<div class="pic-img"><img class="lazy"
+														data-src="https://thegio.vn/pictures/catalog/bhp.jpg"
+														alt="TÂM ĐIỂM ĐẦU TƯ CỦA SIÊU ĐÔ THỊ TP.HCM SAU SÁT NHẬP"></div>
+											</div>
+											<div class="head-text">
+												<div class="date-thumb">16-06-2025</div>
+												<h3>TÂM ĐIỂM ĐẦU TƯ CỦA SIÊU ĐÔ THỊ TP.HCM SAU SÁT NHẬP</h3>
+												<a class="view-news link-load"
+													href="tin-tuc/tam-diem-dau-tu-cua-sieu-do-thi-tp-hcm-sau-sat-nhap.html"
+													data-name="news-372"></a>
+												<div class="class-hidden link-change-url"
+													data-title="TÂM ĐIỂM ĐẦU TƯ CỦA SIÊU ĐÔ THỊ TP.HCM SAU SÁT NHẬP"
+													data-description="Đề án sáp nhập TP.HCM, Bình Dương và Bà Rịa - Vũng Tàu vừa chính thức được thông qua là cột mốc quan trọng đánh dấu giai đoạn tái cấu trúc toàn diện không gian đô thị, hạ tầng và dòng vốn đầu tư tại khu vực phía Nam."
+													data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
+													aria-label="linkchangeurl"></div>
+											</div>
+										</div>
+									</div>
+									<div class="link-page ani-item">
+										<div class="box-news">
+											<div class="pic-thumb">
+												<div class="pic-img"><img class="lazy"
+														data-src="https://thegio.vn/pictures/catalog/map.jpg"
+														alt="LOẠT HẠ TẦNG &quot; KHỦNG &quot; SẮP CÁN ĐÍCH , THỊ TRƯỜNG ĐỊA ỐC KHU ĐÔNG TĂNG NHIỆT">
+												</div>
+											</div>
+											<div class="head-text">
+												<div class="date-thumb">09-06-2025</div>
+												<h3>LOẠT HẠ TẦNG &quot; KHỦNG &quot; SẮP CÁN ĐÍCH , THỊ TRƯỜNG ĐỊA ỐC
+													KHU
+													ĐÔNG
+													TĂNG NHIỆT</h3>
+												<a class="view-news link-load"
+													href="tin-tuc/loat-ha-tang-khung-sap-can-dich-thi-truong-dia-oc-khu-dong-tang-nhiet.html"
+													data-name="news-369"></a>
+												<div class="class-hidden link-change-url"
+													data-title="LOẠT HẠ TẦNG &quot; KHỦNG &quot; SẮP CÁN ĐÍCH , THỊ TRƯỜNG ĐỊA ỐC KHU ĐÔNG TĂNG NHIỆT"
+													data-description="Các dự án nút giao Tân Vạn, đường Vành Đai 3, sân bay Long Thành và cao tốc Biên Hòa – Vũng Tàu dự kiến hoàn thiện cuối năm 2025, đang tạo ra hấp lực mạnh mẽ, tái kích hoạt dòng tiền đầu tư bất động sản tại các khu vực kết nối trực tiếp hạ tầng."
+													data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
+													aria-label="linkchangeurl"></div>
+											</div>
+										</div>
+									</div>
+									<div class="link-page ani-item">
+										<div class="box-news">
+											<div class="pic-thumb">
+												<div class="pic-img"><img class="lazy"
+														data-src="https://thegio.vn/pictures/catalog/tintuc/c06pool-dayfinalthap-gio-dong.jpg"
+														alt="CĂN HỘ VIEW SÔNG THE GIÓ RIVERSIDE - &quot;HÀNG HIẾM&quot; TẠI KHU ĐÔNG">
+												</div>
+											</div>
+											<div class="head-text">
+												<div class="date-thumb">02-06-2025</div>
+												<h3>CĂN HỘ VIEW SÔNG THE GIÓ RIVERSIDE - &quot;HÀNG HIẾM&quot; TẠI KHU
+													ĐÔNG
+												</h3>
+												<a class="view-news link-load"
+													href="tin-tuc/can-ho-view-song-the-gio-riverside-hang-hiem-tai-khu-dong.html"
+													data-name="news-368"></a>
+												<div class="class-hidden link-change-url"
+													data-title="CĂN HỘ VIEW SÔNG THE GIÓ RIVERSIDE - &quot;HÀNG HIẾM&quot; TẠI KHU ĐÔNG"
+													data-description="Các căn hộ tại tháp Gió Đông dự án The Gió Riverside sở hữu tầm nhìn hướng sông Đồng Nai, đối diện trung tâm trung tâm hành chính mới “Biên Hòa Đông phố” trong tương lai cùng các tiện ích cao cấp, góp phần định vị lối sống cao cấp tại khu Đông TP.HCM."
+													data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
+													aria-label="linkchangeurl"></div>
+											</div>
+										</div>
+									</div>
+									<div class="link-page ani-item">
+										<div class="box-news">
+											<div class="pic-thumb">
+												<div class="pic-img"><img class="lazy"
+														data-src="https://thegio.vn/pictures/catalog/tintuc/key-visual.jpg"
+														alt="AN GIA (AGG) RA MẮT THÁP GIÓ ĐÔNG DỰ ÁN THE GIÓ RIVERSIDE">
+												</div>
+											</div>
+											<div class="head-text">
+												<div class="date-thumb">28-05-2025</div>
+												<h3>AN GIA (AGG) RA MẮT THÁP GIÓ ĐÔNG DỰ ÁN THE GIÓ RIVERSIDE</h3>
+												<a class="view-news link-load"
+													href="tin-tuc/an-gia-agg-ra-mat-thap-gio-dong-du-an-the-gio-riverside.html"
+													data-name="news-367"></a>
+												<div class="class-hidden link-change-url"
+													data-title="AN GIA (AGG) RA MẮT THÁP GIÓ ĐÔNG DỰ ÁN THE GIÓ RIVERSIDE"
+													data-description="Sau thành công của tháp Gió Nam, Tập đoàn BĐS An Gia (AGG) tiếp tục triển khai ra mắt tháp Gió Đông, khởi động giai đoạn 2 của dự án The Gió Riverside."
+													data-keyword="thegio, thegioriverside, angia, agg, angiagroup, canhothegio"
+													aria-label="linkchangeurl"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> <!-- .news-carousel-container -->
 						<div class="wrap-view-more white-text column col-short ani-item" data-id="filter-text"
 							style="position: relative !important; display: flex !important; justify-content: center !important; width: 100% !important; margin: 3rem auto 0 !important; left: auto !important; bottom: auto !important;">
 							<a class="view-more blue link-load" href="tin-tuc.html" aria-label="link-load">
@@ -19977,141 +20226,504 @@ l1.2-7.1L394.3,34.5z" />
 						</div>
 					</div>
 				</div>
+				<script>
+					document.addEventListener("DOMContentLoaded", function () {
+						const track = document.getElementById('newsTrack');
+						const prev = document.getElementById('newsPrev');
+						const next = document.getElementById('newsNext');
+						if (!track || !prev || !next) return;
+
+						const originalItems = Array.from(track.querySelectorAll('.link-page'));
+						if (originalItems.length < 2) return;
+
+						let currentIndex = 0;
+						let isAnimating = false;
+						let autoPlayTimer = null;
+
+						function getStepWidth() {
+							const item = track.querySelector('.link-page');
+							if (!item) return 0;
+							const styles = window.getComputedStyle(track);
+							const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+							return item.getBoundingClientRect().width + gap;
+						}
+
+						function render() {
+							const step = getStepWidth();
+							track.style.transform = `translateX(-${currentIndex * step}px)`;
+						}
+
+						function goTo(index, animate = true) {
+							const step = getStepWidth();
+							if (step <= 0) {
+								currentIndex = index;
+								isAnimating = false;
+								return;
+							}
+							currentIndex = index;
+							track.style.transition = animate ? 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+							track.style.transform = `translateX(-${currentIndex * step}px)`;
+
+							if (animate) {
+								clearTimeout(track.animationTimeout);
+								track.animationTimeout = setTimeout(function () {
+									isAnimating = false;
+								}, 800);
+							} else {
+								void track.offsetHeight;
+								track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+							}
+						}
+
+						function setupInfiniteTrack() {
+							const clones = track.querySelectorAll('.link-page[data-clone="true"]');
+							clones.forEach((clone) => clone.remove());
+
+							originalItems.forEach((item) => {
+								const clone = item.cloneNode(true);
+								clone.setAttribute('data-clone', 'true');
+								track.appendChild(clone);
+							});
+
+							currentIndex = 0;
+							goTo(currentIndex, false);
+						}
+
+						setupInfiniteTrack();
+
+						function startAutoPlay() {
+							stopAutoPlay();
+							autoPlayTimer = setInterval(function () {
+								if (isAnimating) return;
+								isAnimating = true;
+								goTo(currentIndex + 1, true);
+							}, 3000);
+						}
+
+						function stopAutoPlay() {
+							if (autoPlayTimer) {
+								clearInterval(autoPlayTimer);
+								autoPlayTimer = null;
+							}
+						}
+
+						startAutoPlay();
+
+						next.addEventListener('click', function () {
+							if (isAnimating) return;
+							stopAutoPlay();
+							isAnimating = true;
+							goTo(currentIndex + 1, true);
+							startAutoPlay();
+						});
+
+						prev.addEventListener('click', function () {
+							if (isAnimating) return;
+							stopAutoPlay();
+							isAnimating = true;
+							goTo(currentIndex - 1, true);
+							startAutoPlay();
+						});
+
+						track.addEventListener('transitionend', function (e) {
+							if (e.target !== track || e.propertyName !== 'transform') return;
+							const total = originalItems.length;
+
+							if (currentIndex >= total) {
+								goTo(0, false);
+							} else if (currentIndex < 0) {
+								goTo(total - 1, false);
+							}
+
+							isAnimating = false;
+							clearTimeout(track.animationTimeout);
+						});
+
+						window.addEventListener('resize', function () {
+							goTo(currentIndex, false);
+						});
+
+						// Pause autoplay on user hover / touch
+						const newsWrapper = document.querySelector('.news-wrapper');
+						if (newsWrapper) {
+							newsWrapper.addEventListener('mouseenter', stopAutoPlay);
+							newsWrapper.addEventListener('mouseleave', startAutoPlay);
+							newsWrapper.addEventListener('touchstart', stopAutoPlay, { passive: true });
+							newsWrapper.addEventListener('touchend', startAutoPlay, { passive: true });
+						}
+					});
+				</script>
 			</div>
 
 
 			<!-- ======================== Tiến độ ========================= -->
-			<div class="group-central progress light" data-name="progress">
-				<div class="slide-inner layout-move">
-					<div class="bg-inner bg-cover lazy"
-						data-bg="pictures/catalog/progress/C05Vuon-Yen-TinhFinal20F.jpg"></div>
-					<div class="text-decor-cover column col-bottom">
-						<div class="text-decor ani-item"></div>
+			<div class="group-central progress dark" data-name="progress"
+				style="position: relative; overflow: hidden; padding: 64px 0 72px;">
+				<div class="slide-inner"
+					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+					<div class="bg-inner"></div>
+				</div>
+
+				<style>
+					.progress-content {
+						position: relative;
+						z-index: 2;
+						max-width: 1360px;
+						margin: 0 auto;
+						padding: 0 40px;
+						box-sizing: border-box;
+					}
+
+					.progress-header {
+						display: flex;
+						justify-content: center;
+						align-items: flex-end;
+						margin-bottom: 30px;
+						position: relative;
+						width: 100%;
+					}
+
+					.progress-title {
+						display: flex;
+						align-items: flex-end;
+						justify-content: center;
+						gap: 15px;
+						text-align: center;
+					}
+
+					.progress-title h2 {
+						color: #ffffff;
+						font-family: 'Montserrat', sans-serif;
+						font-size: 32px;
+						font-weight: 700;
+						text-transform: uppercase;
+						margin: 0;
+						letter-spacing: 1.5px;
+						line-height: 1;
+					}
+
+					.progress-controls {
+						position: absolute;
+						right: 0;
+						bottom: 0;
+						display: flex;
+						gap: 12px;
+					}
+
+					.progress-btn {
+						width: 42px;
+						height: 42px;
+						border: 1px solid #cbb089;
+						background: transparent;
+						border-radius: 50%;
+						cursor: pointer;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						transition: all 0.3s ease;
+					}
+
+					.progress-btn svg {
+						width: 16px;
+						height: 16px;
+						fill: #cbb089;
+						transition: fill 0.3s ease;
+					}
+
+					.progress-btn:hover {
+						background-color: #cbb089;
+					}
+
+					.progress-btn:hover svg {
+						fill: #ffffff;
+					}
+
+					.progress-wrapper {
+						overflow: hidden;
+						width: 100%;
+					}
+
+					.progress-track {
+						display: flex;
+						gap: 30px;
+						transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+					}
+
+					.progress-item {
+						background: #fff;
+						min-width: calc((100% - 30px) / 2.15);
+						box-sizing: border-box;
+						border: 4px solid #cbb089;
+						border-radius: 4px;
+						background-color: #ffffff;
+						box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+						display: flex;
+						flex-direction: column;
+						overflow: hidden;
+					}
+
+					.progress-item-img-wrap {
+						width: 100%;
+						aspect-ratio: 16 / 10;
+						overflow: hidden;
+						position: relative;
+					}
+
+					.progress-item img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						display: block;
+					}
+
+					.progress-desc {
+						background: #111e25;
+						padding: 15px;
+						text-align: center;
+						border-top: 2px solid #cbb089;
+					}
+
+					.progress-desc h3 {
+						color: #ffffff;
+						font-family: 'Montserrat', sans-serif;
+						font-size: 16px;
+						font-weight: 600;
+						margin: 0;
+						text-transform: uppercase;
+						letter-spacing: 1px;
+					}
+
+					/* Responsive */
+					@media (max-width: 1024px) {
+						.progress-item {
+							min-width: calc((100% - 20px) / 1.5);
+						}
+					}
+
+					@media (max-width: 768px) {
+						.progress-content {
+							padding: 0 20px;
+						}
+
+						.progress-item {
+							min-width: 100%;
+						}
+
+						.progress-header {
+							flex-direction: column;
+							align-items: center;
+							gap: 15px;
+						}
+
+						.progress-title {
+							flex-direction: column;
+							align-items: center;
+							gap: 5px;
+						}
+
+						.progress-controls {
+							position: static;
+							margin-top: 10px;
+						}
+
+						.progress-title h2 {
+							font-size: 24px;
+						}
+					}
+
+					@media (max-width: 1100px) {
+						.progress-content.ani-item {
+							opacity: 1 !important;
+						}
+					}
+				</style>
+
+				<div class="progress-content ani-item">
+					<div class="progress-header">
+						<div class="progress-title">
+							<h2>Cập nhật tiến độ mới nhất</h2>
+						</div>
+						<div class="progress-controls">
+							<button class="progress-btn" id="progressPrev">
+								<svg viewBox="0 0 24 24">
+									<path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+								</svg>
+							</button>
+							<button class="progress-btn" id="progressNext">
+								<svg viewBox="0 0 24 24">
+									<path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+								</svg>
+							</button>
+						</div>
 					</div>
-					<div class="title-main break white-text column col-short ani-item">
-						<h2 class="text-ani-item">Tiến độ</h2>
+
+					<div class="progress-wrapper">
+						<div class="progress-track" id="progressTrack">
+							<div class="progress-item">
+								<div class="progress-item-img-wrap">
+									<img src="pictures/catalog/progress/C05Vuon-Yen-TinhFinal20F.jpg"
+										alt="Tiến độ tháng 08 - 2025">
+								</div>
+								<div class="progress-desc">
+									<h3>Tháng 08 - 2025</h3>
+								</div>
+							</div>
+							<div class="progress-item">
+								<div class="progress-item-img-wrap">
+									<img src="pictures/catalog/progress/C05Vuon-Yen-TinhFinal20F.jpg"
+										alt="Tiến độ tháng 07 - 2025">
+								</div>
+								<div class="progress-desc">
+									<h3>Tháng 07 - 2025</h3>
+								</div>
+							</div>
+							<div class="progress-item">
+								<div class="progress-item-img-wrap">
+									<img src="pictures/catalog/progress/thang-9-2024/TG409092402.jpg"
+										alt="Tiến độ tháng 06 - 2025">
+								</div>
+								<div class="progress-desc">
+									<h3>Tháng 06 - 2025</h3>
+								</div>
+							</div>
+							<div class="progress-item">
+								<div class="progress-item-img-wrap">
+									<img src="pictures/catalog/progress/C05Vuon-Yen-TinhFinal20F.jpg"
+										alt="Tiến độ tháng 05 - 2025">
+								</div>
+								<div class="progress-desc">
+									<h3>Tháng 05 - 2025</h3>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="wrap-select">
-					<div class="select-list">
-						<div class="select-header"><span class="but"></span>
-							<h3>Tiến độ</h3>
-						</div>
-						<div class="select-box">
-							<ul>
-								<li><a href="tien-do/thang-08-2025.html" data-month="progress-list-49">
-										<h3>Tháng 08 - 2025</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 08 - 2025"
-										data-description="" data-keyword=""
-										data-hrefen="https://thegio.vn/progress/aug-2025.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-08-2025.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-07-2025.html" data-month="progress-list-48">
-										<h3>Tháng 07 - 2025</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 07 - 2025"
-										data-description="" data-keyword=""
-										data-hrefen="https://thegio.vn/progress/jul-2025.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-07-2025.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-06-2025.html" data-month="progress-list-46">
-										<h3>Tháng 06 - 2025</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 06 - 2025"
-										data-description="" data-keyword=""
-										data-hrefen="https://thegio.vn/progress/jun-2025.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-06-2025.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-05-2025.html" data-month="progress-list-47">
-										<h3>Tháng 05 - 2025</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 05 - 2025"
-										data-description="" data-keyword=""
-										data-hrefen="https://thegio.vn/progress/may-2025.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-05-2025.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-04-2025.html" data-month="progress-list-45">
-										<h3>Tháng 04 - 2025</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 04 - 2025"
-										data-description="" data-keyword=""
-										data-hrefen="https://thegio.vn/progress/april-2025.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-04-2025.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-03-2025.html" data-month="progress-list-44">
-										<h3>Tháng 03 - 2025</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 03 - 2025"
-										data-description="" data-keyword=""
-										data-hrefen="https://thegio.vn/progress/march-2025.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-03-2025.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-02-2025.html" data-month="progress-list-43">
-										<h3>Tháng 02 - 2025</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 02 - 2025"
-										data-description="" data-keyword=""
-										data-hrefen="https://thegio.vn/progress/february-2025.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-02-2025.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-01-2025.html" data-month="progress-list-34">
-										<h3>Tháng 01 - 2025</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 01 - 2025"
-										data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-										data-hrefen="https://thegio.vn/progress/january-2025.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-01-2025.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-12-2024.html" data-month="progress-list-17">
-										<h3>Tháng 12 - 2024</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 12 - 2024"
-										data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-										data-hrefen="https://thegio.vn/progress/december-2024.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-12-2024.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-11-2024.html" data-month="progress-list-18">
-										<h3>Tháng 11 - 2024</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 11 - 2024"
-										data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-										data-hrefen="https://thegio.vn/progress/november-2024.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-11-2024.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-10-2024.html" data-month="progress-list-19">
-										<h3>Tháng 10 - 2024</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 10 - 2024"
-										data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-										data-hrefen="https://thegio.vn/progress/october-2024.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-10-2024.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-								<li><a href="tien-do/thang-09-2024.html" data-month="progress-list-24">
-										<h3>Tháng 09 - 2024</h3>
-									</a>
-									<div class="class-hidden link-change-url" data-title="Tháng 09 - 2024"
-										data-description="The Gió Riverside" data-keyword="The Gió Riverside"
-										data-hrefen="https://thegio.vn/progress/september-2024.html"
-										data-hrefvi="https://thegio.vn/tien-do/thang-09-2024.html"
-										aria-label="linkchangeurl"></div>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="progress-list"></div>
+
+				<script>
+					document.addEventListener("DOMContentLoaded", function () {
+						const track = document.getElementById('progressTrack');
+						const prev = document.getElementById('progressPrev');
+						const next = document.getElementById('progressNext');
+						if (!track || !prev || !next) return;
+
+						const originalItems = Array.from(track.querySelectorAll('.progress-item'));
+						if (originalItems.length < 2) return;
+
+						let currentIndex = 0;
+						let isAnimating = false;
+
+						function getVisibleCount() {
+							return window.innerWidth > 768 ? 2 : 1;
+						}
+
+						function getStepWidth() {
+							const item = track.querySelector('.progress-item');
+							if (!item) return 0;
+							const styles = window.getComputedStyle(track);
+							const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+							return item.getBoundingClientRect().width + gap;
+						}
+
+						function goTo(index, animate = true) {
+							const step = getStepWidth();
+							if (step <= 0) {
+								currentIndex = index;
+								isAnimating = false;
+								return;
+							}
+							currentIndex = index;
+							track.style.transition = animate ? 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+							track.style.transform = `translateX(-${currentIndex * step}px)`;
+
+							if (animate) {
+								clearTimeout(track.animationTimeout);
+								track.animationTimeout = setTimeout(function () {
+									isAnimating = false;
+								}, 800);
+							} else {
+								void track.offsetHeight;
+								track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+							}
+						}
+
+						function setupInfiniteTrack() {
+							const clones = track.querySelectorAll('.progress-item[data-clone="true"]');
+							clones.forEach((clone) => clone.remove());
+
+							originalItems.forEach((item) => {
+								const clone = item.cloneNode(true);
+								clone.setAttribute('data-clone', 'true');
+								track.appendChild(clone);
+							});
+
+							currentIndex = 0;
+							goTo(currentIndex, false);
+						}
+
+						let autoPlayTimer = null;
+
+						function startAutoPlay() {
+							stopAutoPlay();
+							autoPlayTimer = setInterval(function () {
+								if (isAnimating) return;
+								isAnimating = true;
+								goTo(currentIndex + 1, true);
+							}, 3000);
+						}
+
+						function stopAutoPlay() {
+							if (autoPlayTimer) {
+								clearInterval(autoPlayTimer);
+								autoPlayTimer = null;
+							}
+						}
+
+						setupInfiniteTrack();
+						startAutoPlay();
+
+						next.addEventListener('click', function () {
+							if (isAnimating) return;
+							stopAutoPlay();
+							isAnimating = true;
+							goTo(currentIndex + 1, true);
+							startAutoPlay();
+						});
+
+						prev.addEventListener('click', function () {
+							if (isAnimating) return;
+							stopAutoPlay();
+							isAnimating = true;
+							goTo(currentIndex - 1, true);
+							startAutoPlay();
+						});
+
+						track.addEventListener('transitionend', function (e) {
+							if (e.target !== track || e.propertyName !== 'transform') return;
+							const total = originalItems.length;
+
+							if (currentIndex >= total) {
+								goTo(0, false);
+							} else if (currentIndex < 0) {
+								goTo(total - 1, false);
+							}
+
+							isAnimating = false;
+							clearTimeout(track.animationTimeout);
+						});
+
+						window.addEventListener('resize', function () {
+							goTo(currentIndex, false);
+						});
+
+						const progressContent = document.querySelector('.progress-content');
+						if (progressContent) {
+							progressContent.addEventListener('mouseenter', stopAutoPlay);
+							progressContent.addEventListener('mouseleave', startAutoPlay);
+							progressContent.addEventListener('touchstart', stopAutoPlay, { passive: true });
+							progressContent.addEventListener('touchend', startAutoPlay, { passive: true });
+						}
+					});
+				</script>
 			</div>
 
 
@@ -20144,238 +20756,380 @@ l1.2-7.1L394.3,34.5z" />
 					</div>
 				</div>
 			</div> -->
-			<div class="group-central home-showroom light" data-name="home-showroom" style="position: relative; overflow: hidden; padding: 64px 0 72px; background:#fff;">
-    
-    <div class="slide-inner" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
-        <div class="bg-inner bg-cover lazy" style="width: 100%; height: 100%; background: #fff;"></div>
-    </div>
-    
-    <style>
-        .showroom-content {
-            position: relative;
-            z-index: 2;
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 0 40px;
-            box-sizing: border-box;
-        }
-        /* Header chứa tiêu đề phối màu Teal-Gold & Nút điều hướng */
-        .showroom-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 30px;
-        }
-        .showroom-title {
-            display: flex;
-            align-items: flex-end;
-            gap: 15px;
-        }
-        .showroom-title h2 {
-            color: #0c4a54; /* Màu xanh teal sẫm */
-            font-family: 'Montserrat', sans-serif;
-            font-size: 32px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin: 0;
-            letter-spacing: 1.5px;
-            line-height: 1;
-        }
-        .showroom-title span {
-            color: #cbb089; /* Màu vàng đồng */
-            font-size: 24px;
-            font-weight: 300;
-            line-height: 1;
-        }
-        /* Mũi tên điều hướng */
-        .showroom-controls {
-            display: flex;
-            gap: 12px;
-        }
-        .showroom-btn {
-            width: 42px;
-            height: 42px;
-            border: 1px solid #cbb089;
-            background: transparent;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        .showroom-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: #cbb089;
-            transition: fill 0.3s ease;
-        }
-        .showroom-btn:hover {
-            background-color: #cbb089;
-        }
-        .showroom-btn:hover svg {
-            fill: #ffffff;
-        }
-        /* Vùng chạy Slider */
-        .showroom-wrapper {
-            overflow: visible; 
-            width: 100%;
-        }
-        .showroom-track {
-            display: flex;
-            gap: 30px;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        /* Card ảnh viền Gold */
-        .showroom-item {
-            background:#fff;
-            min-width: calc((100% - 30px) / 2.15); /* Hiện 2 ảnh và lấp ló ảnh thứ 3 */
-            box-sizing: border-box;
-            border: 4px solid #cbb089;
-            background-color: #ffffff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            aspect-ratio: 16 / 10;
-        }
-        .showroom-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }/* Responsive */
-        @media (max-width: 1024px) {
-            .showroom-item {
-                background:#fff;
-                min-width: calc((100% - 20px) / 1.5);
-            }
-        }
-        @media (max-width: 768px) {
-            .showroom-content { padding: 0 20px; }
-            .showroom-item {
-                background:#fff;
-                min-width: 100%;
-            }
-            .showroom-title h2 { font-size: 24px; }
-            .showroom-title span { font-size: 18px; }
-        }
-    </style>
+			<div class="group-central home-showroom dark" data-name="home-showroom"
+				style="position: relative; overflow: hidden; padding: 25px 0 30px;">
 
-    <div class="showroom-content ani-item">
-        
-        <div class="showroom-header">
-            <div class="showroom-title">
-                <h2>Nhà mẫu</h2>
-                <span>Căn 2PN</span>
-            </div>
-            <div class="showroom-controls">
-                <button class="showroom-btn" id="slidePrev">
-                    <svg viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/></svg>
-                </button>
-                <button class="showroom-btn" id="slideNext">
-                    <svg viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/></svg>
-                </button>
-            </div>
-        </div>
+				<div class="slide-inner"
+					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+					<div class="bg-inner bg-cover lazy" data-bg="pictures/catalog/background/bg2.svg"></div>
+				</div>
 
-        <div class="showroom-wrapper">
-            <div class="showroom-track" id="showroomTrack">
-                <div class="showroom-item">
-                    <img src="pictures/catalog/library/khai-truong-can-ho-mau/ktchm20.2-1.jpg" alt="Phòng khách">
-                </div>
-                <div class="showroom-item">
-                    <img src="pictures/catalog/tintuc/can-ho-mau/1.jpg" alt="Phòng ăn & Bếp">
-                </div>
-                <div class="showroom-item">
-                    <img src="pictures/catalog/lien-he/lobby.jpg" alt="Phòng ngủ master">
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const track = document.getElementById('showroomTrack');
-            const prev = document.getElementById('slidePrev');
-            const next = document.getElementById('slideNext');
-            if (!track || !prev || !next) return;
+				<style>
+					.showroom-content {
+						position: relative;
+						z-index: 2;
+						max-width: 1360px;
+						margin: 0 auto;
+						padding: 0 40px;
+						box-sizing: border-box;
+					}
 
-            const originalItems = Array.from(track.querySelectorAll('.showroom-item'));
-            if (originalItems.length < 2) return;
+					/* Header chứa tiêu đề phối màu Teal-Gold & Nút điều hướng */
+					.showroom-header {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						margin-bottom: 20px;
+						position: relative;
+						width: 100%;
+					}
 
-            let currentIndex = 0;
-            let isAnimating = false;
+					.showroom-title {
+						display: flex;
+						align-items: flex-end;
+						justify-content: center;
+						gap: 15px;
+						text-align: center;
+					}
 
-            function getVisibleCount() {
-                return window.innerWidth > 768 ? 2 : 1;
-            }
+					.showroom-title h2 {
+						color: #ffffff;
+						/* Màu trắng cho đồng bộ nền tối */
+						font-family: 'Montserrat', sans-serif;
+						font-size: 32px;
+						font-weight: 700;
+						text-transform: uppercase;
+						margin: 0;
+						letter-spacing: 1.5px;
+						line-height: 1;
+					}
 
-            function getStepWidth() {
-                const item = track.querySelector('.showroom-item');
-                if (!item) return 0;
-                const styles = window.getComputedStyle(track);
-                const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
-                return item.getBoundingClientRect().width + gap;
-            }
+					.showroom-title span {
+						color: #cbb089;
+						/* Màu vàng đồng */
+						font-size: 24px;
+						font-weight: 300;
+						line-height: 1;
+					}
 
-            function render() {
-                const step = getStepWidth();
-                track.style.transform = `translateX(-${currentIndex * step}px)`;
-            }
+					.showroom-desc {
+						color: #e0e0e0;
+						font-size: 14px;
+						line-height: 1.6;
+						max-width: 850px;
+						margin: 10px auto 0;
+						text-align: center;
+						font-weight: 300;
+						display: block;
+					}
 
-            function goTo(index, animate = true) {
-                currentIndex = index;
-                track.style.transition = animate ? 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
-                render();
-                if (!animate) {
-                    void track.offsetHeight;
-                    track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-                }
-            }
+					.showroom-desc p {
+						margin: 0 0 10px 0;
+					}
 
-            function setupInfiniteTrack() {
-                const clones = track.querySelectorAll('.showroom-item[data-clone="true"]');
-                clones.forEach((clone) => clone.remove());
+					.showroom-desc p:last-child {
+						margin-bottom: 0;
+					}
 
-                originalItems.forEach((item) => {
-                    const clone = item.cloneNode(true);
-                    clone.setAttribute('data-clone', 'true');
-                    track.appendChild(clone);
-                });
+					/* Mũi tên điều hướng */
+					.showroom-controls {
+						position: absolute;
+						right: 0;
+						top: 0;
+						display: flex;
+						gap: 12px;
+					}
 
-                currentIndex = 0;
-                goTo(currentIndex, false);
-            }
+					.showroom-btn {
+						width: 42px;
+						height: 42px;
+						border: 1px solid #cbb089;
+						background: transparent;
+						border-radius: 50%;
+						cursor: pointer;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						transition: all 0.3s ease;
+					}
 
-            setupInfiniteTrack();
+					.showroom-btn svg {
+						width: 16px;
+						height: 16px;
+						fill: #cbb089;
+						transition: fill 0.3s ease;
+					}
 
-            next.addEventListener('click', function () {
-                if (isAnimating) return;
-                isAnimating = true;
-                goTo(currentIndex + 1, true);
-            });
+					.showroom-btn:hover {
+						background-color: #cbb089;
+					}
 
-            prev.addEventListener('click', function () {
-                if (isAnimating) return;
-                isAnimating = true;
-                goTo(currentIndex - 1, true);
-            });
+					.showroom-btn:hover svg {
+						fill: #ffffff;
+					}
 
-            track.addEventListener('transitionend', function () {
-                const total = originalItems.length;
+					/* Vùng chạy Slider */
+					.showroom-wrapper {
+						overflow: hidden;
+						width: 100%;
+					}
 
-                if (currentIndex >= total) {
-                    goTo(0, false);
-                } else if (currentIndex < 0) {
-                    goTo(total - 1, false);
-                }
+					.showroom-track {
+						display: flex;
+						gap: 30px;
+						transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+					}
 
-                isAnimating = false;
-            });
+					/* Card ảnh viền Gold */
+					.showroom-item {
+						background: #fff;
+						min-width: calc((100% - 30px) / 2.15);
+						/* Hiện 2 ảnh và lấp ló ảnh thứ 3 */
+						box-sizing: border-box;
+						border: 4px solid #cbb089;
+						background-color: #ffffff;
+						box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+						aspect-ratio: 16 / 10;
+					}
 
-            window.addEventListener('resize', function () {
-                goTo(currentIndex, false);
-            });
-        });
-    </script>
-</div>
+					.showroom-item img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						display: block;
+					}
+
+					/* Responsive */
+					@media (max-width: 1024px) {
+						.showroom-item {
+							background: #fff;
+							min-width: calc((100% - 20px) / 1.5);
+						}
+					}
+
+					@media (max-width: 768px) {
+						.showroom-content {
+							padding: 0 20px;
+						}
+
+						.showroom-item {
+							background: #fff;
+							min-width: 100%;
+						}
+
+						.showroom-header {
+							flex-direction: column;
+							align-items: center;
+							gap: 15px;
+						}
+
+						.showroom-title {
+							flex-direction: column;
+							align-items: center;
+							gap: 5px;
+						}
+
+						.showroom-controls {
+							position: static;
+							margin-top: 10px;
+						}
+
+						.showroom-title h2 {
+							font-size: 24px;
+						}
+
+						.showroom-title span {
+							font-size: 18px;
+						}
+
+						.showroom-desc {
+							font-size: 14px;
+							margin-top: 10px;
+							line-height: 1.6;
+						}
+					}
+
+					@media (max-width: 1100px) {
+						.showroom-content.ani-item {
+							opacity: 1 !important;
+						}
+					}
+				</style>
+
+				<div class="showroom-content ani-item">
+
+					<div class="showroom-header">
+						<div class="showroom-title-box">
+							<div class="showroom-title">
+								<h2>Nhà mẫu</h2>
+							</div>
+							<div class="showroom-desc">
+								<p>Căn hộ ven sông The Gió Riverside Dĩ An Bình Dương với lối thiết kế hài hòa, ứng dụng phong cách harmonious living tạo nên không gian cân bằng tính thẩm mỹ, công năng và thiên nhiên.</p>
+								<p>Căn hộ được thiết kế tối ưu diện tích với nhiều không gian như phòng khách có ban công kiểu Juliette (không nhô ra khỏi tòa nhà), 2 phòng ngủ và 2 WC, khu vực bếp, lô-gia rộng rãi.</p>
+								<p>Đặc biệt, căn hộ được Chủ đầu tư An Gia tinh tế sử dụng màu sắc sáng ấm, trung tính tạo cảm giác dễ chịu.</p>
+							</div>
+						</div>
+						<div class="showroom-controls">
+							<button class="showroom-btn" id="slidePrev">
+								<svg viewBox="0 0 24 24">
+									<path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+								</svg>
+							</button>
+							<button class="showroom-btn" id="slideNext">
+								<svg viewBox="0 0 24 24">
+									<path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+								</svg>
+							</button>
+						</div>
+					</div>
+
+					<div class="showroom-wrapper">
+						<div class="showroom-track" id="showroomTrack">
+							<div class="showroom-item">
+								<img src="pictures/catalog/library/khai-truong-can-ho-mau/ktchm20.2-1.jpg"
+									alt="Phòng khách">
+							</div>
+							<div class="showroom-item">
+								<img src="pictures/catalog/tintuc/can-ho-mau/1.jpg" alt="Phòng ăn & Bếp">
+							</div>
+							<div class="showroom-item">
+								<img src="pictures/catalog/lien-he/lobby.jpg" alt="Phòng ngủ master">
+							</div>
+						</div>
+					</div>
+				</div>
+				<script>
+					document.addEventListener("DOMContentLoaded", function () {
+						const track = document.getElementById('showroomTrack');
+						const prev = document.getElementById('slidePrev');
+						const next = document.getElementById('slideNext');
+						if (!track || !prev || !next) return;
+
+						const originalItems = Array.from(track.querySelectorAll('.showroom-item'));
+						if (originalItems.length < 2) return;
+
+						let currentIndex = 0;
+						let isAnimating = false;
+
+						function getVisibleCount() {
+							return window.innerWidth > 768 ? 2 : 1;
+						}
+
+						function getStepWidth() {
+							const item = track.querySelector('.showroom-item');
+							if (!item) return 0;
+							const styles = window.getComputedStyle(track);
+							const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+							return item.getBoundingClientRect().width + gap;
+						}
+
+						function render() {
+							const step = getStepWidth();
+							track.style.transform = `translateX(-${currentIndex * step}px)`;
+						}
+
+						function goTo(index, animate = true) {
+							const step = getStepWidth();
+							if (step <= 0) {
+								currentIndex = index;
+								isAnimating = false;
+								return;
+							}
+							currentIndex = index;
+							track.style.transition = animate ? 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+							track.style.transform = `translateX(-${currentIndex * step}px)`;
+
+							if (animate) {
+								clearTimeout(track.animationTimeout);
+								track.animationTimeout = setTimeout(function () {
+									isAnimating = false;
+								}, 800);
+							} else {
+								void track.offsetHeight;
+								track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+							}
+						}
+
+						function setupInfiniteTrack() {
+							const clones = track.querySelectorAll('.showroom-item[data-clone="true"]');
+							clones.forEach((clone) => clone.remove());
+
+							originalItems.forEach((item) => {
+								const clone = item.cloneNode(true);
+								clone.setAttribute('data-clone', 'true');
+								track.appendChild(clone);
+							});
+
+							currentIndex = 0;
+							goTo(currentIndex, false);
+						}
+
+						let autoPlayTimer = null;
+
+						function startAutoPlay() {
+							stopAutoPlay();
+							autoPlayTimer = setInterval(function () {
+								if (isAnimating) return;
+								isAnimating = true;
+								goTo(currentIndex + 1, true);
+							}, 3000);
+						}
+
+						function stopAutoPlay() {
+							if (autoPlayTimer) {
+								clearInterval(autoPlayTimer);
+								autoPlayTimer = null;
+							}
+						}
+
+						setupInfiniteTrack();
+						startAutoPlay();
+
+						next.addEventListener('click', function () {
+							if (isAnimating) return;
+							stopAutoPlay();
+							isAnimating = true;
+							goTo(currentIndex + 1, true);
+							startAutoPlay();
+						});
+
+						prev.addEventListener('click', function () {
+							if (isAnimating) return;
+							stopAutoPlay();
+							isAnimating = true;
+							goTo(currentIndex - 1, true);
+							startAutoPlay();
+						});
+
+						track.addEventListener('transitionend', function (e) {
+							if (e.target !== track || e.propertyName !== 'transform') return;
+							const total = originalItems.length;
+
+							if (currentIndex >= total) {
+								goTo(0, false);
+							} else if (currentIndex < 0) {
+								goTo(total - 1, false);
+							}
+
+							isAnimating = false;
+							clearTimeout(track.animationTimeout);
+						});
+
+						window.addEventListener('resize', function () {
+							goTo(currentIndex, false);
+						});
+
+						// Pause autoplay when hovering or touching the slider content
+						const showroomContent = document.querySelector('.showroom-content');
+						if (showroomContent) {
+							showroomContent.addEventListener('mouseenter', stopAutoPlay);
+							showroomContent.addEventListener('mouseleave', startAutoPlay);
+							showroomContent.addEventListener('touchstart', stopAutoPlay, { passive: true });
+							showroomContent.addEventListener('touchend', startAutoPlay, { passive: true });
+						}
+					});
+				</script>
+			</div>
 
 			<!-- ========================== Liên hệ ========================= -->
 		</div>
@@ -21769,6 +22523,3 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 </body>
 
 </html>
-
-
-
