@@ -1455,6 +1455,34 @@
 			font-weight: 400
 		}
 
+		/* Shared section heading: follows the original Tiện ích h2 spacing and typography. */
+		.section-title-standard {
+			font-family: Newsreader, serif !important;
+			font-optical-sizing: auto;
+			font-weight: 300 !important;
+			font-size: var(--titleFontBig) !important;
+			line-height: 1.2 !important;
+			letter-spacing: 0 !important;
+			text-transform: none !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+
+		/* Align the custom carousel headings to the mobile spacing used by Tiện ích. */
+		@media screen and (max-width: 768px) {
+			.news-homepage .content-center,
+			.showroom-content {
+				padding: 10vw 5% 0 !important;
+			}
+
+			.news-header,
+			.progress-header,
+			.showroom-header {
+				margin: 0 0 30px !important;
+				padding: 0 !important;
+			}
+		}
+
 		.title-main h3 {
 			font-size: var(--titleFontSmall)
 		}
@@ -19200,17 +19228,18 @@ l1.2-7.1L394.3,34.5z" />
 				</div>
 			</div>
 			<!-- ========================== Pháp lý========================== -->
-			<div class="group-central home-legal dark" data-name="home-legal">
+			<div class="group-central home-legal dark" data-name="home-legal"
+				style="height: auto !important; min-height: 0 !important; overflow: visible !important;">
 				<div class="slide-inner">
 					<div class="bg-inner bg-cover lazy" data-bg="pictures/catalog/background/bg2.svg"></div>
 				</div>
 				<div class="content-main layout-move"
-					style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; box-sizing: border-box; min-height: 100vh;">
-					<div class="content-center" style="max-width: 800px; margin-bottom: 2.5rem; width: 100%;">
+					style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; box-sizing: border-box; height: auto !important; min-height: 0 !important;">
+					<div class="content-center" style="max-width: 800px; width: 100%;">
 						<div class="title-main break white-text column col-short ani-item"
 							style="display: block; opacity: 1 !important; transform: none !important;">
-							<h2
-								style="font-family: Montserrat, sans-serif; font-size: 3rem; font-weight: 700; text-transform: uppercase; color: #ffffff; margin-bottom: 1.5rem; letter-spacing: 2px;">
+							<h2 class="section-title-standard"
+								style="font-family: Montserrat, sans-serif; font-size: 3rem; font-weight: 700; text-transform: uppercase; color: #ffffff; letter-spacing: 2px;">
 								Pháp lý</h2>
 						</div>
 						<div class="box-txt white-text column col-short ani-item"
@@ -19280,21 +19309,23 @@ l1.2-7.1L394.3,34.5z" />
 
 
 			<!-- ========================== Chính sách=========================== -->
-			<div class="group-central home-policy dark" data-name="home-policy">
+			<div class="group-central home-policy dark" data-name="home-policy"
+				style="height: auto !important; min-height: 0 !important; overflow: visible !important;">
 				<div class="slide-inner">
 					<div class="bg-inner lazy"></div>
 				</div>
-				<div class="content-main layout-move">
+				<div class="content-main layout-move"
+					style="position: relative !important; height: auto !important; min-height: 0 !important;">
 					<div class="content-center"
 						style="text-align:center; max-width: 1360px; margin: 0 auto; padding: 0 40px; box-sizing: border-box;">
 						<div class="title-main break white-text column col-short ani-item"
 							style="display: block; margin-bottom: 30px; text-align: center;">
-							<h2
+							<h2 class="section-title-standard"
 								style="font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 700; text-transform: uppercase; color: #ffffff; margin: 0; letter-spacing: 1.5px; line-height: 1;">
 								Chính sách</h2>
 						</div>
 						<div class="policy-img ani-item">
-							<img class="column lazy" data-src="img-chinhsach/csbnthegio.png"
+							<img class="column" src="img-chinhsach/csbnthegio.png"
 								style="max-width:90%;height:auto;" alt="Chính sách" loading="lazy">
 						</div>
 					</div>
@@ -19328,14 +19359,16 @@ l1.2-7.1L394.3,34.5z" />
 				}
 
 				.home-policy .content-main {
-					position: absolute !important;
+					position: relative !important;
 					width: 100% !important;
-					height: 100vh !important;
-					top: 0 !important;
-					left: 0 !important;
-					padding-top: 65px !important;
-					padding-bottom: 10px !important;
+					height: auto !important;
+					min-height: 0 !important;
+					top: auto !important;
+					left: auto !important;
+					padding: 95px 30px 70px !important;
 					box-sizing: border-box !important;
+					z-index: 1 !important;
+					visibility: visible !important;
 				}
 
 				.home-policy .bg-inner {
@@ -19346,10 +19379,29 @@ l1.2-7.1L394.3,34.5z" />
 					background: var(--color-bg-circle-2) !important;
 				}
 
+				/* Keep the content above the decorative background in normal-scroll mode. */
+				.home-policy {
+					position: relative !important;
+					height: auto !important;
+					min-height: 0 !important;
+					isolation: isolate;
+					overflow: visible !important;
+				}
+
+				.home-policy .slide-inner {
+					position: absolute !important;
+					inset: 0;
+					height: 100% !important;
+					z-index: 0 !important;
+				}
+
 				.home-policy .content-center {
 					width: 100% !important;
-					max-width: 1360px !important;
+					max-width: 1500px !important;
 					box-sizing: border-box !important;
+					position: relative !important;
+					z-index: 2 !important;
+					visibility: visible !important;
 				}
 
 				.home-policy .layout-move .column {
@@ -19362,12 +19414,23 @@ l1.2-7.1L394.3,34.5z" />
 					transform: none !important;
 					will-change: unset !important;
 					animation: none !important;
+					visibility: visible !important;
+					position: relative !important;
+					z-index: 2 !important;
+				}
+
+				/* This section is in normal scroll, so do not wait for slider animation classes. */
+				.home-policy .ani-item,
+				.home-policy .text-ani-item .char {
+					opacity: 1 !important;
+					transform: none !important;
+					animation: none !important;
 				}
 
 				.home-policy .policy-img img {
-					max-width: 90% !important;
-					max-height: calc(100vh - 175px) !important;
-					width: auto !important;
+					max-width: 100% !important;
+					max-height: none !important;
+					width: 100% !important;
 					height: auto !important;
 					display: block;
 					margin: 0 auto;
@@ -19486,6 +19549,9 @@ l1.2-7.1L394.3,34.5z" />
 			<style>
 				/* Mobile galleries: horizontal, swipeable carousel instead of a vertical list. */
 				@media screen and (max-width: 1100px) {
+					.picture-library .slide-inner {
+						display: none !important;
+					}
 
 					.picture-library .slide-library,
 					.video-library .slide-library {
@@ -19559,7 +19625,7 @@ l1.2-7.1L394.3,34.5z" />
 					<div class="text-decor column col-bottom ani-item"></div>
 					<div class="content-center column col-short">
 						<div class="title-main break white-text ani-item">
-							<h2 class="text-ani-item">Hình ảnh</h2>
+							<h2 class="text-ani-item section-title-standard">Hình ảnh</h2>
 						</div>
 					</div>
 					<div class="library-box library-box-album">
@@ -19754,7 +19820,7 @@ l1.2-7.1L394.3,34.5z" />
 					<div class="text-decor column col-bottom ani-item"></div>
 					<div class="content-center column col-short">
 						<div class="title-main break white-text ani-item">
-							<h2 class="text-ani-item">Video</h2>
+							<h2 class="text-ani-item section-title-standard">Video</h2>
 						</div>
 					</div>
 					<div class="library-box library-box-album">
@@ -20262,7 +20328,7 @@ l1.2-7.1L394.3,34.5z" />
 					<div class="content-center">
 						<div class="news-header">
 							<div class="news-title">
-								<h2>Tin tức</h2>
+								<h2 class="section-title-standard">Tin tức</h2>
 							</div>
 						</div>
 						<div class="news-carousel-container">
@@ -20579,7 +20645,6 @@ l1.2-7.1L394.3,34.5z" />
 						z-index: 2;
 						max-width: 1360px;
 						margin: 0 auto;
-						padding: 0 40px;
 						box-sizing: border-box;
 					}
 
@@ -20710,9 +20775,6 @@ l1.2-7.1L394.3,34.5z" />
 					}
 
 					@media (max-width: 768px) {
-						.progress-content {
-							padding: 0 20px;
-						}
 
 						.progress-item {
 							min-width: 100%;
@@ -20750,7 +20812,7 @@ l1.2-7.1L394.3,34.5z" />
 				<div class="progress-content ani-item">
 					<div class="progress-header">
 						<div class="progress-title">
-							<h2>Cập nhật tiến độ mới nhất</h2>
+							<h2 class="section-title-standard">Cập nhật tiến độ mới nhất</h2>
 						</div>
 						<div class="progress-controls">
 							<button class="progress-btn" id="progressPrev">
@@ -21170,7 +21232,7 @@ l1.2-7.1L394.3,34.5z" />
 					<div class="showroom-header">
 						<div class="showroom-title-box">
 							<div class="showroom-title">
-								<h2>Nhà mẫu</h2>
+								<h2 class="section-title-standard">Nhà mẫu</h2>
 							</div>
 							<div class="showroom-desc">
 								<p>Căn hộ ven sông The Gió Riverside Dĩ An Bình Dương với lối thiết kế hài hòa, ứng dụng
@@ -21392,7 +21454,7 @@ l1.2-7.1L394.3,34.5z" />
 					<div class="contact-agents-section home-news ani-item" style="width: 100%; margin-bottom: 3rem;">
 						<div class="content-center">
 							<div class="title-main break white-text column col-short">
-								<h2 class="text-ani-item"
+								<h2 class="text-ani-item section-title-standard"
 									style="font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; text-align: center; margin-bottom: 2rem; letter-spacing: 1px;">
 									Chuyên viên tư vấn</h2>
 							</div>
@@ -21926,6 +21988,161 @@ l1.2-7.1L394.3,34.5z" />
 				<div class="text-decor ani-item"></div>
 			</div>
 		</div>
+		<style>
+			/* Legal section in normal flow: background stays behind, content defines its height. */
+			.home-legal {
+				position: relative !important;
+				height: auto !important;
+				min-height: 0 !important;
+				overflow: visible !important;
+				opacity: 1 !important;
+			}
+
+			.home-legal .slide-inner {
+				position: absolute !important;
+				inset: 0;
+				height: 100% !important;
+				z-index: 0 !important;
+			}
+
+			.home-legal .content-main {
+				position: relative !important;
+				height: auto !important;
+				min-height: 0 !important;
+				z-index: 2 !important;
+				visibility: visible !important;
+			}
+
+			.home-legal .ani-item {
+				opacity: 1 !important;
+				transform: none !important;
+			}
+
+			/* Legal carousel uses the same visual system as the Nhà mẫu carousel. */
+			.home-legal .gallery-carousel {
+				width: 100% !important;
+				max-width: 1100px !important;
+				height: auto !important;
+				aspect-ratio: auto !important;
+				border: 0;
+				box-sizing: border-box;
+				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+			}
+
+			.home-legal .gallery-carousel .carousel-track {
+				display: flex !important;
+				gap: 30px;
+				height: auto !important;
+			}
+
+			.home-legal .gallery-carousel .carousel-slide {
+				min-width: 60% !important;
+				height: 550px !important;
+				aspect-ratio: auto;
+				box-sizing: border-box;
+				border: 4px solid #cbb089;
+				border-radius: 4px;
+				overflow: hidden;
+			}
+
+			.home-legal .gallery-carousel .carousel-slide img {
+				width: 100% !important;
+				height: 100% !important;
+				object-fit: cover;
+			}
+
+			.home-legal .gallery-carousel .carousel-prev,
+			.home-legal .gallery-carousel .carousel-next {
+				width: 52px !important;
+				height: 52px !important;
+				border: 2px solid #e2c28d !important;
+				background: rgba(9, 28, 38, 0.9) !important;
+				color: #ffffff !important;
+				font-size: 1.55rem !important;
+				font-weight: 700;
+				opacity: 1 !important;
+				box-shadow: 0 5px 16px rgba(0, 0, 0, 0.45) !important;
+				backdrop-filter: none !important;
+			}
+
+			.home-legal .gallery-carousel .carousel-prev:hover,
+			.home-legal .gallery-carousel .carousel-next:hover {
+				background: #cbb089 !important;
+				color: #ffffff !important;
+			}
+
+			.home-legal .gallery-carousel .carousel-dots {
+				display: none !important;
+			}
+
+			@media screen and (max-width: 1024px) {
+				.home-legal .gallery-carousel .carousel-slide {
+					min-width: calc((100% - 20px) / 1.5) !important;
+					height: 340px !important;
+				}
+			}
+
+			@media screen and (max-width: 768px) {
+				.home-legal .gallery-carousel .carousel-slide {
+					min-width: 100% !important;
+					height: 260px !important;
+				}
+			}
+
+			/* Legal: remove its legacy 2.5rem spacing and keep one consistent carousel gap. */
+			.home-legal .content-center {
+				margin: 0 0 30px !important;
+				padding: 0 !important;
+			}
+
+			.home-legal .box-txt p {
+				margin: 0 !important;
+			}
+
+			/* Final mobile heading rhythm — shared by the sections below and based on Tiện ích. */
+			@media screen and (max-width: 768px) {
+				.home-legal .content-main,
+				.home-policy .content-main {
+					padding: 10vw 5% !important;
+				}
+
+				.picture-library .content-center,
+				.video-library .content-center,
+				.news-homepage .content-center,
+				.showroom-content,
+				.contact-agents-section .content-center {
+					padding: 10vw 5% 0 !important;
+				}
+
+				/* The progress section already has outer spacing; avoid adding a second top gap. */
+				.progress-content {
+					padding: 0 5% !important;
+				}
+
+				.home-legal .title-main,
+				.home-policy .title-main,
+				.picture-library .title-main,
+				.video-library .title-main,
+				.news-header,
+				.progress-header,
+				.showroom-header,
+				.contact-agents-section .title-main {
+					margin: 0 0 30px !important;
+					padding: 0 !important;
+				}
+
+				/* Keep carousel spacing consistent: the gap comes only from its heading block. */
+				.progress-wrapper,
+				.home-legal .gallery-carousel {
+					margin-top: 0 !important;
+					padding-top: 0 !important;
+				}
+
+				.home-legal .content-center {
+					margin-bottom: 30px !important;
+				}
+			}
+		</style>
 	</main>
 
 
@@ -22408,13 +22625,21 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 				const prevBtn = carousel.querySelector(".carousel-prev");
 				const nextBtn = carousel.querySelector(".carousel-next");
 				const dots = Array.from(carousel.querySelectorAll(".carousel-dot"));
+				const isLegalCarousel = carousel.closest(".home-legal") !== null;
 				let currentIndex = 0;
 				let startX = 0;
 				let isDragging = false;
 				let autoSlideInterval;
 
 				const updateCarousel = (index) => {
-					track.style.transform = `translateX(-${index * 100}%)`;
+					if (isLegalCarousel) {
+						const styles = window.getComputedStyle(track);
+						const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+						const step = slides[0].getBoundingClientRect().width + gap;
+						track.style.transform = `translateX(-${index * step}px)`;
+					} else {
+						track.style.transform = `translateX(-${index * 100}%)`;
+					}
 					dots.forEach((dot, idx) => {
 						if (idx === index) {
 							dot.classList.add("active");
@@ -22499,6 +22724,7 @@ c0.56-8.78-2.62-11.79,6.7-4.5C34.58,29.7,34.62,30.11,34.2,30.5z" />
 				// Pause auto-slide when mouse enters, resume when leaves
 				carousel.addEventListener("mouseenter", stopAutoSlide);
 				carousel.addEventListener("mouseleave", startAutoSlide);
+				window.addEventListener("resize", () => updateCarousel(currentIndex));
 
 				// Start auto-slide initially
 				startAutoSlide();
