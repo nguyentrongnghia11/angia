@@ -19440,6 +19440,70 @@ l1.2-7.1L394.3,34.5z" />
 
 
 			<!-- ========================= Thư viện hình ảnh======================= -->
+			<style>
+				/* Mobile galleries: horizontal, swipeable carousel instead of a vertical list. */
+				@media screen and (max-width: 1100px) {
+					.picture-library .slide-library,
+					.video-library .slide-library {
+						width: calc(100% - 24px);
+						max-width: none;
+						margin: 0 auto;
+					}
+
+					.picture-library .slidebox-track,
+					.video-library .slidebox-track {
+						overflow-x: auto !important;
+						overflow-y: visible !important;
+						scroll-snap-type: x mandatory;
+						scroll-behavior: smooth;
+						-webkit-overflow-scrolling: touch;
+						touch-action: pan-x;
+						scrollbar-width: none;
+					}
+
+					.picture-library .slidebox-track::-webkit-scrollbar,
+					.video-library .slidebox-track::-webkit-scrollbar {
+						display: none;
+					}
+
+					.picture-library .library-box .slidebox-list,
+					.video-library .library-box .slidebox-list {
+						display: flex !important;
+						width: 100%;
+						height: auto;
+						gap: 0;
+						padding: 0 0 12px;
+						transform: none !important;
+					}
+
+					.picture-library .item-album.slidebox-item,
+					.video-library .item-video.slidebox-item {
+						flex: 0 0 100%;
+						width: 100% !important;
+						margin: 0 !important;
+						scroll-snap-align: start;
+					}
+
+					.picture-library .pic-library,
+					.video-library .pic-library {
+						width: 100%;
+						height: auto;
+						aspect-ratio: 16 / 9;
+					}
+
+					.picture-library .pic-library .pic-img,
+					.video-library .pic-library .pic-img {
+						height: 100%;
+					}
+
+					.picture-library .library-box .pic-img img,
+					.video-library .library-box .pic-img img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+				}
+			</style>
 			<div class="group-central library picture-library light" data-name="picture-library"
 				data-href="https://thegio.vn/thu-vien/hinh-anh.html" data-hrefen="https://thegio.vn/library/albums.html"
 				data-hrefvi="https://thegio.vn/thu-vien/hinh-anh.html" data-title="Hình ảnh"
@@ -19781,6 +19845,53 @@ l1.2-7.1L394.3,34.5z" />
 					</div>
 				</div>
 			</div>
+			<script>
+				// Auto-scroll the mobile image and video carousels every 3 seconds.
+				document.addEventListener('DOMContentLoaded', function () {
+					if (!window.matchMedia('(max-width: 1100px)').matches) return;
+
+					document.querySelectorAll('.picture-library .slidebox-track, .video-library .slidebox-track').forEach(function (track) {
+						// The original lazy-loader only observes vertically visible items.
+						// Load every carousel image so an off-screen slide never stays blank.
+						track.querySelectorAll('img.lazy[data-src]').forEach(function (image) {
+							if (!image.getAttribute('src')) {
+								image.setAttribute('src', image.dataset.src);
+							}
+							image.classList.remove('lazy');
+						});
+
+						var items = track.querySelectorAll('.slidebox-item');
+						if (items.length < 2) return;
+
+						var timer;
+						function getStep() {
+							var item = items[0];
+							var list = track.querySelector('.slidebox-list');
+							var styles = window.getComputedStyle(list);
+							var gap = parseFloat(styles.columnGap || styles.gap) || 0;
+							return item.getBoundingClientRect().width + gap;
+						}
+
+						function nextSlide() {
+							var step = getStep();
+							if (!step) return;
+							var isLast = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+							track.scrollTo({ left: isLast ? 0 : track.scrollLeft + step, behavior: 'smooth' });
+						}
+
+						function start() {
+							clearInterval(timer);
+							timer = setInterval(nextSlide, 3000);
+						}
+
+						track.addEventListener('touchstart', function () { clearInterval(timer); }, { passive: true });
+						track.addEventListener('touchend', start, { passive: true });
+						track.addEventListener('mouseenter', function () { clearInterval(timer); });
+						track.addEventListener('mouseleave', start);
+						start();
+					});
+				});
+			</script>
 			<div class="group-central library brochure-library dark" data-name="brochure-library"
 				data-href="https://thegio.vn/thu-vien/e-catalogue.html"
 				data-hrefen="https://thegio.vn/library/e-catalogue-.html"
@@ -20025,6 +20136,56 @@ l1.2-7.1L394.3,34.5z" />
 					}
 
 					@media (max-width: 768px) {
+						.news-homepage .content-center {
+							padding: 0 20px;
+						}
+
+						/* Mobile: card dọc để ảnh và nội dung có đủ không gian hiển thị. */
+						.news-homepage .news-track .link-page {
+							padding: 0;
+							background: rgba(255, 255, 255, 0.14) !important;
+							border: 1px solid rgba(255, 255, 255, 0.18);
+							border-radius: 14px;
+							overflow: hidden;
+							box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+						}
+
+						.news-homepage .news-track .link-page .box-news {
+							display: block !important;
+						}
+
+						.news-homepage .news-track .link-page .pic-thumb {
+							width: 100%;
+							height: clamp(155px, 52vw, 210px);
+							aspect-ratio: auto;
+						}
+
+						.news-homepage .news-track .link-page .pic-thumb .pic-img,
+						.news-homepage .news-track .link-page .pic-thumb .pic-img img {
+							height: 100% !important;
+						}
+
+						.news-homepage .news-track .link-page .head-text {
+							width: 100%;
+							min-height: 0;
+							padding: 14px 16px 16px;
+							box-sizing: border-box;
+						}
+
+						.news-homepage .news-track .link-page .date-thumb {
+							margin: 0 0 10px;
+							padding: 0.55rem 0.7rem;
+							font-size: 0.72rem;
+						}
+
+						.news-homepage .news-track .link-page .head-text h3 {
+							padding: 0;
+							margin: 0;
+							font-size: 0.95rem;
+							line-height: 1.45;
+							-webkit-line-clamp: 3;
+						}
+
 						.news-header {
 							flex-direction: column;
 							align-items: center;
@@ -20041,6 +20202,10 @@ l1.2-7.1L394.3,34.5z" />
 						.news-track .link-page {
 							width: 100%;
 							min-width: 100%;
+						}
+
+						.news-title h2 {
+							font-size: 24px;
 						}
 					}
 				</style>
@@ -21132,7 +21297,41 @@ l1.2-7.1L394.3,34.5z" />
 			</div>
 
 			<!-- ========================== Liên hệ ========================= -->
-		</div>
+		<style>
+			/* Mobile fallback: keep the showroom and contact sections in normal document flow.
+			   This avoids the 100vh slider clipping the Contact section after the showroom. */
+			@media screen and (max-width: 1100px) {
+				.box-slider {
+					height: auto !important;
+					overflow: visible !important;
+				}
+
+				.box-slider .group-central.home-showroom {
+					height: auto !important;
+					min-height: 0 !important;
+					overflow: visible !important;
+				}
+
+				.box-slider .group-central.home-contact {
+					position: relative !important;
+					display: block !important;
+					height: auto !important;
+					min-height: 100vh !important;
+					overflow: visible !important;
+					opacity: 1 !important;
+					pointer-events: auto !important;
+					background: var(--color-bg-gradient) !important;
+				}
+
+				.box-slider .group-central.home-contact .content-main {
+					position: relative !important;
+					height: auto !important;
+					min-height: 100vh !important;
+					padding: 4rem 0 !important;
+					overflow: visible !important;
+				}
+			}
+		</style>
 		<div class="group-central home-contact light" data-name="home-contact">
 			<div class="slide-inner">
 				<div class="bg-inner"></div>

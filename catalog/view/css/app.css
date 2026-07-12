@@ -3381,6 +3381,18 @@ body.zoom-active .slidebox-pagination {
 /* Mobile responsive fixes for home-legal, home-gallery, and home-map sections */
 @media screen and (max-width: 1100px) {
 
+  /* Contact is rendered in the normal mobile scroll, so its animation classes
+     do not receive the desktop slider "on-show" state. Keep its content visible. */
+  .home-contact .ani-item,
+  .home-contact .partner-info,
+  .home-contact .company-info h3,
+  .home-contact .text-ani-item,
+  .home-contact .text-ani-item .char {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
   .home-legal .content-main,
   .home-gallery .content-main,
   .home-map .content-main {
