@@ -215,9 +215,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Cập nhật boxNav và Header visibility dựa trên hướng cuộn (Root)
     const threshold = 80;
     const isScrollingDown = scrollY > lastScrollY && scrollY > threshold;
-    const menuOpen = document.body.classList.contains("activemenu") || 
-                     document.documentElement.classList.contains("activemenu") ||
-                     (headerEl && headerEl.classList.contains("active"));
+    const menuOpen = document.body.classList.contains("activemenu") ||
+      document.documentElement.classList.contains("activemenu") ||
+      (headerEl && headerEl.classList.contains("active"));
 
     if (boxNav) {
       if (menuOpen) {
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (optionHeaderEl) optionHeaderEl.classList.remove("header-hidden");
       }
     }
-    
+
     lastScrollY = scrollY;
 
     // Tính targetNavIndex
@@ -291,44 +291,44 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-  navButtons.forEach((btn, idx) => {
-    btn.classList.toggle("current", idx === targetNavIndex);
-  });
+    navButtons.forEach((btn, idx) => {
+      btn.classList.toggle("current", idx === targetNavIndex);
+    });
 
-  // Trigger animations khi section thay đổi
-  if (isNormalScrollPage && currentActiveIndex !== lastActiveIndex) {
-    if (lastActiveIndex !== -1 && sections[lastActiveIndex]) {
-      sections[lastActiveIndex].classList.remove("show-text");
-    }
-    if (sections[currentActiveIndex]) {
-      const sec = sections[currentActiveIndex];
-      sec.classList.add("show-text", "css-play");
-      // Trigger animation cho section mới active
-      _triggerSectionAnimation(sec, currentActiveIndex);
-      // Fix mobile scroll back to top
-      if (Mobile.matches && currentActiveIndex === 0 && isHome) {
-        const logoCenter = document.querySelector(".logo-center");
-        const TaglineVI = document.querySelector(".tagline-vi");
-        const TaglineEN = document.querySelector(".tagline-en");
-        const goDown = document.querySelector(".go-down");
-        if (logoCenter) logoCenter.classList.add("show");
-        if (goDown) goDown.classList.add("show", "center-align");
-        setTimeout(() => {
-          const isVi =
-            (typeof HTML !== "undefined" && HTML.lang === "vi") ||
-            document.documentElement.lang === "vi" ||
-            document.body.lang === "vi";
-          if (isVi) {
-            if (TaglineVI) { TaglineVI.classList.add("show"); if (typeof aniText === "function") aniText(TaglineVI); }
-          } else {
-            if (TaglineEN) { TaglineEN.classList.add("show"); if (typeof aniText === "function") aniText(TaglineEN); }
-          }
-        }, 500);
+    // Trigger animations khi section thay đổi
+    if (isNormalScrollPage && currentActiveIndex !== lastActiveIndex) {
+      if (lastActiveIndex !== -1 && sections[lastActiveIndex]) {
+        sections[lastActiveIndex].classList.remove("show-text");
       }
+      if (sections[currentActiveIndex]) {
+        const sec = sections[currentActiveIndex];
+        sec.classList.add("show-text", "css-play");
+        // Trigger animation cho section mới active
+        _triggerSectionAnimation(sec, currentActiveIndex);
+        // Fix mobile scroll back to top
+        if (Mobile.matches && currentActiveIndex === 0 && isHome) {
+          const logoCenter = document.querySelector(".logo-center");
+          const TaglineVI = document.querySelector(".tagline-vi");
+          const TaglineEN = document.querySelector(".tagline-en");
+          const goDown = document.querySelector(".go-down");
+          if (logoCenter) logoCenter.classList.add("show");
+          if (goDown) goDown.classList.add("show", "center-align");
+          setTimeout(() => {
+            const isVi =
+              (typeof HTML !== "undefined" && HTML.lang === "vi") ||
+              document.documentElement.lang === "vi" ||
+              document.body.lang === "vi";
+            if (isVi) {
+              if (TaglineVI) { TaglineVI.classList.add("show"); if (typeof aniText === "function") aniText(TaglineVI); }
+            } else {
+              if (TaglineEN) { TaglineEN.classList.add("show"); if (typeof aniText === "function") aniText(TaglineEN); }
+            }
+          }, 500);
+        }
+      }
+      lastActiveIndex = currentActiveIndex;
     }
-    lastActiveIndex = currentActiveIndex;
   }
-}
 
   // Hàm trigger animation khi section vào viewport (thay thế scrollStay.prototype.applySlide)
   function _triggerSectionAnimation(sec, idx) {
@@ -401,8 +401,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (locationPage && sec.classList.contains("region") && typeof Wave !== 'undefined') Wave.Play();
 
     // Library / News wave
-    if (sec.classList.contains("brochure-library") && typeof Wave !== 'undefined') Wave.Play();
-    if (sec.classList.contains("news") && typeof Wave !== 'undefined') setTimeout(function () { Wave.Play(); }, 1000);
 
     // colEffect for layout-move
     if (sec.querySelector(".layout-move")) {
@@ -413,22 +411,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Gộp tất cả scroll listener thành 1, throttle bằng rAF ---
   let _scrollTicking = false;
-function _onScrollThrottled() {
-  if (_scrollTicking) return;
-  _scrollTicking = true;
-  requestAnimationFrame(() => {
+  function _onScrollThrottled() {
+    if (_scrollTicking) return;
+    _scrollTicking = true;
+    requestAnimationFrame(() => {
+      _scheduleNavUpdate();
+      if (isNormalScrollPage && typeof onScroll === "function") onScroll();
+      _scrollTicking = false;
+    });
+  }
+
+  window.addEventListener("scroll", _onScrollThrottled, { passive: true });
+  window.addEventListener("resize", () => {
     _scheduleNavUpdate();
-    if (isNormalScrollPage && typeof onScroll === "function") onScroll();
-    _scrollTicking = false;
-  });
-}
+  }, { passive: true });
 
-window.addEventListener("scroll", _onScrollThrottled, { passive: true });
-window.addEventListener("resize", () => {
-  _scheduleNavUpdate();
-}, { passive: true });
-
-_runNavUpdate();
+  _runNavUpdate();
 });
 gsap.config({ nullTargetWarn: !1 });
 var isFirst = 0;
@@ -1891,7 +1889,7 @@ function ContentLoad() {
       document.querySelector(".link-page.current") &&
       document.querySelector(".link-page.current").click());
   }
-  if (progressPage || document.querySelector(".progress")) {
+  if ((progressPage || document.querySelector(".progress")) && document.querySelector(".select-header")) {
     (Logo.classList.add("show"), Footer.classList.add("show", "align-left"));
     var i = document.querySelector(".select-header"),
       u = document.querySelector(".select-box"),
