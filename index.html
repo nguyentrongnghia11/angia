@@ -708,8 +708,8 @@
 		}
 
 		html {
-			-webkit-user-select: none;
-			user-select: none;
+			-webkit-user-select: text;
+			user-select: text;
 			-webkit-font-smoothing: antialiased;
 			text-rendering: optimizeLegibility
 		}
@@ -1909,8 +1909,8 @@
 			width: 100%;
 			height: 100vh;
 			overflow: hidden;
-			-webkit-user-select: none;
-			user-select: none
+			-webkit-user-select: text;
+			user-select: text
 		}
 
 		.group-central {
@@ -20530,12 +20530,18 @@ l1.2-7.1L394.3,34.5z" />
 							font-size: 24px;
 						}
 					}
+
+					@media (max-width: 1100px) {
+						.progress-content.ani-item {
+							opacity: 1 !important;
+						}
+					}
 				</style>
 
 				<div class="progress-content ani-item">
 					<div class="progress-header">
 						<div class="progress-title">
-							<h2>Tiến độ</h2>
+							<h2>Cập nhật tiến độ mới nhất</h2>
 						</div>
 						<div class="progress-controls">
 							<button class="progress-btn" id="progressPrev">
@@ -20751,7 +20757,7 @@ l1.2-7.1L394.3,34.5z" />
 				</div>
 			</div> -->
 			<div class="group-central home-showroom dark" data-name="home-showroom"
-				style="position: relative; overflow: hidden; padding: 64px 0 72px;">
+				style="position: relative; overflow: hidden; padding: 25px 0 30px;">
 
 				<div class="slide-inner"
 					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
@@ -20771,9 +20777,9 @@ l1.2-7.1L394.3,34.5z" />
 					/* Header chứa tiêu đề phối màu Teal-Gold & Nút điều hướng */
 					.showroom-header {
 						display: flex;
-						justify-content: center;
-						align-items: flex-end;
-						margin-bottom: 30px;
+						flex-direction: column;
+						align-items: center;
+						margin-bottom: 20px;
 						position: relative;
 						width: 100%;
 					}
@@ -20806,11 +20812,30 @@ l1.2-7.1L394.3,34.5z" />
 						line-height: 1;
 					}
 
+					.showroom-desc {
+						color: #e0e0e0;
+						font-size: 14px;
+						line-height: 1.6;
+						max-width: 850px;
+						margin: 10px auto 0;
+						text-align: center;
+						font-weight: 300;
+						display: block;
+					}
+
+					.showroom-desc p {
+						margin: 0 0 10px 0;
+					}
+
+					.showroom-desc p:last-child {
+						margin-bottom: 0;
+					}
+
 					/* Mũi tên điều hướng */
 					.showroom-controls {
 						position: absolute;
 						right: 0;
-						bottom: 0;
+						top: 0;
 						display: flex;
 						gap: 12px;
 					}
@@ -20916,14 +20941,33 @@ l1.2-7.1L394.3,34.5z" />
 						.showroom-title span {
 							font-size: 18px;
 						}
+
+						.showroom-desc {
+							font-size: 14px;
+							margin-top: 10px;
+							line-height: 1.6;
+						}
+					}
+
+					@media (max-width: 1100px) {
+						.showroom-content.ani-item {
+							opacity: 1 !important;
+						}
 					}
 				</style>
 
 				<div class="showroom-content ani-item">
 
 					<div class="showroom-header">
-						<div class="showroom-title">
-							<h2>Nhà mẫu</h2>
+						<div class="showroom-title-box">
+							<div class="showroom-title">
+								<h2>Nhà mẫu</h2>
+							</div>
+							<div class="showroom-desc">
+								<p>Căn hộ ven sông The Gió Riverside Dĩ An Bình Dương với lối thiết kế hài hòa, ứng dụng phong cách harmonious living tạo nên không gian cân bằng tính thẩm mỹ, công năng và thiên nhiên.</p>
+								<p>Căn hộ được thiết kế tối ưu diện tích với nhiều không gian như phòng khách có ban công kiểu Juliette (không nhô ra khỏi tòa nhà), 2 phòng ngủ và 2 WC, khu vực bếp, lô-gia rộng rãi.</p>
+								<p>Đặc biệt, căn hộ được Chủ đầu tư An Gia tinh tế sử dụng màu sắc sáng ấm, trung tính tạo cảm giác dễ chịu.</p>
+							</div>
 						</div>
 						<div class="showroom-controls">
 							<button class="showroom-btn" id="slidePrev">
